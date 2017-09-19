@@ -1,0 +1,58 @@
+<div ng-controller="userManageCtrl">
+	<div class="container" style="margin-top:15px;">
+		<ol class="breadcrumb">
+			<li><a href="#/offline">Home</a></li>
+			<li class="active">Manage Users</li>
+		</ol>
+		<div class="main">
+			<div class="row">
+				<div class="col-sm-6">
+					<h3>Add User</h3>
+					<hr/>
+					<form class="form-inline">
+						<label for="exampleInputName2">*Name:</label>
+						<input type="text" ng-model="nameUser" class="form-control" style="margin-top:10px; width:50%; margin-left: 59px;" required placeholder="Enter Employee Name"
+						/><br><br>
+						<label for="exampleInputName2">*OLM ID: </label>
+						<input type="text" ng-model="olmId" class="form-control" style="width:50%;margin-left: 48px;" required maxlength="8" minlength="8" placeholder="Enter Employee OLMID" /><br><br>
+						<label for="exampleInputName2">*Select Circle: </label>
+						<select ng-model="circleUser" class="form-control" style="margin-top:10px; width:50%;margin-left: 15px;" required>
+						<option disabled selected value="">Choose circle</option>
+						<option ng-repeat="circle in circles" value={{circle[0]}}>{{circle[1]}}</option>
+					</select>
+						<br><br>
+						<label for="exampleInputName2">*Select Role: </label>
+						<select class="form-control" ng-model="roleUser" style="margin-top:10px; width:50%;margin-left: 24px;" required>
+						<option disabled selected value="">Choose role</option>
+						<option value=1>Admin</option>
+						<option value=2>Distribution Team</option>
+					</select>
+						<br><br>
+						<label for="exampleInputName2">*Email Id:</label>
+						<input type="email" ng-model="emailUser" class="form-control" style="margin-top:10px; width:50%;margin-left: 52px;" required placeholder="Enter Email ID"
+						/><br><br>
+						<label for="exampleInputName2">*Mobile Number:</label>
+						<input type="text" ng-model="mobileUser" class="form-control" style="margin-top:10px; width:50%;margin-left: 4px;" maxlength="10" placeholder="Enter Mobile number"
+						 minlength="10" required /><br><br>
+						<button id="btnid" class="btn btn-primary" ng-click="addUser()" style="margin-left: 30%;width: 20%;margin-top: -10px;">Add</button>
+						<div class="alert alert-success collapse" role="alert">
+							<strong>Success</strong>
+						</div>
+						<br/>
+					</form>
+				</div>
+				<div class="col-sm-6">
+					<h3>Delete User</h3>
+					<hr/>
+					<form class="form-inline">
+						<div class="form-group">
+							<label for="exampleInputName2">*OLM ID:</label>
+							<input type="text" ng-model="deleteOlmId" class="form-control" style="width:50%;" maxlength="8" minlength="8" placeholder="Employee OLMID" />
+							<button type="primary" class="btn btn-primary" ng-click="deleteUser()" style="margin-left:30px;">Delete</button>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /container -->
+</div>

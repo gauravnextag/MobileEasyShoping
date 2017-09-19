@@ -1,0 +1,41 @@
+<div ng-controller="loginCtrl">
+	<div class="container">
+		<form class="form-signin" autocomplete="off">
+			<h2 class="form-signin-heading">Retailer Portal</h2>
+			<div class="show-error collapse alert alert-danger"></div>
+			<label for="inputOlmId" class="sr-only">OLM ID</label>
+			<input type="text" id="inputOlmId" ng-model="inputOlmId" class="form-control" placeholder="OLM Id" min="2" max="12" required
+			 autofocus>
+			<label for="inputPassword" class="sr-only">Password</label>
+			<input type="password" id="inputPassword" ng-model="password" class="form-control" min="2" max="15" placeholder="Password"
+			 required>
+			<div class="checkbox">
+				<label>
+			<input type="checkbox" value="remember-me"> Remember me
+		  </label>
+			</div>
+			<button class="btn btn-lg btn-primary btn-block" ng-disabled="disabled" ng-click="loginHandler()">Sign in</button>
+		</form>
+	</div>
+	<!-- /container -->
+
+	<!-- <script>
+	//validations
+	$(function() {
+	$('button').on('click', function(e){
+				e.preventDefault();
+	  	$(".show-error").hide();
+  		  if($("#inputOlmId").val().length>2 && $("#inputPassword").val().length>2)
+  		  {
+  		  	window.location.assign("index.html");
+  		  }
+  		else
+  		{
+  			$(".show-error").html("<strong>Error: </strong> Wrong Input format").show();
+  			
+  		}
+	})
+	
+	});
+	</script>  -->
+</div>

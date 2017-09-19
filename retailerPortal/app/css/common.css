@@ -1,0 +1,137 @@
+﻿body {
+  background-color:#ccc;
+  padding-top: 60px;
+}
+
+.navbar-default {
+    background-color: #f8f8f8;
+    border-color: red;
+}
+.navbar-fixed-top {
+    top: 0px;
+    border-width: 0px 0px 2px;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+    color: #fff;
+    background-color: red;
+    font-weight:bold;
+    cursor: default;
+}
+
+.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
+    color: #fff;
+    background-color: #dcdbdd;
+    font-weight:normal;
+    cursor: pointer;
+}
+
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+    color: #fff;
+    background-color: red;
+    font-weight:bold;
+    cursor: pointer;
+}
+
+.a-logo {
+	font-size: 20px;
+	line-height: 48px;
+	text-align: center;
+	padding: 0px 15px;
+	width: 160px;
+	font-weight: bold;
+	height: 50px;
+	text-indent: -999px;
+	display: block;
+	margin: 0px 0px 0px 15px;
+	border-right: 1px solid rgba(0, 0, 0, 0.1);
+	background-image: url("../img/logo.png");
+	background-size: 115px 28px;
+	background-repeat: no-repeat;
+	background-position: 0px 8px;
+}
+
+.user_img {
+    font-size: 1px;
+    line-height: 48px;
+    text-align: right;
+    padding: 0px;
+    width: 50px;
+    height: 50px;
+    display: block;
+    margin: 0px;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    background-image: url("../img/profile_pic.png");
+    background-size: 50px 50px;
+    background-repeat: no-repeat;
+    background-position: 0px;
+}
+
+
+/*.dropdown-menu:before {
+  position: absolute;
+  top: -7px;
+  right: 10%;
+  display: inline-block;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #ccc;
+  border-left: 7px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
+
+.dropdown-menu:after {
+  position: absolute;
+  top: -6px;
+  right: 10%;
+  display: inline-block;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #ffffff;
+  border-left: 6px solid transparent;
+  content: '';
+}*/
+
+.breadcrumb
+{
+	background-color:transparent;
+	padding:2px 0px;
+	margin-bottom:10px;
+	font-size:10px;
+}
+
+.breadcrumb > li + li::before {
+    color: #888;
+}
+
+.main
+{
+	background-color:#fff;
+	border-radius:4px;
+	padding:10px 15px;
+	min-height:450px;
+}
+
+input[type=file]
+{
+	display:inline-block;
+}
+
+.help-block
+{
+	font-size:10px;
+}
+
+.form-inline .form-group
+{
+	margin-right:20px;
+}
+
+/* tr:hover {
+	cursor:pointer;
+	background: #ff656c;
+} */
+
+.excel-record:hover {
+    background-color: #ddd !important;
+}

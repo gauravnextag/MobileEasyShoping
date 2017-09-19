@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Retailer Portal</title>
+
+	<link href="app/css/loader.css" rel="stylesheet" type="text/css" />
+	<script src="app/libs/loader.js" type="text/javascript"></script>
+	<!-- Bootstrap -->
+	<link href="app/css/bootstrap.min.css" rel="stylesheet">
+	<link href="app/css/common.css" rel="stylesheet">
+	<link rel="stylesheet" href="app/css/jquery-ui.min.css">
+	<link href="app/css/signin.css" rel="stylesheet">
+	<link href="app/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+	<link href="app/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body style="padding-right: 0px !important;" ng-app="myApp">
+	<section class="header" ng-controller="navCtrl">
+		<div ng-include="'app/common/nav/views/nav.html'" ng-if="location.path() !== '/'"></div>
+	</section>
+	<div style="height: 100%">
+		<div style="height: 100%" ng-view></div>
+	</div>
+	<!-- Libs -->
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<!--   Angular libs -->
+	<script src="app/libs/jquery.min.js"></script>
+	<script src="app/libs/jquery-ui.min.js"></script>
+	<script src="app/libs/bootstrap.min.js"></script>
+	<script src="app/libs/common.js"></script>
+	<script src="app/libs/angular.js" type="text/javascript"></script>
+	<script src="app/libs/angular-route.js" type="text/javascript"></script>
+	<script src="app/libs/angular-cookies.js" type="text/javascript"></script>
+	<script src="app/libs/angular-messages.js" type="text/javascript"></script>
+	<script src="app/libs/ng-file-upload.min.js" type="text/javascript"></script>
+	<script src="app/common/appConstants.js" type="text/javascript"></script>
+	<script src="app/libs/smart-table.min.js" type="text/javascript"></script>
+	<script src="app/libs/bootstrap-select.min.js" type="text/javascript"></script>
+	<script src="app/libs/moment.js" type="text/javascript"></script>
+	<script src="app/libs/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+	<script src="app/libs/ng-loader.js" type="text/javascript"></script>
+	<script src="app/common/services/storage.service.js" type="text/javascript"></script>
+
+	<!--Angular Root Module & Routing -->
+	<script src="app/app.js"></script>
+
+	<!--Common Services-->
+	<script src="app/common/services/encryption.service.js" type="text/javascript"></script>
+	<script src="app/common/services/user-info.service.js" type="text/javascript"></script>
+	<script src="app/common/services/nav.service.js" type="text/javascript"></script>
+
+	<!--Application Controllers-->
+	<script src="app/modules/login/controllers/login.js"></script>
+	<script src="app/common/nav/controllers/nav.controller.js" type="text/javascript"></script>
+	<script src="app/modules/retailer/controllers/offline.js"></script>
+	<script src="app/modules/broadcast/controllers/broadcast.controller.js"></script>
+	<script src="app/modules/userManagement/controllers/user.controller.js"></script>
+
+	<!--Application Services-->
+	<script src="app/modules/broadcast/services/broadcast.services.js"></script>
+	<script src="app/modules/login/services/login.service.js"></script>
+	<script src="app/modules/retailer/services/uploader.services.js"></script>
+	<script src="app/modules/retailer/services/fileLoader.services.js"></script>
+	<script src="app/modules/userManagement/services/userManagement.services.js"></script>
+
+	<!-- Include the plugin's CSS and JS: -->
+
+
+</body>
+
+</html>

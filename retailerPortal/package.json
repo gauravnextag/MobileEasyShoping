@@ -1,0 +1,38 @@
+{
+    "name": "retailer-portal",
+    "version": "1.0.0",
+    "description": "Retailer Web Portal",
+    "main": "router.js",
+    "scripts": {
+        "test": "",
+        "start": "",
+        "build": "gulp build"
+    },
+    "keywords": [
+        "retailer-portal"
+    ],
+    "author": "Gauri Shanker",
+    "license": "MIT",
+    "devDependencies": {
+        "gulp": "3.9.1",
+        "gulp-clean-css": "2.0.10",
+        "gulp-concat": "2.6.0",
+        "gulp-copy": "0.0.2",
+        "gulp-debug": "2.1.2",
+        "gulp-ftp": "1.1.0",
+        "gulp-htmlmin": "2.0.0",
+        "gulp-ignore": "2.0.2",
+        "gulp-imagemin": "3.0.1",
+        "gulp-jsmin": "0.1.5",
+        "gulp-ng-annotate": "2.0.0",
+        "gulp-obfuscate": "0.2.9",
+        "gulp-replace": "0.5.4",
+        "gulp-scp2": "0.2.0",
+        "gulp-uglify": "1.5.4",
+        "gulp-util": "3.0.8",
+        "gulp-version-number": "0.1.6"
+    },
+    "dependencies": {
+        "gulp-imagemin": "3.1.1"
+    }
+}
