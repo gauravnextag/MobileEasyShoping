@@ -1,0 +1,61 @@
+CREATE TABLE BANK_CONFIG_MASTER
+(
+  key VARCHAR(255) PRIMARY KEY ,
+  VALUE VARCHAR (300) NOT NULL
+);
+
+Insert into bank_config_master (KEY,VALUE) values ('bank.server.check.balance.connection.timeout','30000');
+Insert into bank_config_master (KEY,VALUE) values ('bank.server.check.balance.read.timeout','30000');
+
+Insert into bank_config_master (KEY,VALUE) values ('bank.server.url','http://10.56.188.45:6085/volt1');
+Insert into bank_config_master (KEY,VALUE) values ('bank.server.ucid','CHECKRET');
+Insert into bank_config_master (KEY,VALUE) values ('bank.account.open.fci.url','http://10.56.188.45:6085/volt3');
+Insert into bank_config_master (KEY,VALUE) values ('bank.account.open.nonfci.url','http://10.56.188.45:6085/volt1');
+Insert into bank_config_master (KEY,VALUE) values ('bank.account.open.ucid','COMBINEDCUSTREG');
+
+Insert into bank_config_master (KEY,VALUE) values ('jedis.max.total','20');
+Insert into bank_config_master (KEY,VALUE) values ('jedis.max.idle','20');
+Insert into bank_config_master (KEY,VALUE) values ('jedis.min.idle','20');
+Insert into bank_config_master (KEY,VALUE) values ('redis.ip.property','10.5.200.98');
+Insert into bank_config_master (KEY,VALUE) values ('redis.port.property','31188');
+
+Insert into bank_config_master (KEY,VALUE) values ('customer.esign.2.0.url','http://10.14.138.57:8011/bal_eSIGN2_1/preVerified/customer/signdocuments/v2_1/signcustomerdocuments');
+Insert into bank_config_master (KEY,VALUE) values ('customer.esign.url','http://10.14.138.57:8011/bal_eSIGN2/preVerified/customer/signdocuments/v2/signcustomerdocuments1');
+
+
+Insert into bank_config_master (KEY,VALUE) values ('solace.pb.connection.factory','jms/AirtelBank/AirtelBankConnectionFactory');
+Insert into bank_config_master (KEY,VALUE) values ('solace.pb.url','smf://10.5.170.247:55555');
+Insert into bank_config_master (KEY,VALUE) values ('solace.pb.username','ecafpuser@AirtelBankVPN');
+Insert into bank_config_master (KEY,VALUE) values ('solace.pb.password','ecafpuser@AirtelBankVPN');
+Insert into bank_config_master (KEY,VALUE) values ('solcae.pb.topic','jms/AirtelBank/AirtelPaymentBankOptInTopic');
+
+
+Insert into bank_config_master (KEY,VALUE) values ('mobility.connection.factory','jms/aadhaar/aadhaarConnectionFactory');
+Insert into bank_config_master (KEY,VALUE) values ('mobility.solace.url','smf://10.5.170.247:55555');
+Insert into bank_config_master (KEY,VALUE) values ('mobility.solace.username','ecafpuser@AadhaarVPN');
+Insert into bank_config_master (KEY,VALUE) values ('mobility.solace.password','ecafpuser@AadhaarVPN');
+Insert into bank_config_master (KEY,VALUE) values ('mobility.queue.name','jms/aadhaar/ecafBankAccountQ');
+Insert into bank_config_master (KEY,VALUE) values ('check.ret.block.message','retailer is blocked...!!!!');
+
+
+CREATE TABLE BANK_TXN_LOG
+(
+  TXN_ID VARCHAR(255) PRIMARY KEY ,
+  MOB_TXN_ID VARCHAR (300) NOT NULL,
+  MSISDN VARCHAR (20) NOT NULL,
+  CAF_NUMBER VARCHAR (20) NOT NULL,
+  APP_NAME VARCHAR (300) NOT NULL,
+  STATUS VARCHAR (100) NOT NULL,
+  MESSAGE VARCHAR (300) NOT NULL,
+  TXN_DATE TIMESTAMP(6)  NOT NULL,
+  SNAP_DATE TIMESTAMP(6)  NOT NULL
+)
+  PARTITION BY RANGE (SNAP_DATE)
+  INTERVAL (NUMTODSINTERVAL(1,'DAY'))(PARTITION S1 VALUES LESS THAN(TO_DATE('01-01-1800','DD-MM-YYYY')));
+--------------------------------------------------------
+--  DDL for Index BANK_TXN_LOG_U2
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "BANK_TXN_LOG_U2" ON "BANK_TXN_LOG" ("MSISDN","CAF_NUMBER");
+
+ALTER TABLE "BANK_TXN_LOG" ADD CONSTRAINT "BANK_TXN_LOG_U2" UNIQUE ("MSISDN",CAF_NUMBER);

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="mobileShopping:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="mobileShopping-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="mobileShopping:war exploded" />
+    </root>
+  </artifact>
+</component>
