@@ -1,3 +1,19 @@
+ CREATE TABLE MOBSHOP_CONFIG_MASTER
+(
+  key VARCHAR(255) PRIMARY KEY ,
+  VALUE VARCHAR (300) NOT NULL
+);
+
+Insert into MOBSHOP_CONFIG_MASTER (KEY,VALUE) values ('otp.attempt.exhaust.message','OTP Attempts exhausted');
+Insert into MOBSHOP_CONFIG_MASTER (KEY,VALUE) values ('otp.attempt.interval','-30');
+Insert into MOBSHOP_CONFIG_MASTER (KEY,VALUE) values ('max.otp.attempt','3');
+Insert into MOBSHOP_CONFIG_MASTER (KEY,VALUE) values ('otp.length','6');
+Insert into MOBSHOP_CONFIG_MASTER (KEY,VALUE) values ('otp.short.code','5163339');
+Insert into MOBSHOP_CONFIG_MASTER (KEY,VALUE) values ('otp.sms.text','Your OTP is : {0}. Airtel will never call you to ask for OTP/Password details. Please do not share your details with anyone.');
+Insert into MOBSHOP_CONFIG_MASTER (KEY,VALUE) values ('message.broker.url','http://10.5.176.22:55000/');
+Insert into MOBSHOP_CONFIG_MASTER (KEY,VALUE) values ('message.broker.username','fhecaf');
+Insert into MOBSHOP_CONFIG_MASTER (KEY,VALUE) values ('message.broker.password','fhecaf2');
+
   CREATE TABLE  STATES
    ("ID" NUMBER(6,0) NOT NULL ENABLE,
    "NAME" VARCHAR2(150 CHAR) NOT NULL ENABLE,

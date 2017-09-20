@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<message><sms type="mt"><destination><address><number type="national">${headers.msisdn}</number></address></destination><source><address><number type="abbreviated">${headers.shortcode}</number></address></source><rsr type="sms"/><ud type="text">${headers.smsText}</ud></sms></message>
