@@ -4,13 +4,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class DistributorListRequest {
 
-    private String districtId;
+    private Long districtId;
 
-    public String getDistrictId() {
+    public Long getDistrictId() {
         return districtId;
     }
 
-    public void setDistrictId(String districtId) {
+    public void setDistrictId(Long districtId) {
         this.districtId = districtId;
     }
 

@@ -34,7 +34,7 @@ public class DistributorServicesImpl implements DistributorServices {
     public List getDistributors(DistributorListRequest distributorListRequest) throws BusinessException {
         try {
 
-            if(StringUtils.isEmpty(distributorListRequest.getDistrictId())){
+            if(distributorListRequest.getDistrictId() ==null){
                 throw new BusinessException(ErrorConstants.ERROR_CODE, ErrorConstants.ERROR_MESSAGE_INVALID_REQUEST);
             }else {
                     return distributorDao.getDistributors(distributorListRequest.getDistrictId());

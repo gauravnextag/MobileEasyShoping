@@ -40,6 +40,7 @@ public class Customer implements Serializable {
     @Column(name = "IS_DELETED")
     private int isDeleted;
 
+    @JsonIgnore
     @Column(name="CREATED_DATE")
     private Timestamp createdDate;
 

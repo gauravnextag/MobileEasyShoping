@@ -41,6 +41,7 @@ public class Retailer implements Serializable {
     @Column(name = "IS_DELETED")
     private int isDeleted;
 
+    @JsonIgnore
     @Column(name="CREATED_DATE")
     private Timestamp createdDate;
 
@@ -118,6 +119,20 @@ public class Retailer implements Serializable {
 
     public void setLastModifiedDate(Timestamp lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("store_name", store_name)
+                .append("districtId", districtId)
+                .append("distributorID", distributorID)
+                .append("msisdn", msisdn)
+                .append("registrationStatus", registrationStatus)
+                .append("isDeleted", isDeleted)
+                .append("createdDate", createdDate)
+                .append("lastModifiedDate", lastModifiedDate)
+                .toString();
     }
 
 

@@ -27,7 +27,7 @@ public class DistributorDaoImpl implements DistributorDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(DistributorDaoImpl.class);
 
     @Override
-    public List getDistributors(String districtId) throws DaoException {
+    public List getDistributors(Long districtId) throws DaoException {
         try {
             LOGGER.info("Fetching list of distributors corresponding to district id: {}",districtId);
             Session session = sessionFactory.getCurrentSession();
