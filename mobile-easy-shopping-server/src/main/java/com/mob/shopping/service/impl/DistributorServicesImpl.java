@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mob.shopping.beans.request.DistributorListRequest;
+import com.mob.shopping.entity.Distributor;
+import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.exception.BusinessException;
 import com.mob.shopping.repository.DistributorDao;
 import com.mob.shopping.service.DistributorServices;
@@ -16,6 +18,7 @@ import com.mob.shopping.service.MasterConfigService;
 @Service
 public class DistributorServicesImpl implements DistributorServices {
 
+    private static final Logger logger = LoggerFactory.getLogger(DistributorServicesImpl.class);
 
     @Autowired
     MasterConfigService masterConfigService;
@@ -25,10 +28,8 @@ public class DistributorServicesImpl implements DistributorServices {
 
 
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DistributorServicesImpl.class);
-
     @Override
-    public List getDistributors(DistributorListRequest distributorListRequest) throws BusinessException {
+    public List<Distributor> getDistributors(DistributorListRequest distributorListRequest) throws BaseApplicationException {
     return distributorDao.getDistributors(distributorListRequest.getDistrictId());
     }
 }
