@@ -33,6 +33,9 @@
         "gulp-version-number": "0.1.6"
     },
     "dependencies": {
+        "body-parser": "^1.18.1",
+        "express": "^4.15.4",
+        "express-session": "^1.15.5",
         "gulp-imagemin": "3.1.1"
     }
 }
