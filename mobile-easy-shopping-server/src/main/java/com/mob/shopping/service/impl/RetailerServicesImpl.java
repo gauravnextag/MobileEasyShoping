@@ -15,8 +15,8 @@ public class RetailerServicesImpl implements RetailerServices {
     @Autowired
     MasterConfigService masterConfigService;
 
-    @Autowired
-    RetailerDao retailerDao;
+//    @Autowired
+//    RetailerDao retailerDao;
 
 
 

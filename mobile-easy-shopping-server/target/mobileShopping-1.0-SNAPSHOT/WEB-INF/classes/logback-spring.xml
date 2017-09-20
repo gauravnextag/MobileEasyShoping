@@ -11,6 +11,6 @@
 		</layout>
 	</appender>
 
-	<include file="${bank.log.conf.file.path}" />
+	<include file="${mobShop.log.conf.file.path}" />
 
 </configuration>

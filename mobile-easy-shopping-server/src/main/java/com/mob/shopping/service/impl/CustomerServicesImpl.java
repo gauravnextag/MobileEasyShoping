@@ -1,6 +1,7 @@
 package com.mob.shopping.service.impl;
 
 import com.mob.shopping.repository.RetailerDao;
+import com.mob.shopping.service.CustomerServices;
 import com.mob.shopping.service.MasterConfigService;
 import com.mob.shopping.service.RetailerServices;
 import org.slf4j.Logger;
@@ -9,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomerServicesImpl implements RetailerServices {
+public class CustomerServicesImpl implements CustomerServices {
 
 
     @Autowired
     MasterConfigService masterConfigService;
 
-    @Autowired
-    RetailerDao retailerDao;
+//    @Autowired
+//    RetailerDao retailerDao;
 
 
 
