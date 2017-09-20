@@ -5,6 +5,8 @@
 
 package com.mob.shopping.exception;
 
+import com.mob.shopping.enums.ResponseCode;
+
 /**
  * The Class DaoException.
  *
@@ -22,18 +24,13 @@ public class DaoException extends BaseApplicationException {
      * @param errorMessage the error message
      * @param t the t
      */
-    public DaoException(String errorCode, String errorMessage, Throwable t) {
-        super(errorCode, errorMessage, t);
-    }
+  
 
-    /**
-     * Instantiates a new dao exception.
-     *
-     * @param errorCode the error code
-     * @param errorMessage the error message
-     */
-    public DaoException(String errorCode, String errorMessage) {
-        super(errorCode, errorMessage);
+    public DaoException() {
+    	super();
+    }
+    public DaoException(ResponseCode responseCode) {
+        super(responseCode);
     }
 
 }

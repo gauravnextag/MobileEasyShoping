@@ -1,11 +1,7 @@
 package com.mob.shopping.repository.Impl;
 
-import com.mob.shopping.constants.ErrorConstants;
-import com.mob.shopping.entity.Distributor;
-import com.mob.shopping.entity.District;
-import com.mob.shopping.exception.DaoException;
-import com.mob.shopping.repository.DistributorDao;
-import com.mob.shopping.repository.RetailerDao;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -15,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.mob.shopping.entity.Distributor;
+import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.exception.DaoException;
+import com.mob.shopping.repository.DistributorDao;
 
 @Transactional
 @Repository
@@ -25,7 +24,6 @@ public class DistributorDaoImpl implements DistributorDao {
     SessionFactory sessionFactory;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DistributorDaoImpl.class);
-
     @Override
     public List getDistributors(String districtId) throws DaoException {
         try {
@@ -34,7 +32,7 @@ public class DistributorDaoImpl implements DistributorDao {
             return session.createCriteria(Distributor.class).add(Restrictions.eq("districtId", districtId)).list();
         }catch (Exception e){
             LOGGER.error("Error while Fetching list of distributors corresponding to district id: {}",districtId,e);
-            throw new DaoException(ErrorConstants.DAO_STATUS_CODE, ErrorConstants.ERROR_MESSAGE_DB_ERROR);
+            throw new DaoException(ResponseCode.GENRAL_ERROR);
 
         }
     }

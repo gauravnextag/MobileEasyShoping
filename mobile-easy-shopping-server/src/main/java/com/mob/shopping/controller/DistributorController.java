@@ -36,7 +36,7 @@ public class DistributorController {
                 response.setStatus(new StatusBean(ErrorConstants.ERROR_CODE,ErrorConstants.ERROR_MESSAGE_INVALID_REQUEST));
             }
         } catch (BaseApplicationException e) {
-            response.setStatus(new StatusBean(e.getError().getErrorCode(),e.getError().getErrorMessage()));
+            //	response.setStatus(new StatusBean(e.getError().getErrorCode(),e.getError().getErrorMessage()));
         }catch (Exception e){
             response.setStatus(new StatusBean(ErrorConstants.ERROR_CODE,
                     ErrorConstants.ERROR_MESSAGE_DOWNSTREAM_SYSTEM_DOWN));

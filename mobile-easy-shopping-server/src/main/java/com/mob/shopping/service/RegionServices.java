@@ -1,14 +1,16 @@
 package com.mob.shopping.service;
 
 
-import com.mob.shopping.beans.request.DistrictRequest;
-import com.mob.shopping.exception.BusinessException;
-
 import java.util.List;
+
+import com.mob.shopping.beans.request.DistrictRequest;
+import com.mob.shopping.entity.District;
+import com.mob.shopping.entity.State;
+import com.mob.shopping.exception.BaseApplicationException;
 
 public interface RegionServices {
 
-    public List getStates() throws BusinessException;
+    public List<State> getStates() throws BaseApplicationException;
 
-    public List getDistrictRequest(DistrictRequest districtRequest) throws BusinessException;
+    public List<District> getDistrictRequest(DistrictRequest districtRequest) throws BaseApplicationException;
 }

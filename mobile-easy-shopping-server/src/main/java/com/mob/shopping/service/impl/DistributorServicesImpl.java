@@ -1,20 +1,19 @@
 package com.mob.shopping.service.impl;
 
-import com.mob.shopping.beans.request.DistributorListRequest;
-import com.mob.shopping.constants.ErrorConstants;
-import com.mob.shopping.exception.BusinessException;
-import com.mob.shopping.repository.DistributorDao;
-import com.mob.shopping.repository.RetailerDao;
-import com.mob.shopping.service.DistributorServices;
-import com.mob.shopping.service.MasterConfigService;
-import com.mob.shopping.service.RetailerServices;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.mob.shopping.beans.request.DistributorListRequest;
+import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.exception.BusinessException;
+import com.mob.shopping.repository.DistributorDao;
+import com.mob.shopping.service.DistributorServices;
+import com.mob.shopping.service.MasterConfigService;
 
 @Service
 public class DistributorServicesImpl implements DistributorServices {
@@ -35,7 +34,7 @@ public class DistributorServicesImpl implements DistributorServices {
         try {
 
             if(StringUtils.isEmpty(distributorListRequest.getDistrictId())){
-                throw new BusinessException(ErrorConstants.ERROR_CODE, ErrorConstants.ERROR_MESSAGE_INVALID_REQUEST);
+                throw new BusinessException(ResponseCode.GENRAL_ERROR);
             }else {
                     return distributorDao.getDistributors(distributorListRequest.getDistrictId());
             }

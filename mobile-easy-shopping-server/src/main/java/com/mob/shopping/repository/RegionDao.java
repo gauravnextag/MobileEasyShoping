@@ -1,15 +1,12 @@
 package com.mob.shopping.repository;
 
-import com.mob.shopping.exception.DaoException;
-
 import java.util.List;
 
-public interface RegionDao {
-   public List getStates() throws DaoException;
+import com.mob.shopping.entity.District;
+import com.mob.shopping.entity.State;
+import com.mob.shopping.exception.DaoException;
 
-   public List getDistricts(String stateId) throws DaoException;
-//
-//    CheckBankStatusResponse findByMsisdnAndCafAndAppName(String msisdn , String caf, String appName) throws DaoException;
-//
-//    void save(Retailer bankTxnLog) throws DaoException;
+public interface RegionDao {
+   public List<State> getStates() throws DaoException;
+   public List<District> getDistricts(String stateId) throws DaoException;
 }

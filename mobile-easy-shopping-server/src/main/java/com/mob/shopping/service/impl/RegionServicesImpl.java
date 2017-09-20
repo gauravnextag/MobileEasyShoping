@@ -1,22 +1,22 @@
 package com.mob.shopping.service.impl;
 
-import com.mob.shopping.beans.request.DistrictRequest;
-import com.mob.shopping.constants.ErrorConstants;
-import com.mob.shopping.exception.BusinessException;
-import com.mob.shopping.exception.DaoException;
-import com.mob.shopping.repository.RegionDao;
-import com.mob.shopping.repository.RetailerDao;
-import com.mob.shopping.service.MasterConfigService;
-import com.mob.shopping.service.RegionServices;
-import com.mob.shopping.service.RetailerServices;
-import org.apache.commons.lang.StringUtils;
-import org.apache.cxf.Bus;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.mob.shopping.beans.request.DistrictRequest;
+import com.mob.shopping.entity.District;
+import com.mob.shopping.entity.State;
+import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.exception.BaseApplicationException;
+import com.mob.shopping.exception.BusinessException;
+import com.mob.shopping.repository.RegionDao;
+import com.mob.shopping.service.MasterConfigService;
+import com.mob.shopping.service.RegionServices;
+import com.mob.shopping.util.CommonUtility;
 
 @Service
 public class RegionServicesImpl implements RegionServices{
@@ -33,30 +33,17 @@ public class RegionServicesImpl implements RegionServices{
     private static final Logger LOGGER = LoggerFactory.getLogger(RegionServicesImpl.class);
 
         @Override
-        public List getStates() throws BusinessException{
-            try {
+        public List<State> getStates() throws BusinessException{
                 return regionDao.getStates();
-            }catch (Exception e){
-
-            }
-            return null;
         }
 
     @Override
-    public List getDistrictRequest(DistrictRequest districtRequest) throws BusinessException {
+    public List<District> getDistrictRequest(DistrictRequest districtRequest) throws BaseApplicationException {
 
-            try {
-
-                if(StringUtils.isEmpty(districtRequest.getStateId())){
-                    throw new BusinessException(ErrorConstants.ERROR_CODE, ErrorConstants.ERROR_MESSAGE_INVALID_REQUEST);
-                }else {
-                    return regionDao.getDistricts(districtRequest.getStateId());
-                }
-
-            }catch (Exception e){
-
-            }
-        return null;
+    	if(!CommonUtility.isValidString(districtRequest.getStateId())){
+    		throw new  BaseApplicationException(ResponseCode.GENRAL_ERROR);
+    	}
+    	return regionDao.getDistricts(districtRequest.getStateId());
     }
 
 }

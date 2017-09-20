@@ -1,16 +1,18 @@
 package com.mob.shopping.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import net.sf.json.xml.XMLSerializer;
+import java.nio.charset.Charset;
+import java.util.Random;
+import java.util.UUID;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-import java.nio.charset.Charset;
-import java.util.Random;
-import java.util.UUID;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import net.sf.json.xml.XMLSerializer;
 
 public class CommonUtils {
 

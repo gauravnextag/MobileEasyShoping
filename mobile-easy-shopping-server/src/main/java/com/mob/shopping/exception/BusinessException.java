@@ -5,6 +5,8 @@
 
 package com.mob.shopping.exception;
 
+import com.mob.shopping.enums.ResponseCode;
+
 /**
  * The Class BusinessException.
  *
@@ -22,18 +24,12 @@ public class BusinessException extends BaseApplicationException {
      * @param errorMessage the error message
      * @param t the t
      */
-    public BusinessException(String errorCode, String errorMessage, Throwable t) {
-        super(errorCode, errorMessage, t);
-    }
 
-    /**
-     * Instantiates a new business exception.
-     *
-     * @param errorCode the error code
-     * @param errorMessage the error message
-     */
-    public BusinessException(String errorCode, String errorMessage) {
-        super(errorCode, errorMessage);
+    public BusinessException() {
+    	super();
+    }
+    public BusinessException(ResponseCode responseCode) {
+        super(responseCode);
     }
 
 }

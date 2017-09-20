@@ -1,9 +1,7 @@
 package com.mob.shopping.repository.Impl;
 
-import com.mob.shopping.constants.ErrorConstants;
-import com.mob.shopping.entity.ConfigMaster;
-import com.mob.shopping.exception.DaoException;
-import com.mob.shopping.repository.MasterConfigDao;
+import java.util.List;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.mob.shopping.entity.ConfigMaster;
+import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.exception.DaoException;
+import com.mob.shopping.repository.MasterConfigDao;
 
 @Transactional
 @Repository
@@ -33,11 +34,11 @@ public class MasterConfigDaoImpl implements MasterConfigDao {
             if (CollectionUtils.isNotEmpty(result)) {
                 return result.get(0).getValue();
             } else {
-                throw new DaoException(ErrorConstants.DAO_STATUS_CODE, ErrorConstants.ERROR_MESSAGE_NOT_FOUND_IN_DB);
+                throw new DaoException(ResponseCode.GENRAL_ERROR);
             }
         } catch (Exception e) {
             LOGGER.error("Inside BankMasterConfigDaoImpl:fetching Value for key : {},error {}", key, e.getMessage());
-            throw new DaoException(ErrorConstants.DAO_STATUS_CODE, ErrorConstants.ERROR_MESSAGE_DB_ERROR);
+            throw new DaoException(ResponseCode.GENRAL_ERROR);
         }
     }
 
@@ -49,7 +50,7 @@ public class MasterConfigDaoImpl implements MasterConfigDao {
             return result;
         } catch (Exception e) {
             LOGGER.error("Inside BankMasterConfigDaoImpl:fetching Value,error {}", e.getMessage());
-            throw new DaoException(ErrorConstants.DAO_STATUS_CODE, ErrorConstants.ERROR_MESSAGE_DB_ERROR);
+            throw new DaoException(ResponseCode.GENRAL_ERROR);
         }
     }
 

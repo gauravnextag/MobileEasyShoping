@@ -5,6 +5,8 @@
 
 package com.mob.shopping.exception;
 
+import com.mob.shopping.enums.ResponseCode;
+
 /**
  * The Class AdapterException.
  *
@@ -22,11 +24,11 @@ public class AdapterException extends BaseApplicationException {
      * @param errorMessage the error message
      * @param t the t
      */
-    public AdapterException(String errorCode, String errorMessage, Throwable t) {
-        super(errorCode, errorMessage, t);
+    public AdapterException() {
+    	super();
+    }
+    public AdapterException(ResponseCode responseCode) {
+        super(responseCode);
     }
 
-    public AdapterException(String errorCode, String errorMessage) {
-        super(errorCode, errorMessage);
-    }
 }
