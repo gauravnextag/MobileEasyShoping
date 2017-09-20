@@ -33,7 +33,7 @@ public class DistributorDaoImpl implements DistributorDao {
             Session session = sessionFactory.getCurrentSession();
             return session.createCriteria(Distributor.class).add(Restrictions.eq("districtId", districtId)).list();
         }catch (Exception e){
-            LOGGER.error("Fetching list of distributors corresponding to district id: {}",districtId);
+            LOGGER.error("Error while Fetching list of distributors corresponding to district id: {}",districtId,e);
             throw new DaoException(ErrorConstants.DAO_STATUS_CODE, ErrorConstants.ERROR_MESSAGE_DB_ERROR);
 
         }
