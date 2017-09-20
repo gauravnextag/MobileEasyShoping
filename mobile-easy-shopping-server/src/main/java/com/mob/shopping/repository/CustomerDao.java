@@ -1,8 +1,8 @@
 package com.mob.shopping.repository;
 
+import com.mob.shopping.entity.Customer;
+import com.mob.shopping.exception.DaoException;
+
 public interface CustomerDao {
-//
-//    CheckBankStatusResponse findByMsisdnAndCafAndAppName(String msisdn , String caf, String appName) throws DaoException;
-//
-//    void save(Retailer bankTxnLog) throws DaoException;
+  void save(Customer ustomer) throws DaoException;
 }
