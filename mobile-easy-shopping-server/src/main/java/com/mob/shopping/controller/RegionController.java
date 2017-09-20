@@ -1,8 +1,13 @@
 package com.mob.shopping.controller;
 
 import com.mob.shopping.beans.ResponseBean;
+import com.mob.shopping.beans.StatusBean;
 import com.mob.shopping.beans.request.CheckBankStatusRequest;
+import com.mob.shopping.beans.request.DistrictRequest;
 import com.mob.shopping.beans.request.RetailerBalanceRequest;
+import com.mob.shopping.constants.ErrorConstants;
+import com.mob.shopping.exception.BaseApplicationException;
+import com.mob.shopping.service.RegionServices;
 import com.mob.shopping.service.RetailerServices;
 import org.apache.camel.ProducerTemplate;
 import org.slf4j.Logger;
@@ -16,47 +21,40 @@ public class RegionController {
     private static final Logger logger = LoggerFactory.getLogger(RegionController.class);
 
     @Autowired
-    ProducerTemplate producerTemplate;
+    private RegionServices regionServices;
 
 
-    @Autowired
-    private RetailerServices retailerServices;
-
-
-    @RequestMapping(value = "/retailer/checkBalance", method = RequestMethod.POST)
-    public @ResponseBody
-    ResponseBean checkRetailerBalance(@RequestBody RetailerBalanceRequest retailerBalanceRequest) {
+    @RequestMapping(value = "/getStates", method = RequestMethod.POST)
+    public @ResponseBody ResponseBean getStates() {
         ResponseBean response = new ResponseBean(null, null);
-        logger.info("Request Received for Checking Retailer account Balance having lapu Number {} and mobile Number",
-                new Object[]{retailerBalanceRequest.getLapuNumber(), retailerBalanceRequest.getMsisdn()});
-//        try {
-//            response.setResult(retailerServices.checkRetailerBalance(retailerBalanceRequest));
-//            response.setStatus(new StatusBean("SUCCESS", "success"));
-//        } catch (BaseApplicationException e) {
-//            response.setStatus(new StatusBean(e.getError().getErrorCode(),e.getError().getErrorMessage()));
-//        }catch (Exception e){
-//            response.setStatus(new StatusBean(ErrorConstants.ERROR_CODE,
-//                    ErrorConstants.ERROR_MESSAGE_DOWNSTREAM_SYSTEM_DOWN));
-//        }
+        try {
+            response.setResult(regionServices.getStates());
+            response.setStatus(new StatusBean("SUCCESS", "success"));
+        } catch (BaseApplicationException e) {
+            response.setStatus(new StatusBean(e.getError().getErrorCode(),e.getError().getErrorMessage()));
+        }catch (Exception e){
+            response.setStatus(new StatusBean(ErrorConstants.ERROR_CODE,
+                    ErrorConstants.ERROR_MESSAGE_DOWNSTREAM_SYSTEM_DOWN));
+        }
         return response;
     }
 
-    @RequestMapping(value = "/connection/info", method = RequestMethod.POST)
-    public @ResponseBody
-    ResponseBean checkBankStatus(@RequestBody CheckBankStatusRequest checkBankStatusRequest) {
+    @RequestMapping(value = "/getDistrict", method = RequestMethod.POST)
+    public @ResponseBody ResponseBean getDistrict(@RequestBody DistrictRequest districtRequest) {
         ResponseBean response = new ResponseBean(null, null);
-//        try {
-//
-//         logger.info("Request Received for Checking bank open status from {} application for mobile number : {} and " +
-//                        "Caf Number {}",checkBankStatusRequest.getAppName(),checkBankStatusRequest.getMsisdn(),checkBankStatusRequest.getCafNumber());
-//            response.setResult(retailerServices.checkAccountStatus(checkBankStatusRequest));
-//            response.setStatus(new StatusBean("SUCCESS", "success"));
-//        } catch (BaseApplicationException e) {
-//            response.setStatus(new StatusBean(e.getError().getErrorCode(),e.getError().getErrorMessage()));
-//        }catch (Exception e){
-//            response.setStatus(new StatusBean(ErrorConstants.ERROR_CODE,
-//                    ErrorConstants.ERROR_MESSAGE_DOWNSTREAM_SYSTEM_DOWN));
-//        }
+        try {
+            if(districtRequest!=null){
+                response.setResult(regionServices.getDistrictRequest(districtRequest));
+                response.setStatus(new StatusBean("SUCCESS", "success"));
+            }else {
+                response.setStatus(new StatusBean(ErrorConstants.ERROR_CODE,ErrorConstants.ERROR_MESSAGE_INVALID_REQUEST));
+            }
+        } catch (BaseApplicationException e) {
+            response.setStatus(new StatusBean(e.getError().getErrorCode(),e.getError().getErrorMessage()));
+        }catch (Exception e){
+            response.setStatus(new StatusBean(ErrorConstants.ERROR_CODE,
+                    ErrorConstants.ERROR_MESSAGE_DOWNSTREAM_SYSTEM_DOWN));
+        }
         return response;
     }
 }

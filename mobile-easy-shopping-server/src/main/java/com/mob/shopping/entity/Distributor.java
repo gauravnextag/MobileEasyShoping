@@ -1,62 +1,70 @@
 package com.mob.shopping.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * Created by B0097545 on 9/4/17.
  */
 @Entity
-@Table(name = "BANK_TXN_LOG")
+@Table(name = "DISTRIBUTOR")
 public class Distributor implements Serializable {
 
     @Id
-    @Column(name = "TXN_ID")
-    private String txnId;
-    @Column(name = "MOB_TXN_ID")
-    private String mobTxnId;
+    @SequenceGenerator(name = "DISTRIBUTOR_SEQ", sequenceName = "DISTRIBUTOR_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DISTRIBUTOR_SEQ")
+    @Column(name = "ID")
+    private Long id;
+
+    @Column(name = "NAME")
+    private String name;
+
+    @Column(name = "DISTRICT_ID")
+    private Long districtId;
 
     @Column(name = "MSISDN")
     private String msisdn;
 
-    @Column(name = "CAF_NUMBER")
-    private String caf;
+    @Column(name = "ADDRESS")
+    private String address;
 
-    @Column(name = "APP_NAME")
-    private String appName;
+    @JsonIgnore
+    @Column(name = "IS_DELETED")
+    private int isDeleted;
 
-    @Column(name = "STATUS")
-    private String status;
+    @Column(name="CREATED_DATE")
+    private Timestamp createdDate;
 
-    @Column(name = "MESSAGE")
-    private String message;
+    @JsonIgnore
+    @Column(name="LAST_MODIFIED_DATE")
+    private Timestamp lastModifiedDate;
 
-    @Column(name = "TXN_DATE")
-    private Date txnDate;
-
-    @Column(name = "SNAP_DATE")
-    private Date snapDate;
-
-    public String getTxnId() {
-        return txnId;
+    public Long getId() {
+        return id;
     }
 
-    public void setTxnId(String txnId) {
-        this.txnId = txnId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getMobTxnId() {
-        return mobTxnId;
+    public String getName() {
+        return name;
     }
 
-    public void setMobTxnId(String mobTxnId) {
-        this.mobTxnId = mobTxnId;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getDistrictId() {
+        return districtId;
+    }
+
+    public void setDistrictId(Long districtId) {
+        this.districtId = districtId;
     }
 
     public String getMsisdn() {
@@ -67,66 +75,49 @@ public class Distributor implements Serializable {
         this.msisdn = msisdn;
     }
 
-    public String getCaf() {
-        return caf;
+    public String getAddress() {
+        return address;
     }
 
-    public void setCaf(String caf) {
-        this.caf = caf;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getAppName() {
-        return appName;
+    public int getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setAppName(String appName) {
-        this.appName = appName;
+    public void setIsDeleted(int isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
-    public String getStatus() {
-        return status;
+    public Timestamp getCreatedDate() {
+        return createdDate;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public String getMessage() {
-        return message;
+    public Timestamp getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Date getTxnDate() {
-        return txnDate;
-    }
-
-    public void setTxnDate(Date txnDate) {
-        this.txnDate = txnDate;
-    }
-
-    public Date getSnapDate() {
-        return snapDate;
-    }
-
-    public void setSnapDate(Date snapDate) {
-        this.snapDate = snapDate;
+    public void setLastModifiedDate(Timestamp lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("txnId", txnId)
-                .append("mobTxnId", mobTxnId)
+                .append("id", id)
+                .append("name", name)
+                .append("districtId", districtId)
                 .append("msisdn", msisdn)
-                .append("caf", caf)
-                .append("appName", appName)
-                .append("status", status)
-                .append("message", message)
-                .append("txnDate", txnDate)
-                .append("snapDate", snapDate)
+                .append("address", address)
+                .append("isDeleted", isDeleted)
+                .append("createdDate", createdDate)
+                .append("lastModifiedDate", lastModifiedDate)
                 .toString();
     }
 }

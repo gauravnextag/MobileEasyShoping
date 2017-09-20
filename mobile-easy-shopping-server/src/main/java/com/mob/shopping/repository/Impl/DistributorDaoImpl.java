@@ -1,21 +1,43 @@
 package com.mob.shopping.repository.Impl;
 
+import com.mob.shopping.constants.ErrorConstants;
+import com.mob.shopping.entity.Distributor;
+import com.mob.shopping.entity.District;
+import com.mob.shopping.exception.DaoException;
+import com.mob.shopping.repository.DistributorDao;
 import com.mob.shopping.repository.RetailerDao;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional
 @Repository
-public class DistributorDaoImpl implements RetailerDao {
+public class DistributorDaoImpl implements DistributorDao {
 
     @Autowired
     SessionFactory sessionFactory;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DistributorDaoImpl.class);
+
+    @Override
+    public List getDistributors(String districtId) throws DaoException {
+        try {
+            LOGGER.info("Fetching list of distributors corresponding to district id: {}",districtId);
+            Session session = sessionFactory.getCurrentSession();
+            return session.createCriteria(Distributor.class).add(Restrictions.eq("districtId", districtId)).list();
+        }catch (Exception e){
+            LOGGER.error("Fetching list of distributors corresponding to district id: {}",districtId);
+            throw new DaoException(ErrorConstants.DAO_STATUS_CODE, ErrorConstants.ERROR_MESSAGE_DB_ERROR);
+
+        }
+    }
 
 //    @SuppressWarnings("unchecked")
 //    @Override

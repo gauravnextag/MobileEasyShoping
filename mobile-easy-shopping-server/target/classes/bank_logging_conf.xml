@@ -13,13 +13,13 @@
 		<encoder>
 			<charset>UTF-8</charset>
 			<Pattern>
-				%d bank-integration [%thread] %-18.-18logger{0} %.-1level - %message %n%xEx{12}%nopex
+				%d mob-shopping [%thread] %-18.-18logger{0} %.-1level - %message %n%xEx{12}%nopex
 			</Pattern>
 		</encoder>
 	</appender>
 
 	<!-- Application Loggers -->
-	<logger name="com.airtel.mob.paybank" level="INFO" additivity="false">
+	<logger name="com.mob.shopping" level="INFO" additivity="false">
 		<appender-ref ref="FILE" />
 	</logger>
 
