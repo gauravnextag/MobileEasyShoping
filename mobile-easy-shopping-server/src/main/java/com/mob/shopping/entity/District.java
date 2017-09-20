@@ -24,6 +24,9 @@ public class District implements Serializable {
     @Column(name = "DISPLAY_NAME")
     private String displayName;
 
+    @Column(name = "STATE_ID")
+    private String stateId;
+
     @JsonIgnore
     @Column(name = "IS_DELETED")
     private int isDeleted;
@@ -81,6 +84,14 @@ public class District implements Serializable {
 
     public void setLastModifiedDate(Timestamp lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(String stateId) {
+        this.stateId = stateId;
     }
 
     @Override

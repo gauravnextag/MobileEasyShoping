@@ -48,7 +48,7 @@ public class RegionDaoImpl implements RegionDao {
             Session session = sessionFactory.getCurrentSession();
             return session.createCriteria(District.class).add(Restrictions.eq("stateId", stateId)).list();
         }catch (Exception e){
-            LOGGER.error("Fetching list of district corresponding to state id: {}",stateId);
+            LOGGER.error("Error while Fetching list of district corresponding to state id: {}",stateId,e);
             throw new DaoException(ErrorConstants.DAO_STATUS_CODE, ErrorConstants.ERROR_MESSAGE_DB_ERROR);
 
         }
