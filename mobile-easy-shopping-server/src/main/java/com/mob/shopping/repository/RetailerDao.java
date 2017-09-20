@@ -1,8 +1,8 @@
 package com.mob.shopping.repository;
 
+import com.mob.shopping.beans.request.RegistrationRequest;
+import com.mob.shopping.exception.BaseApplicationException;
+
 public interface RetailerDao {
-//
-//    CheckBankStatusResponse findByMsisdnAndCafAndAppName(String msisdn , String caf, String appName) throws DaoException;
-//
-//    void save(Retailer bankTxnLog) throws DaoException;
+    void save(RegistrationRequest registrationRequest) throws BaseApplicationException;
 }

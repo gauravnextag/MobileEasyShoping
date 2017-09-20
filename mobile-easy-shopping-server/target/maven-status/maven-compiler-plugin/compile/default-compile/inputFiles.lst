@@ -1,4 +1,5 @@
 /Users/b0200200/allProjects/MobileEasyShoping/mobile-easy-shopping-server/src/main/java/com/mob/shopping/entity/District.java
+/Users/b0200200/allProjects/MobileEasyShoping/mobile-easy-shopping-server/src/main/java/com/mob/shopping/beans/request/RegistrationRequest.java
 /Users/b0200200/allProjects/MobileEasyShoping/mobile-easy-shopping-server/src/main/java/com/mob/shopping/beans/response/Status.java
 /Users/b0200200/allProjects/MobileEasyShoping/mobile-easy-shopping-server/src/main/java/com/mob/shopping/controller/CustomerController.java
 /Users/b0200200/allProjects/MobileEasyShoping/mobile-easy-shopping-server/src/main/java/com/mob/shopping/util/CommonUtility.java
@@ -48,6 +49,7 @@
 /Users/b0200200/allProjects/MobileEasyShoping/mobile-easy-shopping-server/src/main/java/com/mob/shopping/service/DistributorServices.java
 /Users/b0200200/allProjects/MobileEasyShoping/mobile-easy-shopping-server/src/main/java/com/mob/shopping/entity/Retailer.java
 /Users/b0200200/allProjects/MobileEasyShoping/mobile-easy-shopping-server/src/main/java/com/mob/shopping/entity/State.java
+/Users/b0200200/allProjects/MobileEasyShoping/mobile-easy-shopping-server/src/main/java/com/mob/shopping/constants/enums/RetailerRegistrationStatus.java
 /Users/b0200200/allProjects/MobileEasyShoping/mobile-easy-shopping-server/src/main/java/com/mob/shopping/util/RestUtils.java
 /Users/b0200200/allProjects/MobileEasyShoping/mobile-easy-shopping-server/src/main/java/com/mob/shopping/beans/ResponseBean.java
 /Users/b0200200/allProjects/MobileEasyShoping/mobile-easy-shopping-server/src/main/java/com/mob/shopping/beans/StatusBean.java

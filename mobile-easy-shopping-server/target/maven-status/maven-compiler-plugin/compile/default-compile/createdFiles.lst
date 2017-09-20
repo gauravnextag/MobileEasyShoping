@@ -9,6 +9,7 @@ com/mob/shopping/beans/request/ClearCacheRequest.class
 com/mob/shopping/beans/request/DistributorListRequest.class
 com/mob/shopping/service/MasterConfigService.class
 com/mob/shopping/util/RestExceptionHandler.class
+com/mob/shopping/beans/request/RegistrationRequest.class
 com/mob/shopping/MobileShopping.class
 com/mob/shopping/service/impl/RegionServicesImpl.class
 com/mob/shopping/util/RestResponse.class
@@ -23,6 +24,7 @@ com/mob/shopping/repository/Impl/DistributorDaoImpl.class
 com/mob/shopping/util/RestUtils.class
 com/mob/shopping/entity/State.class
 com/mob/shopping/repository/CustomerDao.class
+com/mob/shopping/constants/enums/RetailerRegistrationStatus.class
 com/mob/shopping/constants/ErrorConstants.class
 com/mob/shopping/service/impl/MasterConfigServiceImpl.class
 com/mob/shopping/repository/Impl/RegionDaoImpl.class

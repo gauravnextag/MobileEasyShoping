@@ -6,7 +6,7 @@
 	<wls:weblogic-version>12.2.1</wls:weblogic-version>
 	<wls:context-root>payment-bank</wls:context-root>
 	<wls:session-descriptor>
-		<wls:cookie-name>JSESSIONID</wls:cookie-name>
+		<wls:cookie-storeName>JSESSIONID</wls:cookie-storeName>
 		<wls:cookie-domain></wls:cookie-domain>
 		<wls:cookie-secure>false</wls:cookie-secure>
 		<wls:url-rewriting-enabled>false</wls:url-rewriting-enabled>
@@ -14,20 +14,20 @@
 
 	<wls:container-descriptor>
 		<wls:prefer-application-packages>
-			<wls:package-name>org.slf4j.*</wls:package-name>
-			<wls:package-name>org.apache.commons.*</wls:package-name>
-			<wls:package-name>antlr.*</wls:package-name>
-			<wls:package-name>org.apache.commons.*</wls:package-name>
-			<wls:package-name>org.springframework.*</wls:package-name>
-			<wls:package-name>org.hibernate.*</wls:package-name>
-			<wls:package-name>org.joda.*</wls:package-name>
-			<wls:package-name>com.fasterxml.*</wls:package-name>
-			<wls:package-name>org.jboss.*</wls:package-name>
+			<wls:package-storeName>org.slf4j.*</wls:package-storeName>
+			<wls:package-storeName>org.apache.commons.*</wls:package-storeName>
+			<wls:package-storeName>antlr.*</wls:package-storeName>
+			<wls:package-storeName>org.apache.commons.*</wls:package-storeName>
+			<wls:package-storeName>org.springframework.*</wls:package-storeName>
+			<wls:package-storeName>org.hibernate.*</wls:package-storeName>
+			<wls:package-storeName>org.joda.*</wls:package-storeName>
+			<wls:package-storeName>com.fasterxml.*</wls:package-storeName>
+			<wls:package-storeName>org.jboss.*</wls:package-storeName>
 
 		</wls:prefer-application-packages>
 		<wls:prefer-application-resources>
-			<wls:resource-name>org/slf4j/impl/StaticLoggerBinder.class
-			</wls:resource-name>
+			<wls:resource-storeName>org/slf4j/impl/StaticLoggerBinder.class
+			</wls:resource-storeName>
 		</wls:prefer-application-resources>
 	</wls:container-descriptor>
 </wls:weblogic-web-app>

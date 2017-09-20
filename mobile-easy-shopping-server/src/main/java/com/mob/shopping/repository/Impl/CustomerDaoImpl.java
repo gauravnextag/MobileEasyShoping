@@ -1,5 +1,6 @@
 package com.mob.shopping.repository.Impl;
 
+import com.mob.shopping.repository.CustomerDao;
 import com.mob.shopping.repository.RetailerDao;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Repository
-public class CustomerDaoImpl implements RetailerDao {
+public class CustomerDaoImpl implements CustomerDao {
 
     @Autowired
     SessionFactory sessionFactory;

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface DistributorDao {
 
-    List getDistributors(String districtId) throws DaoException;
+    List getDistributors(Long districtId) throws DaoException;
 //
 //    CheckBankStatusResponse findByMsisdnAndCafAndAppName(String msisdn , String caf, String appName) throws DaoException;
 //
