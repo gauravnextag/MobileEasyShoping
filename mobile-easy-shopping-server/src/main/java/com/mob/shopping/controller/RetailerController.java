@@ -30,5 +30,10 @@ public class RetailerController {
     	retailerServices.register(registrationRequest);
     	return RestUtils.successResponse(Boolean.TRUE);
     }
+
+    
+    
+    
+    
  
 }
