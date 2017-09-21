@@ -7,7 +7,10 @@ public enum ResponseCode {
 	APP_SUCCESS(0, "success"),
 	SUCCESS(200, "SUCCESS"),
 	INTERNAL_SERVER_ERROR(5000, "Your request could not be served by the system. Please try again!"),
-	GENRAL_ERROR(515, "Your request could not served. Please try again later");
+	GENRAL_ERROR(515, "Your request could not served. Please try again later"),
+	ERROR_MESSAGE__DETAILS_MANDATORY(505, "Please provide message details"),
+	ERROR_MESSAGE_DAO(601, "Error creating record. Please check the data and retry"),
+	ERROR_MESSAGE_MESSAGE_SEND_FAILED(602,"Error while sending message to mobile number");
 
 	private final int code;
 	private final String description;

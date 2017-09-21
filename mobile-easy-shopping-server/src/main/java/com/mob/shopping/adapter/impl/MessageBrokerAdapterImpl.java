@@ -3,6 +3,7 @@ package com.mob.shopping.adapter.impl;
 import com.mob.shopping.adapter.MessageBrokerAdapter;
 import com.mob.shopping.constants.ConfigConstants;
 import com.mob.shopping.constants.ErrorConstants;
+import com.mob.shopping.enums.ResponseCode;
 import com.mob.shopping.exception.BusinessException;
 import com.mob.shopping.exception.MessageBrokerException;
 import com.mob.shopping.service.MasterConfigService;
@@ -58,8 +59,7 @@ public class MessageBrokerAdapterImpl implements MessageBrokerAdapter {
 		}
 		LOGGER.info("Inside MessageBrokerAdapterImpl.sendMessage error while sending message {} to msisdn {}",
 				responseString, msisdn);
-		throw new MessageBrokerException(ErrorConstants.ERROR_CODE,
-				ErrorConstants.ERROR_MESSAGE_MESSAGE_SEND_FAILED + msisdn);
+		throw new MessageBrokerException(ResponseCode.ERROR_MESSAGE_MESSAGE_SEND_FAILED);
 	}
 
 }

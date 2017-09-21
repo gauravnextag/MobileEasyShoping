@@ -2,6 +2,8 @@ package com.mob.shopping.service.impl;
 
 import com.mob.shopping.adapter.MessageBrokerAdapter;
 import com.mob.shopping.constants.ErrorConstants;
+import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.exception.BusinessException;
 import com.mob.shopping.service.MessageBrokerService;
 import org.apache.commons.lang.StringUtils;
@@ -23,15 +25,14 @@ public class MessageBrokerServiceImpl implements MessageBrokerService {
 	 */
 	private final Logger LOGGER = LoggerFactory.getLogger(MessageBrokerServiceImpl.class);
 
-	public boolean sendMessage(String msisdn, String shortCode, String smsText) throws Exception {
+	public boolean sendMessage(String msisdn, String shortCode, String smsText) throws BaseApplicationException {
 		if (!StringUtils.isEmpty(msisdn) && !StringUtils.isEmpty(shortCode) && !StringUtils.isEmpty(smsText)) {
 			LOGGER.info("Inside MessageBrokerServiceImpl.sendMessage : sending message to : {} from shortcode {} sms text {} ",
 					new Object[] { msisdn, shortCode, smsText });
 			
 			return messageBrokerAdapter.sendMessage(msisdn, shortCode, smsText);
 		}
-		throw new BusinessException(ErrorConstants.ERROR_CODE,
-				ErrorConstants.ERROR_MESSAGE_MESSAGE_DETAILS_MANDATORY);
+		throw new BaseApplicationException(ResponseCode.ERROR_MESSAGE__DETAILS_MANDATORY);
 	}
 
 

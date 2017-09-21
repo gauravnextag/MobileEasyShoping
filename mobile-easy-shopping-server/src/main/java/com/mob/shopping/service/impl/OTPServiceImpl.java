@@ -1,8 +1,10 @@
 package com.mob.shopping.service.impl;
 
+import com.mob.shopping.beans.OTPOperationDTO;
 import com.mob.shopping.constants.ConfigConstants;
 import com.mob.shopping.constants.ErrorConstants;
 import com.mob.shopping.entity.OTP;
+import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.exception.BusinessException;
 import com.mob.shopping.repository.OTPDao;
 import com.mob.shopping.service.MasterConfigService;
@@ -35,24 +37,13 @@ public class OTPServiceImpl implements OTPService {
 	private MessageBrokerService messageBrokerService;
 
 
-//	public OTPOperationDTO verifyOTP(String msisdn, String otp, String otpToken) {
-//
-//		OTPOperationDTO otpOperationDTO = null;
-//		otpOperationDTO = dslOtpDao.verifyOTP(msisdn, otp, otpToken);
-//
-//		return otpOperationDTO;
-//	}
-//
-//	public OTPOperationDTO verifyOTPFromCache(DSLBean cached, DSLBean original) {
-//
-//		OTPOperationDTO otpOperationDTO = null;
-//		if (cached.getDslOtp().getOtpCode().equals(original.getDslOtp().getOtpCode()) && cached.getDslOtp().getOtpToken().equals(original.getDslOtp().getOtpToken())) {
-//			otpOperationDTO = new OTPOperationDTO(CAFConstants.OTP_VERIFICATION_SUCCESS);
-//		} else {
-//			new OTPOperationDTO(CAFConstants.ERROR_OTP_VERIFICATION_FAILED);
-//		}
-//		return otpOperationDTO;
-//	}
+	public OTPOperationDTO verifyOTP(String msisdn, String otp) {
+
+		OTPOperationDTO otpOperationDTO = null;
+		otpOperationDTO = otpDao.verifyOTP(msisdn, otp);
+
+		return otpOperationDTO;
+	}
 
 	public boolean isMaxOTPAttempt(String msisdn) {
 		if (org.apache.commons.lang.StringUtils.isEmpty(msisdn)) {
@@ -61,22 +52,15 @@ public class OTPServiceImpl implements OTPService {
 		return false;
 	}
 
-	public OTP generateOTP(String msisdn) throws BusinessException {
+	public OTP generateOTP(String msisdn) throws BaseApplicationException {
 
 		OTP otp = null;
-		try {
-			UUID uuid = UUID.randomUUID();
-			String otpString = Long.toString(Math.abs(uuid.getLeastSignificantBits() % 1000000) * 10).substring(0,6);
+        UUID uuid = UUID.randomUUID();
+        String otpString = Long.toString(Math.abs(uuid.getLeastSignificantBits() % 1000000) * 10).substring(0,6);
 
-			otp = otpDao.generateOTP(msisdn, otpString, uuid.toString());
-
-			messageBrokerService.sendMessage(msisdn, masterConfigService.getValueByKey(ConfigConstants.OTP_SHORT_CODE),
+        otp = otpDao.generateOTP(msisdn, otpString, uuid.toString());
+        messageBrokerService.sendMessage(msisdn, masterConfigService.getValueByKey(ConfigConstants.OTP_SHORT_CODE),
 					MessageFormat.format(masterConfigService.getValueByKey(ConfigConstants.OTP_SMS), otp.getOpt()));
-
-		} catch (final Exception e) {
-			LOGGER.error("exception occured while sending OTP ", e);
-			throw new BusinessException(ErrorConstants.ERROR_CODE, ErrorConstants.ERROR_GENERATE_OTP);
-		}
 
 		return otp;
 	}

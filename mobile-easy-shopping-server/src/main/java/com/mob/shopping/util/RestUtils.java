@@ -21,6 +21,10 @@ public class RestUtils {
 	public static <T> ResponseEntity<RestResponse<T>> successResponse(T data) {
 		return successResponse(data,"ok" ,HttpStatus.OK);
 	}
+
+	public static <T> ResponseEntity<RestResponse<T>> successResponse() {
+		return successResponse(null,"ok" ,HttpStatus.OK);
+	}
 	
 	public static <T> ResponseEntity<RestResponse<T>> successResponse(T data, String message) {
 		return successResponse(data, message, HttpStatus.OK);

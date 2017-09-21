@@ -3,26 +3,19 @@
  */
 package com.mob.shopping.controller;
 
-import com.mob.shopping.beans.ErrorBean;
-import com.mob.shopping.beans.ResponseBean;
+import com.mob.shopping.beans.OTPOperationDTO;
 import com.mob.shopping.beans.request.OTPRequestBean;
-import com.mob.shopping.entity.ConfigMaster;
-import com.mob.shopping.entity.OTP;
-import com.mob.shopping.exception.BusinessException;
+import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.service.MasterConfigService;
 import com.mob.shopping.service.OTPService;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
+import com.mob.shopping.util.RestResponse;
+import com.mob.shopping.util.RestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Gaurav Aggarwal
@@ -40,82 +33,23 @@ public class OTPController {
 	MasterConfigService masterServices;
 
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(OTPController.class);
+	private static final Logger logger = LoggerFactory.getLogger(OTPController.class);
 
 	@RequestMapping(value = "/sendOtp", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody
-	ResponseBean sendOTP(@RequestBody OTPRequestBean otpRequestBean) {
-		ResponseBean response = new ResponseBean(null, null);
-
-		try {
-			LOGGER.info("OTP REQUEST_INITIATED for user {} ", otpRequestBean.getMsisdn());
-
-			otpService.generateOTP(otpRequestBean.getMsisdn());
-		} catch (BusinessException exception) {
-			LOGGER.info("BusinessException occurred while generating OTP ", exception);
-			response.setError(new ErrorBean(exception.getError().getErrorCode(), exception.getError().getErrorMessage()));
-		} catch (Exception e) {
-			LOGGER.error("Error stacktrace for send OTP ", e);
-			response.setError(new ErrorBean());
-		}
-		return response;
+	public @ResponseBody ResponseEntity<RestResponse<Boolean>> sendOTP(@RequestBody OTPRequestBean otpRequestBean) throws BaseApplicationException {
+        String method = "[CONTROLLER] sendOTP>>>> ::::";
+        logger.info(method);
+        otpService.generateOTP(otpRequestBean.getMsisdn());
+        return RestUtils.successResponse(Boolean.TRUE);
 	}
 
-//	@RequestMapping(value = "/verifyOtp", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public @ResponseBody
-//    ResponseBean verifyOTP(@RequestBody DSLBean dslBean) {
-//
-//		ResponseBean response = new ResponseBean(null, null);
-//		DSLBean cachedDslBean = null;
-//		OTPOperationDTO otpStatus ;
-//		DSLBean responseBean;
-//		LOGGER.info("Verify OTP REQUEST_INITIATED for user {} ", dslBean.getDslId());
-//		try {
-//			LOGGER.info("Trying to fetch from cache value {}", dslBean.getDslId());
-//			 cachedDslBean = (DSLBean) cacheServices.getMessageFromRedis(dslBean.getDslId());
-//
-//		} catch (Exception ex) {
-//			LOGGER.info("Exception is :: {}", ex);
-//			LOGGER.info("Exception occurred while fetching from cache {}. Otp expired", dslBean.getDslId());
-//		}
-//
-//		try {
-//			if (null == dslBean.getDslOtp() || dslBean.getDslOtp().getOtpCode().isEmpty() || null== dslBean.getDslOtp().getOtpCode()) {
-//				LOGGER.info("No parameters found in verifyOtp request");
-//				response.setError(new ErrorBean(CAFConstants.ERROR_CODE_ERROR, CAFConstants.ERROR_MESSAGE));
-//				return response;
-//			}
-//
-//			if(cachedDslBean!=null) {
-//				LOGGER.info("Found in cache {}",cachedDslBean);
-//				otpStatus = dslService.verifyOTPFromCache(cachedDslBean, dslBean);
-//			}else{
-//				//In case of redis Failure
-//				LOGGER.info("Not Found in cache , Trying to verifying from db");
-//				dslBean = dslService.getDetailsByDslId(dslBean.getDslId(),dslBean);
-//				otpStatus = dslService.verifyOTP(dslBean.getMsisdn(), dslBean.getDslOtp().getOtpCode(),
-//					dslBean.getDslOtp().getOtpToken());
-//			}
-//			if (null == otpStatus) {
-//				LOGGER.info("OTP status found null, failed to verify OTP");
-//				response.setError(new ErrorBean(CAFConstants.ERROR_CODE_ERROR, CAFConstants.ERROR_MESSAGE));
-//				return response;
-//			}
-//
-//			if (otpStatus.getOtpStatus().equalsIgnoreCase(CAFConstants.OTP_VERIFICATION_SUCCESS)) {
-//				responseBean = cachedDslBean!=null?cachedDslBean:dslBean;
-//				response.setResult(responseBean);
-//				response.setError(new ErrorBean("SUCCESS", CAFConstants.OTP_VERIFICATION_SUCCESS));
-//
-//			} else {
-//				response.setError(new ErrorBean(CAFConstants.ERROR_CODE_ERROR, otpStatus.getOtpStatus()));
-//			}
-//		} catch (Exception e) {
-//			LOGGER.error("Exception occurred while verifying OTP and generating token", e);
-//			response.setError(new ErrorBean(CAFConstants.ERROR_CODE_ERROR, CAFConstants.ERROR_MESSAGE));
-//		}
-//		return response;
-//	}
+	@RequestMapping(value = "/verifyOtp", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody
+    ResponseEntity<RestResponse<OTPOperationDTO>> verifyOTP(@RequestBody OTPRequestBean otpRequestBean) {
+        String method = "[CONTROLLER] verifyOTP>>>> ::::";
+        logger.info(method);
+		return RestUtils.successResponse(otpService.verifyOTP(otpRequestBean.getMsisdn(), otpRequestBean.getOtp()));
+	}
 
 //	/**
 //	 * Method to create OAuth2AccessToken for user

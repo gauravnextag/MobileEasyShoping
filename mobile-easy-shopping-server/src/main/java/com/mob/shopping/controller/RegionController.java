@@ -29,7 +29,7 @@ public class RegionController {
     private RegionServices regionServices;
 
     @RequestMapping(value = "/getStates", method = RequestMethod.POST)
-    public @ResponseBody ResponseEntity<RestResponse<List<State>>> getStates() {
+    public @ResponseBody ResponseEntity<RestResponse<List<State>>> getStates() throws BaseApplicationException {
 		String method = "[CONTROLLER] getStates>>>> ::::";
     	logger.info(method);
 		return RestUtils.successResponse(regionServices.getStates());

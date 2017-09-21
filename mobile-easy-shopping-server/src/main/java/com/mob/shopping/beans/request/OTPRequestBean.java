@@ -5,6 +5,15 @@ import java.io.Serializable;
 public class OTPRequestBean implements Serializable {
 
    private String msisdn;
+   private String otp;
+
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
 
     public String getMsisdn() {
         return msisdn;
