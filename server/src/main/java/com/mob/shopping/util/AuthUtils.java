@@ -26,6 +26,9 @@ public class AuthUtils {
   private static final String ISSUER = "http://www.mobile.com";
 
   public static String decodeToken(String authHeader) throws BaseApplicationException {
+	  if(!CommonUtility.isValidString(authHeader)){
+		  throw new BaseApplicationException(ResponseCode.INVALID_TOKEN);
+	  }
     return xor(decode(authHeader).getSubject().getBytes());
   }
 

@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
@@ -16,6 +17,7 @@ import org.springframework.web.WebApplicationInitializer;
 @ComponentScan(basePackages = "com.mob.shopping")
 @EnableTransactionManagement
 @PropertySources({ @PropertySource(value = "file:${mobShop.property.file.path}", ignoreResourceNotFound = true) })
+@ServletComponentScan(basePackages={"com.mob.shopping.interceptor"})
 public class MobileShopping extends SpringBootServletInitializer implements WebApplicationInitializer{
 
     public static void main(String[] args) {
