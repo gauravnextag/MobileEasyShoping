@@ -10,9 +10,12 @@ public interface Constants {
 	public interface DISTRIBUTOR {
 		String DISTRICT_ID = "districtId";
 	}
-	
+
 	public interface Headers {
 		String AUTH_TOKEN = "AUTH-TOKEN";
+	    String KEY="KEY";
+		String DATA = "DATA";
+		String USER_ID = "USER-ID";
 	}
-	
+
 }

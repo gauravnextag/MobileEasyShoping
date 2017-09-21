@@ -13,8 +13,9 @@ public enum ResponseCode {
 	TOKEN_EXPIRED(5002, "Your request could not served. Token expired!"),
 	ERROR_MESSAGE__DETAILS_MANDATORY(5003, "Please provide message details"),
 	ERROR_MESSAGE_DAO(5004, "Error creating record. Please check the data and retry"),
-	ERROR_MESSAGE_MESSAGE_SEND_FAILED(5005,"Error while sending message. Please check the data and retry");
-
+	INVALID_PARAMETER(5005, "Your request could not served. Invalid parameter!"),
+	ERROR_MESSAGE_MESSAGE_SEND_FAILED(5006,"Error while sending message. Please check the data and retry");
+	
 	private final int code;
 	private final String description;
 
