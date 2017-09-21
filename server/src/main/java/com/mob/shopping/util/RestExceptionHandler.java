@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.exception.BaseApplicationException;
 
 

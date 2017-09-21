@@ -3,22 +3,22 @@ package com.mob.shopping.service.impl;
 import com.mob.shopping.beans.OTPOperationDTO;
 import com.mob.shopping.constants.ConfigConstants;
 import com.mob.shopping.constants.ErrorConstants;
+import com.mob.shopping.constants.enums.UserType;
 import com.mob.shopping.entity.OTP;
-import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.exception.BusinessException;
 import com.mob.shopping.repository.OTPDao;
 import com.mob.shopping.service.MasterConfigService;
 import com.mob.shopping.service.MessageBrokerService;
 import com.mob.shopping.service.OTPService;
+import com.mob.shopping.util.AuthUtils;
+import io.swagger.models.auth.In;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.stream.XMLStreamException;
-import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.UUID;
 
@@ -38,11 +38,13 @@ public class OTPServiceImpl implements OTPService {
 	private MessageBrokerService messageBrokerService;
 
 
-	public OTPOperationDTO verifyOTP(String msisdn, String otp) {
+	public OTPOperationDTO verifyOTP(String msisdn, String otp, Integer userType) {
 
 		OTPOperationDTO otpOperationDTO = null;
 		otpOperationDTO = otpDao.verifyOTP(msisdn, otp);
-
+		if(otpOperationDTO.getOtpStatus().equals(ErrorConstants.OTP_VERIFICATION_SUCCESS)){
+        otpOperationDTO.setAuthToken(AuthUtils.createToken(msisdn+":"+userType+":"));
+		}
 		return otpOperationDTO;
 	}
 
@@ -56,7 +58,13 @@ public class OTPServiceImpl implements OTPService {
         return false;
 	}
 
-	public OTP generateOTP(String msisdn) throws BaseApplicationException {
+	public OTP generateOTP(String msisdn, Integer userType) throws BaseApplicationException {
+
+	    //check user valid
+        if(userType.equals(UserType.CUSTOMER)){
+
+        }
+
 
 		OTP otp = null;
 	    Long oldAttempts = Long.valueOf(0);

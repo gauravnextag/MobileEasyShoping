@@ -1,10 +1,10 @@
 package com.mob.shopping.constants.enums;
 
-public enum RetailerRegistrationStatus {
-    PENDING(1) , SUCCESS(0) ,FAIL(2);
+public enum UserType {
+    RETAILER(1) , DISTRIBUTOR(0) ,CUSTOMER(2);
 
     Integer value;
-    RetailerRegistrationStatus(Integer s) {
+    UserType(Integer s) {
         this.value = s;
     }
 

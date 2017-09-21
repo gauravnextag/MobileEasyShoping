@@ -6,7 +6,6 @@ package com.mob.shopping.service;
 import com.mob.shopping.beans.OTPOperationDTO;
 import com.mob.shopping.entity.OTP;
 import com.mob.shopping.exception.BaseApplicationException;
-import com.mob.shopping.exception.BusinessException;
 import org.springframework.stereotype.Service;
 
 
@@ -15,10 +14,10 @@ public interface OTPService {
 
 //	DSLBean getDetailsByDslId(String dslId, DSLBean dslBean) throws AdapterException, JsonParseException, JsonMappingException, IOException, BusinessException, JAXBException, XMLStreamException;
 //
-	OTPOperationDTO verifyOTP(String msisdn, String otp);
+	OTPOperationDTO verifyOTP(String msisdn, String otp, Integer userType);
 //
 //	OTPOperationDTO verifyOTPFromCache(DSLBean cached, DSLBean original);
 
-	OTP generateOTP(String msisdn) throws BaseApplicationException;
+	OTP generateOTP(String msisdn, Integer userType) throws BaseApplicationException;
 
 }

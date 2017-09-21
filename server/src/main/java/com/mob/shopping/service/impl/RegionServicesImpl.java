@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.mob.shopping.beans.request.DistrictRequest;
 import com.mob.shopping.entity.District;
 import com.mob.shopping.entity.State;
-import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.exception.BusinessException;
 import com.mob.shopping.repository.RegionDao;

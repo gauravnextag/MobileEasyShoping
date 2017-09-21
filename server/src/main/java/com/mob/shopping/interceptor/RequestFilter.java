@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.util.AuthUtils;
 import com.mob.shopping.util.CommonUtility;
@@ -47,6 +47,9 @@ public class RequestFilter extends OncePerRequestFilter {
 		if (!CommonUtility.isValidString(tokenParsed)) {
 			throw new BaseApplicationException(ResponseCode.INVALID_TOKEN);
 		}
+
+		//
+
 
 		if (!request.getMethod().equals(RequestMethod.GET)) {
 			// YatraServletRequestWrapper myrequest = new

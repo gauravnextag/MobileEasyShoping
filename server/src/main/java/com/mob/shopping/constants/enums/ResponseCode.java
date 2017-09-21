@@ -1,4 +1,4 @@
-package com.mob.shopping.enums;
+package com.mob.shopping.constants.enums;
 
 import com.mob.shopping.util.CommonUtility;
 

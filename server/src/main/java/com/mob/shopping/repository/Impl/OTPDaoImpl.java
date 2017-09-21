@@ -4,7 +4,7 @@ import com.mob.shopping.beans.OTPOperationDTO;
 import com.mob.shopping.constants.ConfigConstants;
 import com.mob.shopping.constants.ErrorConstants;
 import com.mob.shopping.entity.OTP;
-import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.exception.DaoException;
 import com.mob.shopping.repository.OTPDao;
 import com.mob.shopping.service.MasterConfigService;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.List;
 
 @Repository
