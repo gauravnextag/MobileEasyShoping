@@ -19,8 +19,6 @@ public interface OTPService {
 //
 //	OTPOperationDTO verifyOTPFromCache(DSLBean cached, DSLBean original);
 
-	boolean isMaxOTPAttempt(String msisdn);
-
 	OTP generateOTP(String msisdn) throws BaseApplicationException;
 
 }

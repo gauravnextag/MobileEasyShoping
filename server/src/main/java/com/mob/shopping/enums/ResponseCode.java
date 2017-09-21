@@ -9,11 +9,18 @@ public enum ResponseCode {
 	INTERNAL_SERVER_ERROR(5000, "Your request could not be served by the system. Please try again!"),
 
 	GENRAL_ERROR(515, "Your request could not served. Please try again later"),
+<<<<<<< HEAD:server/src/main/java/com/mob/shopping/enums/ResponseCode.java
 	INVALID_TOKEN(5001, "Your request could not served. Invalid Token provided!"),
 	TOKEN_EXPIRED(5002, "Your request could not served. Token expired!"),
 	ERROR_MESSAGE__DETAILS_MANDATORY(5003, "Please provide message details"),
 	ERROR_MESSAGE_DAO(5004, "Error creating record. Please check the data and retry"),
 	ERROR_MESSAGE_MESSAGE_SEND_FAILED(5005,"Error while sending message. Please check the data and retry");
+=======
+	ERROR_MESSAGE__DETAILS_MANDATORY(505, "Please provide message details"),
+	ERROR_MESSAGE_DAO(601, "Error creating record. Please check the data and retry"),
+	ERROR_MESSAGE_MESSAGE_SEND_FAILED(602,"Error while sending message to mobile number"),
+	MAX_OTP_ATTEMPT_REACHED(603,"Max otp Attempt reached");
+>>>>>>> Verify Otp EDGE CASES:mobile-easy-shopping-server/src/main/java/com/mob/shopping/enums/ResponseCode.java
 
 	private final int code;
 	private final String description;

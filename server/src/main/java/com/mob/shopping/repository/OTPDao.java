@@ -9,8 +9,7 @@ public interface OTPDao {
 
 	OTPOperationDTO verifyOTP(String msisdn, String otp	);
 
-	boolean areOTPGenerationExhausted(String msisdn);
+	OTP generateOTP(String msisdn, String otpCode, String uuid, Long id, Long oldAttempts) throws DaoException;
 
-	OTP generateOTP(String msisdn, String otpCode, String uuid) throws DaoException;
-
+	OTP findByMsisdn(String msisdn);
 }

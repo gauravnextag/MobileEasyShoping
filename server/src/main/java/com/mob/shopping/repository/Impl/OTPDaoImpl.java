@@ -8,19 +8,16 @@ import com.mob.shopping.enums.ResponseCode;
 import com.mob.shopping.exception.DaoException;
 import com.mob.shopping.repository.OTPDao;
 import com.mob.shopping.service.MasterConfigService;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -42,32 +39,24 @@ public class OTPDaoImpl implements OTPDao {
 
         OTPOperationDTO otpOperationDTO = null;
 
+        final Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
         try {
-            final Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-            final Calendar currentDateTime = Calendar.getInstance();
-            currentDateTime.setTime(currentTimestamp);
-
-            final int maxTimeAllowed = Integer.parseInt(masterConfigService.getValueByKey(ConfigConstants.MAX_OTP_INTERVAL));
-
-            currentDateTime.add(Calendar.MINUTE, maxTimeAllowed * -60);
-            final Timestamp expiryTimestamp = new Timestamp(currentDateTime.getTime().getTime());
-
+            final int maxTimeAllowed = Integer.parseInt(masterConfigService.getValueByKey(ConfigConstants
+                    .MAX_OTP_INTERVAL));
+            currentTimestamp.setTime(currentTimestamp.getTime()+maxTimeAllowed*60*1000);
+            final Timestamp expiryTimestamp = currentTimestamp;
             List<OTP> otpList;
             Session session = sessionFactory.getCurrentSession();
-            otpList = session.createCriteria(OTP.class).add(Restrictions.eq("msisdn",msisdn)).add(Restrictions.lt("lastModifiedDate",expiryTimestamp)).list();
+            logger.info("time:{}",expiryTimestamp);
+            otpList = session.createCriteria(OTP.class).add(Restrictions.eq("msisdn", msisdn)).add(Restrictions.gt("lastModifiedDate", expiryTimestamp)).list();
 
             if (null != otpList && otpList.size() > 0) {
                 final OTP otpInfo = otpList.get(0);
 
-                if (otpInfo.getAttempts().intValue() >= Integer.parseInt(masterConfigService.getValueByKey(ConfigConstants
-                        .MAX_OTP_ATTEMPT))) {
-                    logger.info("Verify otp attempts exhausted for user {}", msisdn);
-                    otpOperationDTO = new OTPOperationDTO(ErrorConstants.ERROR_ATTEMPTS_EXHAUSTED);
-
-                } else if (otpInfo.getOpt().equals(otp)) {
-                    logger.info("OTP verification successful for user {}", msisdn);
-                    session.delete(otpInfo);
-                    otpOperationDTO = new OTPOperationDTO(ErrorConstants.OTP_VERIFICATION_SUCCESS);
+                if (otpInfo.getOpt().equals(otp)) {
+                logger.info("OTP verification successful for user {}", msisdn);
+                session.delete(otpInfo);
+                otpOperationDTO = new OTPOperationDTO(ErrorConstants.OTP_VERIFICATION_SUCCESS);
                 } else {
                     logger.info("DSL OTP verification failed for user {}, updating failed attempts", msisdn);
                     otpInfo.setAttempts(otpInfo.getAttempts() + 1);
@@ -75,7 +64,7 @@ public class OTPDaoImpl implements OTPDao {
                     otpOperationDTO = new OTPOperationDTO(ErrorConstants.ERROR_OTP_VERIFICATION_FAILED);
                 }
             } else {
-                logger.info( "OTP list is empty user {}", msisdn);
+                logger.info("OTP list is empty user {}", msisdn);
                 otpOperationDTO = new OTPOperationDTO(ErrorConstants.ERROR_INVALID_OTP_TOKEN);
             }
         } catch (Exception exception) {
@@ -88,18 +77,22 @@ public class OTPDaoImpl implements OTPDao {
 
     @Override
     @Transactional(rollbackOn = Exception.class)
-    public OTP generateOTP(String msisdn, String otpCode, String uuid) throws DaoException {
+    public OTP generateOTP(String msisdn, String otpCode, String uuid, Long id, Long oldAttempts) throws DaoException {
 
         Session session = null;
         final OTP otp = new OTP();
         otp.setMsisdn(msisdn);
         otp.setCreatedDate(new Timestamp(System.currentTimeMillis()));
         otp.setLastModifiedDate(new Timestamp(System.currentTimeMillis()));
-        otp.setAttempts(Long.valueOf(0));
+        otp.setAttempts(oldAttempts + 1);
         otp.setOpt(otpCode);
 
         try {
             session = sessionFactory.getCurrentSession();
+            if (oldAttempts > 0) {
+                otp.setId(id);
+                session.update(otp);
+            }
             session.save(otp);
         } catch (Exception exception) {
             logger.error("Exception occurred while saving OTP Info ", exception);
@@ -108,40 +101,30 @@ public class OTPDaoImpl implements OTPDao {
         return otp;
     }
 
-
-
-    @SuppressWarnings("unchecked")
     @Override
-    @Transactional(rollbackOn = Exception.class)
-    public boolean areOTPGenerationExhausted(String msisdn) {
-
+    @SuppressWarnings("unchecked")
+    public OTP findByMsisdn(String msisdn) {
+        Session session = null;
         final Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-        final Calendar currentDateTime = Calendar.getInstance();
-        currentDateTime.setTime(currentTimestamp);
-
-        List<OTP> otpList;
         try {
-
+            session = sessionFactory.getCurrentSession();
             final int maxTimeAllowed = Integer.parseInt(masterConfigService.getValueByKey(ConfigConstants.MAX_OTP_INTERVAL));
+            currentTimestamp.setTime(currentTimestamp.getTime()+maxTimeAllowed*60*1000);
+            final Timestamp expiryTimestamp = currentTimestamp;
 
-            currentDateTime.add(Calendar.MINUTE, maxTimeAllowed * -60);
-            final Timestamp expiryTimestamp = new Timestamp(currentDateTime.getTime().getTime());
-
-            Session session = sessionFactory.getCurrentSession();
-
-            otpList = session.createCriteria(OTP.class).add(Restrictions.eq("msisdn",msisdn)).add(Restrictions.gt("lastModifiedDate",expiryTimestamp)).list();
-
-            if (null != otpList && otpList.size() > 0) {
-                if (otpList.size() >= Integer.parseInt(masterConfigService.getValueByKey(ConfigConstants.MAX_OTP_ATTEMPT))) {
-                    logger.info("areOTPGenerationExhausted is TRUE >> otpList.size()" + otpList.size()
-                            + ", maxOTPAttempts::" + masterConfigService.getValueByKey(ConfigConstants.MAX_OTP_ATTEMPT));
-                    return true;
+            List<OTP> otpList = session.createCriteria(OTP.class).add(Restrictions.eq("msisdn", msisdn)).list();
+            if(otpList != null){
+                if (otpList.size() > 0 && otpList.get(0).getLastModifiedDate().getTime() >
+                        expiryTimestamp.getTime()) {
+                    return otpList.get(0);
+                }else {
+                    session.delete(otpList.get(0));
                 }
             }
-        } catch (Exception exception) {
-            logger.error("Exception occurred while validating OTP attempts ", exception);
+        } catch (Exception e) {
+            logger.error("Exception occurred while fetching OTP for msisdn ", msisdn);
+            throw new DaoException(ResponseCode.ERROR_MESSAGE_DAO);
         }
-        return false;
+        return null;
     }
-
 }
