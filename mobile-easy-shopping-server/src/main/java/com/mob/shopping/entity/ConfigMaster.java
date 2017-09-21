@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "BANK_CONFIG_MASTER")
+@Table(name = "MOBSHOP_CONFIG_MASTER")
 public class ConfigMaster {
 
     private static final long serialVersionUID = -2121888469743746966L;

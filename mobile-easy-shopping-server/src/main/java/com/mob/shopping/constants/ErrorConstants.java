@@ -22,6 +22,17 @@ public interface ErrorConstants {
     String ERROR_MESSAGE_REQUEST_XML_ERROR = "Error while creating request xml";
     String ERROR_MESSAGE_KEY_NOT_FOUND= "Key Not Found in cache";
     String ERROR_MESSAGE_PAYMENT_BANK_QUEUE_DOWN= "Payment Bank System Message queue down";
+    String ERROR_MESSAGE_MESSAGE_SEND_FAILED = "Error while sending message to msisdn ";
+    String ERROR_MESSAGE_MESSAGE_DETAILS_MANDATORY = "Please provide message details.";
+    String ERROR_GENERATE_OTP = "An error occurred while generating OTP. Please try again";
+    String ERROR_ATTEMPTS_EXHAUSTED = "OTP Attempts exhausted";
+    String ERROR_USER_UNAUTHORIZED = "User is unauthorized";
+    String ERROR_OTP_VERIFICATION_FAILED = "OTP Verification Failed";
+    String ERROR_INVALID_OTP_TOKEN = "Invalid OTP Token provided";
+    String OTP_VERIFICATION_SUCCESS = "OTP verified successfully";
+
+
+
 
 
 

@@ -1,10 +1,7 @@
 package com.mob.shopping.constants;
 
 public interface ConfigConstants {
-    String BANK_SERVER_URL = "bank.server.url";
-    String BANK_SERVER_UCID = "bank.server.ucid";
-    String BANK_SERVER_CHECK_BALANCE_READ_TIMEOUT = "bank.server.check.balance.read.timeout";
-    String BANK_SERVER_CHECK_BALANCE_CONNECTION_TIMEOUT = "bank.server.check.balance.connection.timeout";
+
     String JEDIS_MAX_TOTAL = "jedis.max.total";
     String JEDIS_MIN_IDLE = "jedis.min.idle";
     String JEDIS_MAX_IDLE = "jedis.max.idle";
@@ -13,12 +10,14 @@ public interface ConfigConstants {
     String REDIS_SENTINEL_MASTER = "redis.sentinel.master";
     String REDIS_SENTINEL_HOST_PORTS = "redis.sentinel.host.and.ports";
 
-    String SOLACE_PAYMENT_BANK_CONNECTION_FACTORY = "solace.pb.connection.factory";
-    String SOLACE_PAYMENT_BANK_URL = "solace.pb.url";
-    String SOLACE_PAYMENT_USERNAME = "solace.pb.username";
-    String SOLACE_PAYMENT_PASSWORD = "solace.pb.password";
-    String SOLCAE_PAYMENT_BANK_TOPIC = "solcae.pb.topic";
-    String PAYBANK_BLOCK_MESSAGE = "check.ret.block.message";
-
+    public static String OTP_ATTEMP_EXHAUST_MESSAGE = "otp.attempt.exhaust.message";
+    public static String MAX_OTP_INTERVAL = "otp.attempt.interval";
+    public static String MAX_OTP_ATTEMPT = "max.otp.attempt";
+    public static String OTP_LENGTH = "otp.length";
+    public static String OTP_SHORT_CODE = "otp.short.code";
+    public static String OTP_SMS = "otp.sms.text";
+    public static String MESSAGE_BROKER_URL = "message.broker.url";
+    public static String MESSAGE_BROKER_USER_NAME = "message.broker.username";
+    public static String MESSAGE_BROKER_PASSWORD = "message.broker.password";
 
 }
