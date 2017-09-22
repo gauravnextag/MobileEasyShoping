@@ -5,6 +5,7 @@ package com.mob.shopping.controller;
 
 import com.mob.shopping.beans.OTPOperationDTO;
 import com.mob.shopping.beans.request.OTPRequestBean;
+import com.mob.shopping.entity.OTP;
 import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.service.MasterConfigService;
 import com.mob.shopping.service.OTPService;
@@ -36,11 +37,11 @@ public class OTPController {
 	private static final Logger logger = LoggerFactory.getLogger(OTPController.class);
 
 	@RequestMapping(value = "/sendOtp", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<RestResponse<Boolean>> sendOTP(@RequestBody OTPRequestBean otpRequestBean) throws BaseApplicationException {
+	public @ResponseBody
+	ResponseEntity<RestResponse<OTP>> sendOTP(@RequestBody OTPRequestBean otpRequestBean) throws BaseApplicationException {
         String method = "[CONTROLLER] sendOTP>>>> ::::";
         logger.info(method);
-        otpService.generateOTP(otpRequestBean.getMsisdn(),otpRequestBean.getUserType());
-        return RestUtils.successResponse(Boolean.TRUE);
+        return RestUtils.successResponse(otpService.generateOTP(otpRequestBean.getMsisdn()));
 	}
 
 	@RequestMapping(value = "/verifyOtp", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,7 +49,8 @@ public class OTPController {
     ResponseEntity<RestResponse<OTPOperationDTO>> verifyOTP(@RequestBody OTPRequestBean otpRequestBean) {
         String method = "[CONTROLLER] verifyOTP>>>> ::::";
         logger.info(method);
-		return RestUtils.successResponse(otpService.verifyOTP(otpRequestBean.getMsisdn(), otpRequestBean.getOtp(),otpRequestBean.getUserType()));
+		return RestUtils.successResponse(otpService.verifyOTP(otpRequestBean.getMsisdn(), otpRequestBean.getOtp(),
+				otpRequestBean.getUserId()));
 	}
 
 //	/**

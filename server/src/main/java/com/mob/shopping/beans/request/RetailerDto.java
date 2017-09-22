@@ -3,70 +3,88 @@
  */
 package com.mob.shopping.beans.request;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.io.Serializable;
 
 public class RetailerDto implements Serializable{
 	
 	private static final long serialVersionUID = 5161951753589611610L;
 
-		private Long id;
+    private Long id;
 
-	    private String store_name;
+    private Long districtId;
 
-	    private Long districtId;
+    private Long distributorId;
 
-	    private Long distributorID;
-	    
-	    private Integer registrationStatus ;
+    private Integer registrationStatus ;
 
-		public Long getId() {
-			return id;
-		}
+    private String storeName;
 
-		public void setId(Long id) {
-			this.id = id;
-		}
+    private String msisdn;
 
-		public String getStore_name() {
-			return store_name;
-		}
+    public Long getId() {
+        return id;
+    }
 
-		public void setStore_name(String store_name) {
-			this.store_name = store_name;
-		}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-		public Long getDistrictId() {
-			return districtId;
-		}
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
-		public void setDistrictId(Long districtId) {
-			this.districtId = districtId;
-		}
+    public Long getDistrictId() {
+        return districtId;
+    }
 
-		public Long getDistributorID() {
-			return distributorID;
-		}
+    public void setDistrictId(Long districtId) {
+        this.districtId = districtId;
+    }
 
-		public void setDistributorID(Long distributorID) {
-			this.distributorID = distributorID;
-		}
+    public Long getDistributorId() {
+        return distributorId;
+    }
 
-		
-		public Integer getRegistrationStatus() {
-			return registrationStatus;
-		}
+    public void setDistributorId(Long distributorId) {
+        this.distributorId = distributorId;
+    }
 
-		public void setRegistrationStatus(Integer registrationStatus) {
-			this.registrationStatus = registrationStatus;
-		}
+    public Integer getRegistrationStatus() {
+        return registrationStatus;
+    }
 
-		@Override
-		public String toString() {
-			return "RetailerDto [id=" + id + ", store_name=" + store_name + ", districtId=" + districtId
-					+ ", distributorID=" + distributorID + ", registrationStatus=" + registrationStatus + "]";
-		}
+    public void setRegistrationStatus(Integer registrationStatus) {
+        this.registrationStatus = registrationStatus;
+    }
 
-	    
+    public String getStoreName() {
+        return storeName;
+    }
 
-	    
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getMsisdn() {
+        return msisdn;
+    }
+
+    public void setMsisdn(String msisdn) {
+        this.msisdn = msisdn;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("storeName", storeName)
+                .append("districtId", districtId)
+                .append("distributorId", distributorId)
+                .append("registrationStatus", registrationStatus)
+                .append("storeName", storeName)
+                .append("msisdn", msisdn)
+                .toString();
+    }
 }

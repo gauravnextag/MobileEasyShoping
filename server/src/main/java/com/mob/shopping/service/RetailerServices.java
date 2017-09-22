@@ -10,7 +10,7 @@ import com.mob.shopping.exception.BaseApplicationException;
 
 public interface RetailerServices {
 
-    void register(RegistrationRequest registrationRequest) throws BaseApplicationException;
+    void register(RetailerDto registrationRequest) throws BaseApplicationException;
 
     List<Retailer> get(Long distributorId)throws BaseApplicationException;
     

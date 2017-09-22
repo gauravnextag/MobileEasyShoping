@@ -30,14 +30,14 @@ public class RetailerController {
     private RetailerServices retailerServices;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public @ResponseBody ResponseEntity<RestResponse<Boolean>> getDistrict(@RequestBody RegistrationRequest registrationRequest) {        
+    public @ResponseBody ResponseEntity<RestResponse<Boolean>> register(@RequestBody RetailerDto registrationRequest) {
     	String method = "[CONTROLLER] getDistrict>>>> RegistrationRequest :: "+registrationRequest.toString();
     	logger.info(method);
     	retailerServices.register(registrationRequest);
     	return RestUtils.successResponse(Boolean.TRUE);
     }
 
-    @RequestMapping(value = "/retailer/{distributorId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{distributorId}", method = RequestMethod.GET)
     public @ResponseBody ResponseEntity<RestResponse<List<Retailer>>> getRetailer(@PathVariable Long distributorId) {        
     	String method = "[CONTROLLER] getRetailer>>>> distributorId :: "+distributorId;
     	logger.info(method);

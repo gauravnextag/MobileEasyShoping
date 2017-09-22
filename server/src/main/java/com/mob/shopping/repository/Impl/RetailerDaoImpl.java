@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mob.shopping.constants.enums.RegistrationStatus;
-import com.mob.shopping.entity.District;
 import com.mob.shopping.entity.Retailer;
 import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.exception.DaoException;
@@ -36,13 +35,13 @@ public class RetailerDaoImpl implements RetailerDao {
             session.persist(retailer);
     }
 
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Retailer> get(Long distributorId) throws BaseApplicationException {
 		Session session = sessionFactory.getCurrentSession();
-		
-		 return  session.createCriteria(District.class)
+
+		 return  session.createCriteria(Retailer.class)
 				 .add(Restrictions.eq(Constants.RETAILER.DISTRIBUTOR_ID,distributorId))
 				 .add(Restrictions.eq(Constants.IS_DELETED,0)).list();
 	}
@@ -52,7 +51,7 @@ public class RetailerDaoImpl implements RetailerDao {
 	@Override
 	public Retailer getPendingRetailerById(Long id) {
 		Session session = sessionFactory.getCurrentSession();
-		return (Retailer) session.createCriteria(District.class)
+		return (Retailer) session.createCriteria(Retailer.class)
 		 .add(Restrictions.eq(Constants.ID,id))
 		 .add(Restrictions.eq(Constants.RETAILER.REGISTRATION_STATUS,RegistrationStatus.PENDING.getValue()))
 		 .add(Restrictions.eq(Constants.IS_DELETED,0)).uniqueResult();
@@ -64,7 +63,23 @@ public class RetailerDaoImpl implements RetailerDao {
 		String method = "[DAO] update>>>> Retailer :: "+retailer.toString();
     	logger.info(method);
             Session session = sessionFactory.getCurrentSession();
-             session.persist(retailer);
-             
+             session.update(retailer);
+
 	}
+
+    @Override
+    public Retailer findByMsisdnAndRegistrationStatus(String msisdn, Integer registrationStatus) throws DaoException{
+        String method = "[DAO] FETCH>>>> Retailer :: ";
+        logger.info(method);
+        Session session = sessionFactory.getCurrentSession();
+       List<Retailer> retailers = session.createCriteria(Retailer.class)
+               .add(Restrictions.eq("msisdn",msisdn))
+               .add(Restrictions.eq("registrationStatus",registrationStatus))
+               .add(Restrictions.eq("isDeleted",0))
+               .list();
+        if(retailers!=null && retailers.size()>0){
+            return retailers.get(0);
+        }
+        return null;
+    }
 }

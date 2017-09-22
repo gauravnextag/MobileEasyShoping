@@ -32,13 +32,13 @@ public class Retailer implements Serializable {
     private Long id;
 
     @Column(name = "STORE_NAME")
-    private String store_name;
+    private String storeName;
 
     @Column(name = "DISTRICT_ID")
     private Long districtId;
 
     @Column(name = "DISTRIBUTOR_ID")
-    private Long distributorID;
+    private Long distributorId;
 
     @Column(name = "MSISDN")
     private String msisdn;
@@ -66,12 +66,12 @@ public class Retailer implements Serializable {
         this.id = id;
     }
 
-    public String getStore_name() {
-        return store_name;
+    public String getStoreName() {
+        return storeName;
     }
 
-    public void setStore_name(String store_name) {
-        this.store_name = store_name;
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 
     public Long getDistrictId() {
@@ -80,14 +80,6 @@ public class Retailer implements Serializable {
 
     public void setDistrictId(Long districtId) {
         this.districtId = districtId;
-    }
-
-    public Long getDistributorID() {
-        return distributorID;
-    }
-
-    public void setDistributorID(Long distributorID) {
-        this.distributorID = distributorID;
     }
 
     public String getMsisdn() {
@@ -114,6 +106,14 @@ public class Retailer implements Serializable {
         this.isDeleted = isDeleted;
     }
 
+    public Long getDistributorId() {
+        return distributorId;
+    }
+
+    public void setDistributorId(Long distributorId) {
+        this.distributorId = distributorId;
+    }
+
     public Timestamp getCreatedDate() {
         return createdDate;
     }
@@ -122,20 +122,18 @@ public class Retailer implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public Timestamp getLastModifiedDate() {
-        return lastModifiedDate;
-    }
 
     public void setLastModifiedDate(Timestamp lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
-                .append("store_name", store_name)
+                .append("storeName", storeName)
                 .append("districtId", districtId)
-                .append("distributorID", distributorID)
+                .append("distributorId", distributorId)
                 .append("msisdn", msisdn)
                 .append("registrationStatus", registrationStatus)
                 .append("isDeleted", isDeleted)
@@ -143,6 +141,11 @@ public class Retailer implements Serializable {
                 .append("lastModifiedDate", lastModifiedDate)
                 .toString();
     }
+
+    public Timestamp getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
 
 
 }

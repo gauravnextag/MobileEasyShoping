@@ -57,9 +57,9 @@ public class OTPDaoImpl implements OTPDao {
                 session.delete(otpInfo);
                 otpOperationDTO = new OTPOperationDTO(ErrorConstants.OTP_VERIFICATION_SUCCESS);
                 } else {
-                    logger.info("DSL OTP verification failed for user {}, updating failed attempts", msisdn);
-                    otpInfo.setAttempts(otpInfo.getAttempts() + 1);
-                    session.saveOrUpdate(otpInfo);
+//                    logger.info("OTP verification failed for user {}, updating failed attempts", msisdn);
+//                    otpInfo.setAttempts(otpInfo.getAttempts() + 1);
+//                    session.saveOrUpdate(otpInfo);
                     otpOperationDTO = new OTPOperationDTO(ErrorConstants.ERROR_OTP_VERIFICATION_FAILED);
                 }
             } else {
@@ -112,16 +112,16 @@ public class OTPDaoImpl implements OTPDao {
             final Timestamp expiryTimestamp = currentTimestamp;
 
             List<OTP> otpList = session.createCriteria(OTP.class).add(Restrictions.eq("msisdn", msisdn)).list();
-            if(otpList != null){
-                if (otpList.size() > 0 && otpList.get(0).getLastModifiedDate().getTime() >
-                        expiryTimestamp.getTime()) {
+
+            if(otpList != null && otpList.size() > 0){
+                if (otpList.get(0).getLastModifiedDate().getTime() > expiryTimestamp.getTime()) {
                     return otpList.get(0);
                 }else {
                     session.delete(otpList.get(0));
                 }
             }
         } catch (Exception e) {
-            logger.error("Exception occurred while fetching OTP for msisdn ", msisdn);
+            logger.error("Exception occurred while fetching OTP for msisdn :{} ,error :{} ", msisdn, e);
             throw new DaoException(ResponseCode.ERROR_MESSAGE_DAO);
         }
         return null;

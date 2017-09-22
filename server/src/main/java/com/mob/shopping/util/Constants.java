@@ -17,7 +17,7 @@ public interface Constants {
 	
 	
 	public interface RETAILER {
-		String DISTRIBUTOR_ID = "distributorID";
+		String DISTRIBUTOR_ID = "distributorId";
 		String REGISTRATION_STATUS = "registrationStatus";
 	}
 

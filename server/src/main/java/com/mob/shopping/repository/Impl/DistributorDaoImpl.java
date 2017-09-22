@@ -2,6 +2,7 @@ package com.mob.shopping.repository.Impl;
 
 import java.util.List;
 
+import com.mob.shopping.entity.Retailer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -33,5 +34,19 @@ public class DistributorDaoImpl implements DistributorDao {
             return session.createCriteria(Distributor.class).add(Restrictions.eq(Constants.DISTRIBUTOR.DISTRICT_ID, districtId)).list();
 
     }
+
+    @Override
+    public Distributor findByMsisdn(String msisdn) throws DaoException {
+        String method = "[DAO] FETCH>>>> Distributor :: ";
+        logger.info(method);
+        Session session = sessionFactory.getCurrentSession();
+        List<Distributor> distributors = session.createCriteria(Distributor.class).add(Restrictions.eq("msisdn",msisdn))
+                .list();
+        if(distributors!=null && distributors.size()>0){
+            return distributors.get(0);
+        }
+        return null;
+    }
+
 
 }

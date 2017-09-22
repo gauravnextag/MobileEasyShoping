@@ -1,8 +1,8 @@
 <included>
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/payBank/logs/bankLog.log</file>
+		<file>/mobShop/logs/mobShop.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>/payBank/logs/bankLog_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<fileNamePattern>/mobShop/logs/mobShop_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>200MB</maxFileSize>
 			</timeBasedFileNamingAndTriggeringPolicy>

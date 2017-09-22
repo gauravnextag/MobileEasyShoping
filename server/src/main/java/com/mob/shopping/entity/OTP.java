@@ -42,6 +42,9 @@ public class OTP implements Serializable {
     @Column(name="LAST_MODIFIED_DATE")
     private Timestamp lastModifiedDate;
 
+    @Transient
+    private Long userId;
+
     public Long getId() {
         return id;
     }
@@ -98,6 +101,14 @@ public class OTP implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
@@ -108,6 +119,7 @@ public class OTP implements Serializable {
                 .append("isDeleted", isDeleted)
                 .append("createdDate", createdDate)
                 .append("lastModifiedDate", lastModifiedDate)
+                .append("userId", userId)
                 .toString();
     }
 }

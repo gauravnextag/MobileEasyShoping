@@ -3,6 +3,7 @@
  */
 package com.mob.shopping.repository.Impl;
 
+import com.mob.shopping.exception.DaoException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -23,19 +24,25 @@ public class UserDaoImpl implements UserDao {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public User findByMSISDN(String msisdn) throws BaseApplicationException {
+	public User findByMSISDN(String msisdn) throws DaoException {
 		Session session = sessionFactory.getCurrentSession();
 		return (User) session.createCriteria(User.class).add(Restrictions.eq(Constants.MSISDN, msisdn))
 				.add(Restrictions.eq(Constants.IS_DELETED, 0)).uniqueResult();
 	}
 
 	@Override
-	public User findByUserIdAndMSISDN(Long userId, String msisdn) throws BaseApplicationException {
+	public User findByUserIdAndMSISDN(Long userId, String msisdn) throws DaoException {
 		Session session = sessionFactory.getCurrentSession();
 
 		return (User) session.createCriteria(User.class).add(Restrictions.eq(Constants.MSISDN, msisdn))
 				.add(Restrictions.eq(Constants.USER_ID, userId)).add(Restrictions.eq(Constants.IS_DELETED, 0))
 				.uniqueResult();
+	}
+
+	@Override
+	public void save(User user) throws DaoException {
+		Session session = sessionFactory.getCurrentSession();
+		session.save(user);
 	}
 
 }

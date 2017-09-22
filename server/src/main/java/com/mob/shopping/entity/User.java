@@ -6,21 +6,19 @@ package com.mob.shopping.entity;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Entity
+@Table(name = "USERS")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -7117846981590659564L;
 
 	@Id
-	@SequenceGenerator(name = "USER_SEQ", sequenceName = "USER_SEQ", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQ")
+	@SequenceGenerator(name = "USERS_SEQ", sequenceName = "USERS_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERS_SEQ")
 	@Column(name = "ID")
 	private Long id;
 

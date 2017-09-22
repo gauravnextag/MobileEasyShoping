@@ -15,5 +15,9 @@ public enum UserType {
     public void setValue(Integer value) {
         this.value = value;
     }
+
+    public static String getName(int value){
+        return  UserType.values()[value].toString();
+    }
 }
 
