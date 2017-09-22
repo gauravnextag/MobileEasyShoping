@@ -10,5 +10,4 @@ public interface UserService {
 	User findByMSISDN(String msisdn) throws BaseApplicationException;
 	User findByUserIdAndMSISDN(Long userId,String msisdn) throws BaseApplicationException;
 
-
 }

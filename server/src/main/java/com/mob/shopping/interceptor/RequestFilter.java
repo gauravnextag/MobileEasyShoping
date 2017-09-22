@@ -16,6 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mob.shopping.beans.request.UserDto;
 import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.util.AuthUtils;
@@ -43,10 +44,16 @@ public class RequestFilter extends OncePerRequestFilter {
 		try {
 			if (CommonUtility.isValidString(request.getHeader(Constants.Headers.AUTH_TOKEN))) {
 				String tokenParsed = AuthUtils.decodeToken(request.getHeader(Constants.Headers.AUTH_TOKEN));
-
-				if (!CommonUtility.isValidString(tokenParsed)) {
+				String[] list = tokenParsed.split(":");
+			
+				if (!CommonUtility.isValidString(tokenParsed)||CommonUtility.isNullObject(list) || list.length<3) {
 					throw new BaseApplicationException(ResponseCode.INVALID_TOKEN);
 				}
+				UserDto userDto = new UserDto();
+		    	userDto.setId(Long.parseLong(list[0]));
+		    	userDto.setMsisdn(list[1]);
+		    	userDto.setUserType(Integer.parseInt(list[2]));
+				request.setAttribute("user",userDto);
 			}
 
 			if (!request.getMethod().equals(RequestMethod.GET)) {
