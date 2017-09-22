@@ -1,7 +1,7 @@
 package com.mob.shopping.constants.enums;
 
 public enum UserType {
-    RETAILER(1) , DISTRIBUTOR(0) ,CUSTOMER(2);
+	DISTRIBUTOR(0), RETAILER(1),CUSTOMER(2);
 
     Integer value;
     UserType(Integer s) {

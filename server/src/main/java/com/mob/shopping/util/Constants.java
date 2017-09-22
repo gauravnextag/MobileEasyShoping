@@ -8,6 +8,8 @@ public interface Constants {
 	Integer FAILURE_STATUS = 101;
 	String  ID = "id";
 	String  IS_DELETED = "isDeleted";
+	String  MSISDN   = "msisdn";
+	String USER_ID   = "userId";
 
 	public interface DISTRIBUTOR {
 		String DISTRICT_ID = "districtId";
