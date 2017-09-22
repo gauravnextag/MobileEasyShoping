@@ -40,43 +40,38 @@ public class RequestFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		try{  
-		logger.info("Filer in process");
-		// if (CommonUtility.isNullObject(yatraConstants)) {
-		// cacheService = WebApplicationContextUtils
-		// .getRequiredWebApplicationContext(this.getFilterConfig().getServletContext())
-		// .getBean(CacheService.class);
-		// }
-		//
-		String tokenParsed = AuthUtils.decodeToken(request.getHeader(Constants.Headers.AUTH_TOKEN));
+		try {
+			if (CommonUtility.isValidString(request.getHeader(Constants.Headers.AUTH_TOKEN))) {
+				String tokenParsed = AuthUtils.decodeToken(request.getHeader(Constants.Headers.AUTH_TOKEN));
 
-		if (!CommonUtility.isValidString(tokenParsed)) {
-			throw new BaseApplicationException(ResponseCode.INVALID_TOKEN);
+				if (!CommonUtility.isValidString(tokenParsed)) {
+					throw new BaseApplicationException(ResponseCode.INVALID_TOKEN);
+				}
+			}
+
+			if (!request.getMethod().equals(RequestMethod.GET)) {
+				// YatraServletRequestWrapper myrequest = new
+				// YatraServletRequestWrapper(request);
+				// requestFlooding.preventFalseRequest(myrequest.encryptedKey());
+				filterChain.doFilter(request, response);
+			} else {
+				filterChain.doFilter(request, response);
+			}
+
+		} catch (BaseApplicationException e) {
+			RestResponse<?> err = RestUtils.errorResponseEnum(e.getResponseCode());
+			response.setStatus(HttpStatus.OK.value());
+			response.setHeader("content-type", "application/json");
+			response.getWriter().write(convertObjectToJson(err));
+		} catch (Exception e) {
+			RestResponse<?> err = RestUtils.errorResponseData(e.getMessage());
+			response.setStatus(HttpStatus.OK.value());
+			response.setHeader("content-type", "application/json");
+			response.getWriter().write(convertObjectToJson(err));
 		}
 
-		if (!request.getMethod().equals(RequestMethod.GET)) {
-			// YatraServletRequestWrapper myrequest = new
-			// YatraServletRequestWrapper(request);
-			// requestFlooding.preventFalseRequest(myrequest.encryptedKey());
-			filterChain.doFilter(request, response);
-		} else {
-			filterChain.doFilter(request, response);
-		}
-		
-	} catch (BaseApplicationException e) {
-		RestResponse<?> err = RestUtils.errorResponseEnum(e.getResponseCode());
-		response.setStatus(HttpStatus.OK.value());
-		response.setHeader("content-type", "application/json");
-		response.getWriter().write(convertObjectToJson(err));
-	} catch (Exception e) {
-		RestResponse<?> err = RestUtils.errorResponseData(e.getMessage());
-		response.setStatus(HttpStatus.OK.value());
-		response.setHeader("content-type", "application/json");
-		response.getWriter().write(convertObjectToJson(err));
 	}
 
-	}
-	
 	public String convertObjectToJson(Object object) throws JsonProcessingException {
 		if (object == null) {
 			return null;

@@ -12,5 +12,5 @@ public interface RegionServices {
 
     public List<State> getStates() throws BaseApplicationException;
 
-    public List<District> getDistrictRequest(DistrictRequest districtRequest) throws BaseApplicationException;
+    public List<District> getDistrictRequest(Long stateId) throws BaseApplicationException;
 }

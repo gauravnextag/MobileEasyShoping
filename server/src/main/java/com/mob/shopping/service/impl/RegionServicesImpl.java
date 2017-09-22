@@ -38,12 +38,12 @@ public class RegionServicesImpl implements RegionServices{
         }
 
     @Override
-    public List<District> getDistrictRequest(DistrictRequest districtRequest) throws BaseApplicationException {
+    public List<District> getDistrictRequest(Long stateId) throws BaseApplicationException {
 
-    	if(!CommonUtility.isValidString(districtRequest.getStateId())){
-    		throw new  BaseApplicationException(ResponseCode.GENRAL_ERROR);
+    	if(!CommonUtility.isValidLong(stateId)){
+    		throw new  BaseApplicationException(ResponseCode.INVALID_PARAMETER);
     	}
-    	return regionDao.getDistricts(districtRequest.getStateId());
+    	return regionDao.getDistricts(stateId);
     }
 
 }

@@ -34,7 +34,7 @@ public class RegionDaoImpl implements RegionDao {
 
     @SuppressWarnings("unchecked")
 	@Override
-    public List<District> getDistricts(String stateId) throws DaoException {
+    public List<District> getDistricts(Long stateId) throws DaoException {
             LOGGER.info("Fetching list of district corresponding to state id: {}",stateId);
             Session session = sessionFactory.getCurrentSession();
             return  session.createCriteria(District.class).add(Restrictions.eq("stateId", stateId)).list();

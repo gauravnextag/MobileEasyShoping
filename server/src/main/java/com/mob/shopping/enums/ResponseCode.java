@@ -14,7 +14,8 @@ public enum ResponseCode {
 	ERROR_MESSAGE__DETAILS_MANDATORY(5003, "Please provide message details"),
 	ERROR_MESSAGE_DAO(5004, "Error creating record. Please check the data and retry"),
 	INVALID_PARAMETER(5005, "Your request could not served. Invalid parameter!"),
-	ERROR_MESSAGE_MESSAGE_SEND_FAILED(5006,"Error while sending message. Please check the data and retry");
+	ERROR_MESSAGE_MESSAGE_SEND_FAILED(5006,"Error while sending message. Please check the data and retry"),
+	RETAILOR_NOT_FOUND(5007,"No retailor found");
 	
 	private final int code;
 	private final String description;

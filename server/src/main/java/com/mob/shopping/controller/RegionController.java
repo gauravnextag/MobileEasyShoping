@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,17 +28,17 @@ public class RegionController {
     @Autowired
     private RegionServices regionServices;
 
-    @RequestMapping(value = "/getStates", method = RequestMethod.POST)
+    @RequestMapping(value = "/state", method = RequestMethod.GET)
     public @ResponseBody ResponseEntity<RestResponse<List<State>>> getStates() throws BaseApplicationException {
 		String method = "[CONTROLLER] getStates>>>> ::::";
     	logger.info(method);
 		return RestUtils.successResponse(regionServices.getStates());
     }
 
-    @RequestMapping(value = "/getDistrict", method = RequestMethod.POST)
-    public @ResponseBody ResponseEntity<RestResponse<List<District>>>  getDistrict(@RequestBody DistrictRequest districtRequest)throws BaseApplicationException {
-		String method = "[CONTROLLER] getDistrict>>>> DistrictRequest :: "+districtRequest.toString();
+    @RequestMapping(value = "/district/{stateId}", method = RequestMethod.GET)
+    public @ResponseBody ResponseEntity<RestResponse<List<District>>>  getDistrict(@PathVariable Long stateId)throws BaseApplicationException {
+		String method = "[CONTROLLER] getDistrict>>>> stateId :: "+stateId;
     	logger.info(method);
-    	return RestUtils.successResponse(regionServices.getDistrictRequest(districtRequest));
+    	return RestUtils.successResponse(regionServices.getDistrictRequest(stateId));
     }
 }

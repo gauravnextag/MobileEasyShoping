@@ -8,5 +8,5 @@ import com.mob.shopping.exception.DaoException;
 
 public interface RegionDao {
    public List<State> getStates() throws DaoException;
-   public List<District> getDistricts(String stateId) throws DaoException;
+   public List<District> getDistricts(Long stateId) throws DaoException;
 }

@@ -34,7 +34,7 @@ public class Customer implements Serializable {
     private Integer deliveryStatus ;
 
     @Column(name = "NO_OF_DEVICES")
-    private String noOfDevices;
+    private Integer noOfDevices;
 
     @JsonIgnore
     @Column(name = "IS_DELETED")
@@ -88,11 +88,11 @@ public class Customer implements Serializable {
         this.deliveryStatus = deliveryStatus;
     }
 
-    public String getNoOfDevices() {
+    public Integer getNoOfDevices() {
         return noOfDevices;
     }
 
-    public void setNoOfDevices(String noOfDevices) {
+    public void setNoOfDevices(Integer noOfDevices) {
         this.noOfDevices = noOfDevices;
     }
 

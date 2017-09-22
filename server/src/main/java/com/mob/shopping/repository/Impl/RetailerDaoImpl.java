@@ -1,16 +1,23 @@
 package com.mob.shopping.repository.Impl;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mob.shopping.constants.enums.RegistrationStatus;
+import com.mob.shopping.entity.District;
 import com.mob.shopping.entity.Retailer;
+import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.exception.DaoException;
 import com.mob.shopping.repository.RetailerDao;
+import com.mob.shopping.util.Constants;
 
 @Transactional
 @Repository
@@ -28,4 +35,36 @@ public class RetailerDaoImpl implements RetailerDao {
             Session session = sessionFactory.getCurrentSession();
             session.persist(retailer);
     }
+
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Retailer> get(Long distributorId) throws BaseApplicationException {
+		Session session = sessionFactory.getCurrentSession();
+		
+		 return  session.createCriteria(District.class)
+				 .add(Restrictions.eq(Constants.RETAILER.DISTRIBUTOR_ID,distributorId))
+				 .add(Restrictions.eq(Constants.IS_DELETED,0)).list();
+	}
+
+
+
+	@Override
+	public Retailer getPendingRetailerById(Long id) {
+		Session session = sessionFactory.getCurrentSession();
+		return (Retailer) session.createCriteria(District.class)
+		 .add(Restrictions.eq(Constants.ID,id))
+		 .add(Restrictions.eq(Constants.RETAILER.REGISTRATION_STATUS,RegistrationStatus.PENDING.getValue()))
+		 .add(Restrictions.eq(Constants.IS_DELETED,0)).uniqueResult();
+	}
+
+
+	@Override
+	public void update(Retailer retailer) {
+		String method = "[DAO] update>>>> Retailer :: "+retailer.toString();
+    	logger.info(method);
+            Session session = sessionFactory.getCurrentSession();
+             session.persist(retailer);
+             
+	}
 }
