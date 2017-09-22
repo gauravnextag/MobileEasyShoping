@@ -1,6 +1,6 @@
 package com.mob.shopping.exception;
 
-import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.constants.enums.ResponseCode;
 
 public class MessageBrokerException extends BaseApplicationException {
 

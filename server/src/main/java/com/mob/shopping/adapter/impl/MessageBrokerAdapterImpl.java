@@ -2,8 +2,7 @@ package com.mob.shopping.adapter.impl;
 
 import com.mob.shopping.adapter.MessageBrokerAdapter;
 import com.mob.shopping.constants.ConfigConstants;
-import com.mob.shopping.constants.ErrorConstants;
-import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.exception.BusinessException;
 import com.mob.shopping.exception.MessageBrokerException;
 import com.mob.shopping.service.MasterConfigService;

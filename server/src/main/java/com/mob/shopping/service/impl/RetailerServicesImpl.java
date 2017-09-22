@@ -12,7 +12,7 @@ import com.mob.shopping.beans.request.RegistrationRequest;
 import com.mob.shopping.beans.request.RetailerDto;
 import com.mob.shopping.constants.enums.RegistrationStatus;
 import com.mob.shopping.entity.Retailer;
-import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.repository.RetailerDao;
 import com.mob.shopping.service.MasterConfigService;

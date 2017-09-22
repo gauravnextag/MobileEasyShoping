@@ -16,7 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.util.AuthUtils;
 import com.mob.shopping.util.CommonUtility;
@@ -68,6 +68,7 @@ public class RequestFilter extends OncePerRequestFilter {
 			response.setStatus(HttpStatus.OK.value());
 			response.setHeader("content-type", "application/json");
 			response.getWriter().write(convertObjectToJson(err));
+			
 		}
 
 	}

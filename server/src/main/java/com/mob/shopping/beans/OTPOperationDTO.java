@@ -1,10 +1,16 @@
 package com.mob.shopping.beans;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class OTPOperationDTO {
 
 	private String otpStatus;
 
 	private String additionalData;
+
+	private String authToken;
+
+	private String userId;
 
 	public OTPOperationDTO(final String otpStatus) {
 		this.otpStatus = otpStatus;
@@ -31,12 +37,30 @@ public class OTPOperationDTO {
 		this.additionalData = additionalData;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "OTPOperationDTO [otpStatus=" + otpStatus + ", additionalData=" + additionalData + "]";
+	public String getAuthToken() {
+		return authToken;
 	}
-	
+
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
+	}
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("otpStatus", otpStatus)
+                .append("additionalData", additionalData)
+                .append("authToken", authToken)
+                .append("userId", userId)
+                .toString();
+    }
+
 }

@@ -39,7 +39,7 @@ public class OTPController {
 	public @ResponseBody ResponseEntity<RestResponse<Boolean>> sendOTP(@RequestBody OTPRequestBean otpRequestBean) throws BaseApplicationException {
         String method = "[CONTROLLER] sendOTP>>>> ::::";
         logger.info(method);
-        otpService.generateOTP(otpRequestBean.getMsisdn());
+        otpService.generateOTP(otpRequestBean.getMsisdn(),otpRequestBean.getUserType());
         return RestUtils.successResponse(Boolean.TRUE);
 	}
 
@@ -48,7 +48,7 @@ public class OTPController {
     ResponseEntity<RestResponse<OTPOperationDTO>> verifyOTP(@RequestBody OTPRequestBean otpRequestBean) {
         String method = "[CONTROLLER] verifyOTP>>>> ::::";
         logger.info(method);
-		return RestUtils.successResponse(otpService.verifyOTP(otpRequestBean.getMsisdn(), otpRequestBean.getOtp()));
+		return RestUtils.successResponse(otpService.verifyOTP(otpRequestBean.getMsisdn(), otpRequestBean.getOtp(),otpRequestBean.getUserType()));
 	}
 
 //	/**

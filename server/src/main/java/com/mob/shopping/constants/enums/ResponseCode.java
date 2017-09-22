@@ -1,4 +1,4 @@
-package com.mob.shopping.enums;
+package com.mob.shopping.constants.enums;
 
 import com.mob.shopping.util.CommonUtility;
 
@@ -15,8 +15,9 @@ public enum ResponseCode {
 	ERROR_MESSAGE_DAO(5004, "Error creating record. Please check the data and retry"),
 	INVALID_PARAMETER(5005, "Your request could not served. Invalid parameter!"),
 	ERROR_MESSAGE_MESSAGE_SEND_FAILED(5006,"Error while sending message. Please check the data and retry"),
-	RETAILOR_NOT_FOUND(5007,"No retailor found");
-	
+	RETAILOR_NOT_FOUND(5007,"No retailor found"),
+    MAX_OTP_ATTEMPT_REACHED(5008,"Max otp Attempt reached");
+
 	private final int code;
 	private final String description;
 

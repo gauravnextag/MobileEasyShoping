@@ -6,7 +6,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
-import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.exception.BaseApplicationException;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;

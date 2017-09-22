@@ -1,16 +1,13 @@
 package com.mob.shopping.service.impl;
 
 import com.mob.shopping.adapter.MessageBrokerAdapter;
-import com.mob.shopping.constants.ErrorConstants;
-import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.exception.BaseApplicationException;
-import com.mob.shopping.exception.BusinessException;
 import com.mob.shopping.service.MessageBrokerService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -3,7 +3,7 @@ package com.mob.shopping.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 
-import com.mob.shopping.enums.ResponseCode;
+import com.mob.shopping.constants.enums.ResponseCode;
 
 
 public class BaseApplicationException extends RuntimeException {
