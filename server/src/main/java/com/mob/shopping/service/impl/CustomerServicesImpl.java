@@ -14,6 +14,8 @@ import com.mob.shopping.repository.CustomerDao;
 import com.mob.shopping.service.CustomerServices;
 import com.mob.shopping.util.CommonUtility;
 
+import java.sql.Timestamp;
+
 @Service
 public class CustomerServicesImpl implements CustomerServices {
     
@@ -30,9 +32,11 @@ public class CustomerServicesImpl implements CustomerServices {
 		Customer customer = new Customer();
 		customer.setName(customerDto.getName());
 		customer.setMsisdn(customerDto.getMsisdn());
-		customer.setRetailerID(customerDto.getRetailerID());
+		customer.setRetailerID(customerDto.getRetailerId());
 		customer.setNoOfDevices(customerDto.getNoOfDevices());
 		customer.setDeliveryStatus(DeliveryStatus.PENDING.getValue());
+		customer.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+		customer.setLastModifiedDate(new Timestamp(System.currentTimeMillis()));
 		Long userId =  customerDao.save(customer);
 		if(!CommonUtility.isValidLong(userId)){
 			throw new BaseApplicationException();

@@ -7,10 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mob.shopping.beans.request.DistributorListRequest;
 import com.mob.shopping.entity.Distributor;
 import com.mob.shopping.exception.BaseApplicationException;
-import com.mob.shopping.exception.BusinessException;
 import com.mob.shopping.repository.DistributorDao;
 import com.mob.shopping.service.DistributorServices;
 import com.mob.shopping.service.MasterConfigService;
@@ -29,7 +27,7 @@ public class DistributorServicesImpl implements DistributorServices {
 
 
     @Override
-    public List<Distributor> getDistributors(DistributorListRequest distributorListRequest) throws BaseApplicationException {
-    return distributorDao.getDistributors(distributorListRequest.getDistrictId());
+    public List<Distributor> getDistributors(Long districtId) throws BaseApplicationException {
+    return distributorDao.getDistributors(districtId);
     }
 }

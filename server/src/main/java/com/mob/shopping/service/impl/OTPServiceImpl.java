@@ -65,6 +65,8 @@ public class OTPServiceImpl implements OTPService {
 		   key =  key.concat(msisdn).concat(UserType.getName(user.getUserType())).concat(userId.toString());
             otpOperationDTO.setAuthToken(AuthUtils.createToken(key));
 		}
+		otpOperationDTO.setUserId(user.getUserId());
+		otpOperationDTO.setUserType(user.getUserType());
 		return otpOperationDTO;
 	}
 
@@ -91,6 +93,7 @@ public class OTPServiceImpl implements OTPService {
 	    Long id = null;
         UUID uuid = UUID.randomUUID();
         String otpString = Long.toString(Math.abs(uuid.getLeastSignificantBits() % 1000000) * 10).substring(0,6);
+        try {
         OTP oldOtp = otpDao.findByMsisdn(msisdn);
         if(oldOtp!=null){
             if(isMaxOTPAttempt(oldOtp)){
@@ -100,8 +103,13 @@ public class OTPServiceImpl implements OTPService {
             id =oldOtp.getId();
         }
         otp = otpDao.generateOTP(msisdn, otpString, uuid.toString(),id,oldAttempts);
-        messageBrokerService.sendMessage(msisdn, masterConfigService.getValueByKey(ConfigConstants.OTP_SHORT_CODE),
-					MessageFormat.format(masterConfigService.getValueByKey(ConfigConstants.OTP_SMS), otp.getOpt()));
+
+            messageBrokerService.sendMessage(msisdn, masterConfigService.getValueByKey(ConfigConstants.OTP_SHORT_CODE),
+                    MessageFormat.format(masterConfigService.getValueByKey(ConfigConstants.OTP_SMS), otp.getOpt()));
+        }catch (Exception e){
+
+        }
+        //otp.setOpt("");//Not sending otp Code to UI
         otp.setUserId(userId);
 		return otp;
 	}

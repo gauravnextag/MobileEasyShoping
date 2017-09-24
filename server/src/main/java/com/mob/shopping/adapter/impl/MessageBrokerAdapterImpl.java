@@ -43,22 +43,31 @@ public class MessageBrokerAdapterImpl implements MessageBrokerAdapter {
 		mapRequest.put("msisdn", msisdn);
 		mapRequest.put("shortcode", shortCode);
 		mapRequest.put("smsText", smsText);
-		String requestXML = producerTemplate.requestBodyAndHeaders("direct:performFreemarkerTemplatingForMessageBroker",
-				null, mapRequest, String.class);
-		
-		LOGGER.info("Inside MessageBrokerAdapterImpl.sendMessage request {}", requestXML);
-		HttpHeaders headers = CommonUtils.getHttpEntityHeaders(masterConfigService.getValueByKey(ConfigConstants.MESSAGE_BROKER_USER_NAME), masterConfigService.getValueByKey(ConfigConstants.MESSAGE_BROKER_PASSWORD),
-				MediaType.TEXT_XML);
-		HttpEntity<String> entity = new HttpEntity<String>(requestXML, headers);
+		String responseString ="";
+		try {
 
-		String responseString = restTemplate.postForObject(masterConfigService.getValueByKey(ConfigConstants.MESSAGE_BROKER_URL), entity, String.class);
-		LOGGER.info("Inside MessageBrokerAdapterImpl.sendMessage response {} to msisdn {}", responseString, msisdn);
-		if (responseString.equalsIgnoreCase("ok")) {
-			return true;
+			String requestXML = producerTemplate.requestBodyAndHeaders("direct:performFreemarkerTemplatingForMessageBroker",
+					null, mapRequest, String.class);
+
+			LOGGER.info("Inside MessageBrokerAdapterImpl.sendMessage request {}", requestXML);
+			HttpHeaders headers = CommonUtils.getHttpEntityHeaders(masterConfigService.getValueByKey(ConfigConstants.MESSAGE_BROKER_USER_NAME), masterConfigService.getValueByKey(ConfigConstants.MESSAGE_BROKER_PASSWORD),
+					MediaType.TEXT_XML);
+			HttpEntity<String> entity = new HttpEntity<String>(requestXML, headers);
+
+			responseString = restTemplate.postForObject(masterConfigService.getValueByKey(ConfigConstants.MESSAGE_BROKER_URL), entity, String.class);
+			LOGGER.info("Inside MessageBrokerAdapterImpl.sendMessage response {} to msisdn {}", responseString, msisdn);
+
+			if (responseString.equalsIgnoreCase("ok")) {
+				return true;
+			}
+			LOGGER.info("Inside MessageBrokerAdapterImpl.sendMessage error while sending message {} to msisdn {}",
+					responseString, msisdn);
+			throw new MessageBrokerException(ResponseCode.ERROR_MESSAGE_MESSAGE_SEND_FAILED);
+
+		}catch (Exception e){
+			throw new MessageBrokerException(ResponseCode.ERROR_MESSAGE_MESSAGE_SEND_FAILED);
 		}
-		LOGGER.info("Inside MessageBrokerAdapterImpl.sendMessage error while sending message {} to msisdn {}",
-				responseString, msisdn);
-		throw new MessageBrokerException(ResponseCode.ERROR_MESSAGE_MESSAGE_SEND_FAILED);
+
 	}
 
 }

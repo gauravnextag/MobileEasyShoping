@@ -6,11 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.mob.shopping.beans.request.DistributorListRequest;
 import com.mob.shopping.entity.Distributor;
@@ -28,13 +24,13 @@ public class DistributorController {
     private DistributorServices distributorServices;
 
 
-    @RequestMapping(value = "/getDistributors", method = RequestMethod.GET)
+    @RequestMapping(value = "/getDistributors//{districtId}", method = RequestMethod.POST)
     public @ResponseBody
-    ResponseEntity<RestResponse<List<Distributor>>> getDistributors(@RequestBody DistributorListRequest distributorListRequest)
+    ResponseEntity<RestResponse<List<Distributor>>> getDistributors(@PathVariable Long districtId)
     throws BaseApplicationException{
-    	String method = "[CONTROLLER] getDistributors>>>> DistributorListRequest :: "+distributorListRequest.toString();
+    	String method = "[CONTROLLER] getDistributors>>>> DistributorListRequest :: "+districtId;
     	logger.info(method);
-    	return RestUtils.successResponse(distributorServices.getDistributors(distributorListRequest));
+    	return RestUtils.successResponse(distributorServices.getDistributors(districtId));
     }
 
 

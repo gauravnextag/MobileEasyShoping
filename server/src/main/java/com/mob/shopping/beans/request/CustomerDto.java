@@ -14,7 +14,7 @@ public class CustomerDto implements Serializable {
 
     private String name;
 
-    private Long retailerID;
+    private Long retailerId;
 
     private String msisdn;
 
@@ -42,12 +42,12 @@ public class CustomerDto implements Serializable {
 		this.name = name;
 	}
 
-	public Long getRetailerID() {
-		return retailerID;
+	public Long getRetailerId() {
+		return retailerId;
 	}
 
-	public void setRetailerID(Long retailerID) {
-		this.retailerID = retailerID;
+	public void setRetailerId(Long retailerId) {
+		this.retailerId = retailerId;
 	}
 
 	public String getMsisdn() {
@@ -92,7 +92,7 @@ public class CustomerDto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CustomerDto [id=" + id + ", name=" + name + ", retailerID=" + retailerID + ", msisdn=" + msisdn
+		return "CustomerDto [id=" + id + ", name=" + name + ", retailerID=" + retailerId + ", msisdn=" + msisdn
 				+ ", deliveryStatus=" + deliveryStatus + ", noOfDevices=" + noOfDevices + ", isDeleted=" + isDeleted
 				+ ", createdDate=" + createdDate + "]";
 	}
