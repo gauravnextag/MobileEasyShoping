@@ -24,7 +24,7 @@ public class DistributorController {
     private DistributorServices distributorServices;
 
 
-    @RequestMapping(value = "/getDistributors//{districtId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/getDistributors/{districtId}", method = RequestMethod.POST)
     public @ResponseBody
     ResponseEntity<RestResponse<List<Distributor>>> getDistributors(@PathVariable Long districtId)
     throws BaseApplicationException{

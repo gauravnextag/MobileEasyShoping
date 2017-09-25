@@ -55,7 +55,7 @@ public class RequestFilter extends OncePerRequestFilter {
 				request.setAttribute("user",userDto);
 			}else{
 				String url = request.getRequestURL().toString();
-				if (url.contains("getDistributors") || url.contains("otp") || url.contains("state") || url.contains("district") ) {
+				if (!(url.contains("customer") || url.contains("action"))){
 					filterChain.doFilter(request, response);
 				} else {
 					logger.error("INVALID_USER ::"+ ResponseCode.INVALID_USER);
