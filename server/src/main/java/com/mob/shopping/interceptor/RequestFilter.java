@@ -53,6 +53,7 @@ public class RequestFilter extends OncePerRequestFilter {
 		    	userDto.setMsisdn(list[1]);
 		    	userDto.setUserType(Integer.parseInt(list[2]));
 				request.setAttribute("user",userDto);
+				filterChain.doFilter(request, response);
 			}else{
 				String url = request.getRequestURL().toString();
 				if (!(url.contains("customer") || url.contains("action"))){
