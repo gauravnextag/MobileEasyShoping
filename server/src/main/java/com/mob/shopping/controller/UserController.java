@@ -18,7 +18,7 @@ import com.mob.shopping.util.RestResponse;
 import com.mob.shopping.util.RestUtils;
 
 @RestController
-@RequestMapping(value = "user")
+@RequestMapping(value = "/user")
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 

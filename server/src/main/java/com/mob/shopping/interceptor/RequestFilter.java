@@ -54,16 +54,15 @@ public class RequestFilter extends OncePerRequestFilter {
 		    	userDto.setMsisdn(list[1]);
 		    	userDto.setUserType(Integer.parseInt(list[2]));
 				request.setAttribute("user",userDto);
+			}else{
+				if (request.getRequestURL().toString().contains("login")) {
+					filterChain.doFilter(request, response);
+				} else {
+					throw new BaseApplicationException(ResponseCode.INVALID_USER);
+				}
 			}
 
-			if (!request.getMethod().equals(RequestMethod.GET)) {
-				// YatraServletRequestWrapper myrequest = new
-				// YatraServletRequestWrapper(request);
-				// requestFlooding.preventFalseRequest(myrequest.encryptedKey());
-				filterChain.doFilter(request, response);
-			} else {
-				filterChain.doFilter(request, response);
-			}
+			
 
 		} catch (BaseApplicationException e) {
 			RestResponse<?> err = RestUtils.errorResponseEnum(e.getResponseCode());

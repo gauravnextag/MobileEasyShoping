@@ -22,7 +22,7 @@ public interface Constants {
 	}
 
 	public interface Headers {
-		String AUTH_TOKEN = "AUTH-TOKEN";
+		String AUTH_TOKEN = "Authorization";
 	    String KEY="KEY";
 		String DATA = "DATA";
 		String USER_ID = "USER-ID";
