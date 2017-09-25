@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mob.shopping.beans.request.DistrictRequest;
 import com.mob.shopping.entity.District;
 import com.mob.shopping.entity.State;
 import com.mob.shopping.exception.BaseApplicationException;

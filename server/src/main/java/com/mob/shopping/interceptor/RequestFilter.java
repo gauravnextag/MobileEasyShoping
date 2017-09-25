@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -55,9 +54,11 @@ public class RequestFilter extends OncePerRequestFilter {
 		    	userDto.setUserType(Integer.parseInt(list[2]));
 				request.setAttribute("user",userDto);
 			}else{
-				if (request.getRequestURL().toString().contains("login")) {
+				String url = request.getRequestURL().toString();
+				if (url.contains("getDistributors") || url.contains("otp") || url.contains("state") || url.contains("district") ) {
 					filterChain.doFilter(request, response);
 				} else {
+					logger.error("INVALID_USER ::"+ ResponseCode.INVALID_USER);
 					throw new BaseApplicationException(ResponseCode.INVALID_USER);
 				}
 			}

@@ -17,7 +17,8 @@ public enum ResponseCode {
 	ERROR_MESSAGE_MESSAGE_SEND_FAILED(5006,"Error while sending message. Please check the data and retry"),
 	RETAILOR_NOT_FOUND(5007,"No retailor found"),
     MAX_OTP_ATTEMPT_REACHED(5008,"Max otp Attempt reached"),
-	INVALID_USER(5009,"Invalid user. Please register");
+	INVALID_USER(5009,"Invalid user. Please register"),
+	USER_NOT_AUTHORIZE(5010,"User. not authorize. Please register");
 
 	private final int code;
 	private final String description;
