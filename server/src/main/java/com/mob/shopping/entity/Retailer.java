@@ -40,6 +40,9 @@ public class Retailer implements Serializable {
     @Column(name = "REGISTRATION_STATUS")
     private Integer registrationStatus ;
 
+    @Column(name = "GST_NUMBER")
+    private String gstNumber ;
+
     @JsonIgnore
     @Column(name = "IS_DELETED")
     private int isDeleted;
@@ -121,6 +124,13 @@ public class Retailer implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    public String getGstNumber() {
+        return gstNumber;
+    }
+
+    public void setGstNumber(String gstNumber) {
+        this.gstNumber = gstNumber;
+    }
 
     @Override
     public String toString() {
@@ -131,6 +141,7 @@ public class Retailer implements Serializable {
                 .append("distributorId", distributorId)
                 .append("msisdn", msisdn)
                 .append("registrationStatus", registrationStatus)
+                .append("gstNumber", gstNumber)
                 .append("isDeleted", isDeleted)
                 .append("createdDate", createdDate)
                 .append("lastModifiedDate", lastModifiedDate)

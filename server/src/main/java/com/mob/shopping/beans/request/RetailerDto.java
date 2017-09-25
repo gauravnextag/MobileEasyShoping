@@ -23,6 +23,8 @@ public class RetailerDto implements Serializable{
 
     private String msisdn;
 
+    private String gstNumber;
+
     public Long getId() {
         return id;
     }
@@ -73,6 +75,14 @@ public class RetailerDto implements Serializable{
 
     public void setMsisdn(String msisdn) {
         this.msisdn = msisdn;
+    }
+
+    public String getGstNumber() {
+        return gstNumber;
+    }
+
+    public void setGstNumber(String gstNumber) {
+        this.gstNumber = gstNumber;
     }
 
     @Override

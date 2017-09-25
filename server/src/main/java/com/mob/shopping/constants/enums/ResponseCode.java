@@ -18,7 +18,11 @@ public enum ResponseCode {
 	RETAILOR_NOT_FOUND(5007,"No retailor found"),
     MAX_OTP_ATTEMPT_REACHED(5008,"Max otp Attempt reached"),
 	INVALID_USER(5009,"Invalid user. Please register"),
-	USER_NOT_AUTHORIZE(5010,"User. not authorize. Please register");
+	USER_NOT_AUTHORIZE(5010,"User. not authorize. Please register"),
+	RETAILER_ALREADY_REGISTER(5011," User is already register"),
+	RETAILER_REQUEST_PENDING(5012," Your request is pending . Please contact your Distributor to approve your account"),
+	NO_PENDING_USER(5013," No Pending user found")
+	;
 
 	private final int code;
 	private final String description;

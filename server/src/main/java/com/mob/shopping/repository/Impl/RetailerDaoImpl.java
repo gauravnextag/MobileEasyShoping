@@ -2,6 +2,7 @@ package com.mob.shopping.repository.Impl;
 
 import java.util.List;
 
+import com.mob.shopping.constants.enums.ResponseCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -82,4 +83,25 @@ public class RetailerDaoImpl implements RetailerDao {
         }
         return null;
     }
+
+	@Override
+	public boolean checkMsisdnStatus(String msisdn) throws DaoException {
+		String method = "[DAO] FETCH>>>> Retailer :: ";
+		logger.info(method);
+		Session session = sessionFactory.getCurrentSession();
+		List<Retailer> retailers = session.createCriteria(Retailer.class)
+				.add(Restrictions.eq("msisdn",msisdn))
+				.add(Restrictions.eq("isDeleted",0))
+				.add(Restrictions.le("registrationStatus",1))
+				.list();
+		if(retailers!=null && retailers.size()>0){
+			retailers.forEach(retailer -> {
+				if(retailer.getRegistrationStatus() ==
+                        RegistrationStatus.APPROVED.getValue()){
+				    throw new DaoException(ResponseCode.RETAILER_ALREADY_REGISTER);
+                }
+			});
+            throw new DaoException(ResponseCode.RETAILER_REQUEST_PENDING);
+		}
+		return true;	}
 }

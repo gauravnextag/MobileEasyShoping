@@ -49,13 +49,18 @@ public class RetailerServicesImpl implements RetailerServices {
 		retailer.setRegistrationStatus(RegistrationStatus.PENDING.getValue());
 		retailer.setCreatedDate(new Timestamp(System.currentTimeMillis()));
 		retailer.setLastModifiedDate(new Timestamp(System.currentTimeMillis()));
+		retailer.setGstNumber(registrationRequest.getGstNumber());
 		if(!CommonUtility.isValidString(registrationRequest.getMsisdn()) || !CommonUtility.isValidString(registrationRequest.getStoreName())
 				|| !CommonUtility.isValidLong(registrationRequest.getDistrictId())){
 			String method = "[SERVICE] register>>>>  :: Missing > Msisdn | StoreName | DistrictId ";
 			logger.error(method);
-			throw new BaseApplicationException(ResponseCode.GENRAL_ERROR);
+			throw new BaseApplicationException(ResponseCode.INVALID_PARAMETER);
 		}
+		if(retailerDao.checkMsisdnStatus(registrationRequest.getMsisdn())){
             retailerDao.save(retailer);
+        }else {
+            throw new BaseApplicationException(ResponseCode.RETAILER_ALREADY_REGISTER);
+        }
 	}
 
 
@@ -90,11 +95,17 @@ public class RetailerServicesImpl implements RetailerServices {
 		}
 		
     Retailer retailer = retailerDao.getPendingRetailerById(retailerDto.getId());
-    
-    if((CommonUtility.isNullObject(retailer)) || (retailerDto.getDistributorId() != retailer.getDistributorId()) ){
-    	String method = "[SERVICE] changeStatus>>>>  :: Invalid change status request  > retailerDto "+retailerDto.toString();
-    	logger.error(method);
-    	throw new BaseApplicationException(ResponseCode.INVALID_PARAMETER);
+
+    if(CommonUtility.isNullObject(retailer)){
+        String method = "[SERVICE] changeStatus>>>>  :: Invalid change status request  > retailerDto "+retailerDto.toString();
+        logger.error(method);
+        throw new BaseApplicationException(ResponseCode.NO_PENDING_USER);
+    }
+
+    if((retailerDto.getDistributorId() != retailer.getDistributorId()) ){
+        String method = "[SERVICE] changeStatus>>>>  :: Invalid change status request  > retailerDto "+retailerDto.toString();
+        logger.error(method);
+        throw new BaseApplicationException(ResponseCode.INVALID_PARAMETER);
     }
     retailer.setRegistrationStatus(retailerDto.getRegistrationStatus());
     if((retailerDto.getRegistrationStatus() == RegistrationStatus.APPROVED.getValue())){
