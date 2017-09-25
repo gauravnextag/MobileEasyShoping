@@ -6,9 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.mob.shopping.beans.request.DistributorListRequest;
 import com.mob.shopping.entity.Distributor;
 import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.service.DistributorServices;
@@ -24,7 +27,7 @@ public class DistributorController {
     private DistributorServices distributorServices;
 
 
-    @RequestMapping(value = "/getDistributors/{districtId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/getDistributors/{districtId}", method = RequestMethod.GET)
     public @ResponseBody
     ResponseEntity<RestResponse<List<Distributor>>> getDistributors(@PathVariable Long districtId)
     throws BaseApplicationException{
