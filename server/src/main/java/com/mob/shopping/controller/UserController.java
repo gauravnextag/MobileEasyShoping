@@ -18,11 +18,10 @@ import com.mob.shopping.util.RestResponse;
 import com.mob.shopping.util.RestUtils;
 
 @RestController
-@RequestMapping(value = "/user")
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	  @RequestMapping(value = "/", method = RequestMethod.GET)
+	  @RequestMapping(value = "/user", method = RequestMethod.GET)
 	    public @ResponseBody ResponseEntity<RestResponse<UserDto>> get(HttpServletRequest request) {        
 	    	String method = "[CONTROLLER] get>>>> user :: ";
 	    	logger.info(method);

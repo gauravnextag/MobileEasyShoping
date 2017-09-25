@@ -49,8 +49,8 @@ public class RequestFilter extends OncePerRequestFilter {
 					throw new BaseApplicationException(ResponseCode.INVALID_TOKEN);
 				}
 				UserDto userDto = new UserDto();
-		    	userDto.setId(Long.parseLong(list[0]));
-		    	userDto.setMsisdn(list[1]);
+		    	userDto.setId(Long.parseLong(list[1]));
+		    	userDto.setMsisdn(list[0]);
 		    	userDto.setUserType(Integer.parseInt(list[2]));
 				request.setAttribute("user",userDto);
 				filterChain.doFilter(request, response);

@@ -62,7 +62,7 @@ public class OTPServiceImpl implements OTPService {
         User user = userService.findByUserIdAndMSISDN(userId,msisdn);
 		otpOperationDTO = otpDao.verifyOTP(msisdn, otp);
 		if(otpOperationDTO.getOtpStatus().equals(ErrorConstants.OTP_VERIFICATION_SUCCESS)){
-		   key =  key.concat(msisdn).concat(UserType.getName(user.getUserType())).concat(userId.toString());
+		   key =  key.concat(msisdn).concat(":").concat(user.getUserType().toString()).concat(":").concat(userId.toString());
             otpOperationDTO.setAuthToken(AuthUtils.createToken(key));
 		}
 		otpOperationDTO.setUserId(user.getUserId());
