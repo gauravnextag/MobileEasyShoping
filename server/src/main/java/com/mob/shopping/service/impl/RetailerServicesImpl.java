@@ -1,17 +1,21 @@
 package com.mob.shopping.service.impl;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import com.mob.shopping.constants.enums.UserType;
-import com.mob.shopping.entity.User;
 import com.mob.shopping.service.UserService;
+import com.sun.tools.corba.se.idl.StringGen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mob.shopping.beans.request.RegistrationRequest;
 import com.mob.shopping.beans.request.RetailerDto;
 import com.mob.shopping.constants.enums.RegistrationStatus;
 import com.mob.shopping.entity.Retailer;
@@ -57,14 +61,23 @@ public class RetailerServicesImpl implements RetailerServices {
 
 
 	@Override
-	public List<Retailer> get(Long distributorId) throws BaseApplicationException {
+	public Map get(Long distributorId) throws BaseApplicationException {
 		String method = "[SERVICE] get>>>>  :: distributorId > distributorId ";
     	logger.error(method);
     	List<Retailer> retailer =  retailerDao.get(distributorId);
     	if(CommonUtility.isNullObject(retailer)){
     		throw new BaseApplicationException(ResponseCode.RETAILOR_NOT_FOUND);
     	}
-    	return retailer;
+    	Map retailerMapByDate = new WeakHashMap<String,Retailer>();
+    	retailer.forEach(retailer1 -> {
+            System.out.println(retailer1.getCreatedDate().toString());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
+            String date =simpleDateFormat.format(new Date(retailer1.getCreatedDate().getTime()));
+            System.out.println(date);
+            retailerMapByDate.put(date,retailer);
+        });
+
+    	return retailerMapByDate;
 	}
 
 
