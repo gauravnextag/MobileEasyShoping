@@ -3,10 +3,7 @@ package com.mob.shopping.service.impl;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.WeakHashMap;
+import java.util.*;
 
 import com.mob.shopping.constants.enums.UserType;
 import com.mob.shopping.service.UserService;
@@ -72,13 +69,19 @@ public class RetailerServicesImpl implements RetailerServices {
     	if(CommonUtility.isNullObject(retailer)){
     		throw new BaseApplicationException(ResponseCode.RETAILOR_NOT_FOUND);
     	}
-    	Map retailerMapByDate = new WeakHashMap<String,Retailer>();
+    	Map<String,List<Retailer>> retailerMapByDate = new WeakHashMap<String,List<Retailer>>();
     	retailer.forEach(retailer1 -> {
             System.out.println(retailer1.getCreatedDate().toString());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
             String date =simpleDateFormat.format(new Date(retailer1.getCreatedDate().getTime()));
             System.out.println(date);
-            retailerMapByDate.put(date,retailer);
+            if(!retailerMapByDate.containsKey(date)){
+                List temp = new LinkedList<Retailer>();
+                temp.add(retailer1);
+                retailerMapByDate.put(date,temp);
+            }else {
+                retailerMapByDate.get(date).add(retailer1);
+            }
         });
 
     	return retailerMapByDate;
