@@ -71,10 +71,8 @@ public class RetailerServicesImpl implements RetailerServices {
     	}
     	Map<String,List<Retailer>> retailerMapByDate = new WeakHashMap<String,List<Retailer>>();
     	retailer.forEach(retailer1 -> {
-            System.out.println(retailer1.getCreatedDate().toString());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
             String date =simpleDateFormat.format(new Date(retailer1.getCreatedDate().getTime()));
-            System.out.println(date);
             if(!retailerMapByDate.containsKey(date)){
                 List temp = new LinkedList<Retailer>();
                 temp.add(retailer1);
