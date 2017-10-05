@@ -1,6 +1,7 @@
 package com.mob.shopping.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,7 @@ public class CustomerController {
     }
     
     @RequestMapping(value = "/{retailerId}", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<RestResponse<List<Customer>>> get(@PathVariable Long retailerId) {        
+    public @ResponseBody ResponseEntity<RestResponse<Map<String,List<Customer>>>> get(@PathVariable Long retailerId) {        
     	String method = "[CONTROLLER] get>>>> retailerId :: "+retailerId;
     	logger.info(method);
     	return RestUtils.successResponse(customerServices.get(retailerId));

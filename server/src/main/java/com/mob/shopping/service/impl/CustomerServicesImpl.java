@@ -1,5 +1,13 @@
 package com.mob.shopping.service.impl;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +21,6 @@ import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.repository.CustomerDao;
 import com.mob.shopping.service.CustomerServices;
 import com.mob.shopping.util.CommonUtility;
-
-import java.sql.Timestamp;
-import java.util.List;
 
 @Service
 public class CustomerServicesImpl implements CustomerServices {
@@ -59,12 +64,25 @@ public class CustomerServicesImpl implements CustomerServices {
 	}
 
 	@Override
-	public List<Customer> get(Long retailerId) {
+	public Map<String,List<Customer>> get(Long retailerId) {
 		
 		if(!CommonUtility.isValidLong(retailerId)){
     		throw new BaseApplicationException(ResponseCode.RETAILOR_NOT_FOUND);
     	}
-		return customerDao.get(retailerId);
+		List<Customer>  customers =  customerDao.get(retailerId);
+		Map<String,List<Customer>> customerMapByDate = new WeakHashMap<String,List<Customer>>();
+		customers.forEach(customer1 -> {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
+            String date =simpleDateFormat.format(new Date(customer1.getCreatedDate().getTime()));
+            if(!customerMapByDate.containsKey(date)){
+            	LinkedList<Customer> temp = new LinkedList<Customer>();
+                temp.add(customer1);
+                customerMapByDate.put(date,temp);
+            }else {
+                customerMapByDate.get(date).add(customer1);
+            }
+        });
+		return customerMapByDate;
 	}
 
 }

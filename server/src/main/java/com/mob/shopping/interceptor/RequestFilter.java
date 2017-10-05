@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,38 +34,51 @@ public class RequestFilter extends OncePerRequestFilter {
 
 	private final Logger logger = LoggerFactory.getLogger(RequestFilter.class.getName());
 
-	// @Autowired
-	// private YatraConstants yatraConstants;
-	//
-
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
+		ServletRequestWrapper myrequest = null;
 		try {
+			try {
+
+				if (!request.getMethod().equals(RequestMethod.GET)) {
+					myrequest = new ServletRequestWrapper(request);
+				}
+			} catch (Exception e) {
+
+			}
+
 			if (CommonUtility.isValidString(request.getHeader(Constants.Headers.AUTH_TOKEN))) {
 				String tokenParsed = AuthUtils.decodeToken(request.getHeader(Constants.Headers.AUTH_TOKEN));
 				String[] list = tokenParsed.split(":");
-			
-				if (!CommonUtility.isValidString(tokenParsed)||CommonUtility.isNullObject(list) || list.length<3) {
+
+				if (!CommonUtility.isValidString(tokenParsed) || CommonUtility.isNullObject(list) || list.length < 3) {
 					throw new BaseApplicationException(ResponseCode.INVALID_TOKEN);
 				}
 				UserDto userDto = new UserDto();
-		    	userDto.setUserId(Long.parseLong(list[2]));
-		    	userDto.setMsisdn(list[0]);
-		    	userDto.setUserType(Integer.parseInt(list[1]));
-				request.setAttribute("user",userDto);
-				filterChain.doFilter(request, response);
-			}else{
-				String url = request.getRequestURL().toString();
-				if ("SKIP".equalsIgnoreCase(request.getHeader(Constants.Headers.KEY)) || !(url.contains("customer") || url.contains("action"))){
+				userDto.setUserId(Long.parseLong(list[2]));
+				userDto.setMsisdn(list[0]);
+				userDto.setUserType(Integer.parseInt(list[1]));
+				request.setAttribute("user", userDto);
+				if (myrequest == null) {
 					filterChain.doFilter(request, response);
 				} else {
-					logger.error("INVALID_USER ::"+ ResponseCode.INVALID_USER);
+					filterChain.doFilter(myrequest, response);
+				}
+			} else {
+				String url = request.getRequestURL().toString();
+				if ("SKIP".equalsIgnoreCase(request.getHeader(Constants.Headers.KEY))
+						|| !(url.contains("customer") || url.contains("action"))) {
+					if (myrequest == null) {
+						filterChain.doFilter(request, response);
+					} else {
+						filterChain.doFilter(myrequest, response);
+					}
+				} else {
+					logger.error("INVALID_USER ::" + ResponseCode.INVALID_USER);
 					throw new BaseApplicationException(ResponseCode.INVALID_USER);
 				}
 			}
-
-			
 
 		} catch (BaseApplicationException e) {
 			RestResponse<?> err = RestUtils.errorResponseEnum(e.getResponseCode());
@@ -76,7 +90,7 @@ public class RequestFilter extends OncePerRequestFilter {
 			response.setStatus(HttpStatus.OK.value());
 			response.setHeader("content-type", "application/json");
 			response.getWriter().write(convertObjectToJson(err));
-			
+
 		}
 
 	}

@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.exception.BaseApplicationException;
+import com.mob.shopping.security.AES;
 import com.mob.shopping.security.EdCipher;
 import com.mob.shopping.security.EdCipherData;
 import com.mob.shopping.security.EncryptionRSA;
@@ -27,7 +28,7 @@ import com.mob.shopping.util.CommonUtility;
 import com.mob.shopping.util.Constants;
 
 /**
- * @author Ashish Gupta
+ * @author Ajay Mishra
  */
 
 public class ServletRequestWrapper extends HttpServletRequestWrapper {
@@ -41,8 +42,7 @@ public class ServletRequestWrapper extends HttpServletRequestWrapper {
 	public ServletRequestWrapper(HttpServletRequest request) throws AuthenticationException, JSONException, IOException, GeneralSecurityException {
 		super(request);
 		StringBuilder stringBuilder = new StringBuilder();
-		String userId = request.getHeader(Constants.Headers.USER_ID);
-		logger.info("Decryption Logic starting for userId :: ",userId);
+		logger.info("Decryption Logic starting for userId :: ");
 		try {
 			InputStream inputStream = request.getInputStream();
 			if (inputStream != null) {
@@ -67,7 +67,8 @@ public class ServletRequestWrapper extends HttpServletRequestWrapper {
 				throw new BaseApplicationException(ResponseCode.INVALID_PARAMETER);
 			}
 			
-			decrytedData = dataDecrypt(Base64.decodeBase64(encryptedData), encryptedKey, userId);
+			//decrytedData = dataDecrypt(Base64.decodeBase64(encryptedData), encryptedKey, userId);
+			decrytedData = AES.decrypt(encryptedData,"secret");
 		}
 		logger.info("Request After modification :: " + decrytedData);
 		payload = decrytedData;
@@ -109,8 +110,9 @@ public class ServletRequestWrapper extends HttpServletRequestWrapper {
 	public String getPayload() {
 		return payload;
 	}
-
+	
 	public String dataDecrypt(byte[] bs, String encryptedKey, String userId) throws BaseApplicationException, IOException, GeneralSecurityException {
+		
 		logger.info("data decrypt method entered :: user ID :: ",userId);
 		EncryptionRSA encryptionRSA = new EncryptionRSA();
 		EdCipher edCipher = new EdCipher();
