@@ -1,12 +1,13 @@
 package com.mob.shopping.service.impl;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
-import com.mob.shopping.constants.enums.UserType;
-import com.mob.shopping.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,14 @@ import org.springframework.stereotype.Service;
 
 import com.mob.shopping.beans.request.RetailerDto;
 import com.mob.shopping.constants.enums.RegistrationStatus;
-import com.mob.shopping.entity.Retailer;
 import com.mob.shopping.constants.enums.ResponseCode;
+import com.mob.shopping.constants.enums.UserType;
+import com.mob.shopping.entity.Retailer;
 import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.repository.RetailerDao;
 import com.mob.shopping.service.MasterConfigService;
 import com.mob.shopping.service.RetailerServices;
+import com.mob.shopping.service.UserService;
 import com.mob.shopping.util.CommonUtility;
 
 @Service
@@ -47,6 +50,7 @@ public class RetailerServicesImpl implements RetailerServices {
 		retailer.setCreatedDate(new Timestamp(System.currentTimeMillis()));
 		retailer.setLastModifiedDate(new Timestamp(System.currentTimeMillis()));
 		retailer.setGstNumber(registrationRequest.getGstNumber());
+		retailer.setAddress(registrationRequest.getAddress());
 		if(!CommonUtility.isValidString(registrationRequest.getMsisdn()) || !CommonUtility.isValidString(registrationRequest.getStoreName())
 				|| !CommonUtility.isValidLong(registrationRequest.getDistrictId())){
 			String method = "[SERVICE] register>>>>  :: Missing > Msisdn | StoreName | DistrictId ";
@@ -61,8 +65,9 @@ public class RetailerServicesImpl implements RetailerServices {
 	}
 
 
+	
 	@Override
-	public Map get(Long distributorId) throws BaseApplicationException {
+	public Map<String,List<Retailer>> get(Long distributorId) throws BaseApplicationException {
 		String method = "[SERVICE] get>>>>  :: distributorId > distributorId ";
     	logger.error(method);
     	List<Retailer> retailer =  retailerDao.get(distributorId);
@@ -74,7 +79,7 @@ public class RetailerServicesImpl implements RetailerServices {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
             String date =simpleDateFormat.format(new Date(retailer1.getCreatedDate().getTime()));
             if(!retailerMapByDate.containsKey(date)){
-                List temp = new LinkedList<Retailer>();
+            	LinkedList<Retailer> temp = new LinkedList<Retailer>();
                 temp.add(retailer1);
                 retailerMapByDate.put(date,temp);
             }else {

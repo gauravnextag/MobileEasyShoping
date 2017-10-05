@@ -15,6 +15,7 @@ import com.mob.shopping.service.CustomerServices;
 import com.mob.shopping.util.CommonUtility;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class CustomerServicesImpl implements CustomerServices {
@@ -55,6 +56,15 @@ public class CustomerServicesImpl implements CustomerServices {
 	    	logger.error(method);
 			throw new BaseApplicationException(ResponseCode.INVALID_PARAMETER);
 		}
+	}
+
+	@Override
+	public List<Customer> get(Long retailerId) {
+		
+		if(!CommonUtility.isValidLong(retailerId)){
+    		throw new BaseApplicationException(ResponseCode.RETAILOR_NOT_FOUND);
+    	}
+		return customerDao.get(retailerId);
 	}
 
 }

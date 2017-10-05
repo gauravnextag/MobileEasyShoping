@@ -3,9 +3,13 @@ package com.mob.shopping.entity;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import javax.persistence.*;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -42,6 +46,9 @@ public class Retailer implements Serializable {
 
     @Column(name = "GST_NUMBER")
     private String gstNumber ;
+    
+    @Column(name = "ADDRESS")
+    private String address;
 
     @JsonIgnore
     @Column(name = "IS_DELETED")
@@ -131,27 +138,26 @@ public class Retailer implements Serializable {
     public void setGstNumber(String gstNumber) {
         this.gstNumber = gstNumber;
     }
+    
+    public String getAddress() {
+		return address;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("storeName", storeName)
-                .append("districtId", districtId)
-                .append("distributorId", distributorId)
-                .append("msisdn", msisdn)
-                .append("registrationStatus", registrationStatus)
-                .append("gstNumber", gstNumber)
-                .append("isDeleted", isDeleted)
-                .append("createdDate", createdDate)
-                .append("lastModifiedDate", lastModifiedDate)
-                .toString();
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    public Timestamp getLastModifiedDate() {
+	public Timestamp getLastModifiedDate() {
         return lastModifiedDate;
     }
-
+	
+	@Override
+	public String toString() {
+		return "Retailer [id=" + id + ", storeName=" + storeName + ", districtId=" + districtId + ", distributorId="
+				+ distributorId + ", msisdn=" + msisdn + ", registrationStatus=" + registrationStatus + ", gstNumber="
+				+ gstNumber + ", address=" + address + ", isDeleted=" + isDeleted + ", createdDate=" + createdDate
+				+ ", lastModifiedDate=" + lastModifiedDate + "]";
+	}
 
 
 }

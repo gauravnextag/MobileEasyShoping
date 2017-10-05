@@ -15,6 +15,7 @@ import com.mob.shopping.entity.District;
 import com.mob.shopping.entity.State;
 import com.mob.shopping.exception.DaoException;
 import com.mob.shopping.repository.RegionDao;
+import com.mob.shopping.util.Constants;
 
 @Transactional
 @Repository
@@ -37,7 +38,8 @@ public class RegionDaoImpl implements RegionDao {
     public List<District> getDistricts(Long stateId) throws DaoException {
             LOGGER.info("Fetching list of district corresponding to state id: {}",stateId);
             Session session = sessionFactory.getCurrentSession();
-            return  session.createCriteria(District.class).add(Restrictions.eq("stateId", stateId)).list();
+            return  session.createCriteria(District.class).add(Restrictions.eq(Constants.STATE_ID, stateId))
+            		.add(Restrictions.eq(Constants.IS_DELETED,0)).list();
     }
 
 }

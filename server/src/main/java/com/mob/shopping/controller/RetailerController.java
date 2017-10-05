@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mob.shopping.beans.request.RegistrationRequest;
 import com.mob.shopping.beans.request.RetailerDto;
 import com.mob.shopping.entity.Retailer;
 import com.mob.shopping.service.RetailerServices;
@@ -39,7 +38,7 @@ public class RetailerController {
     }
 
     @RequestMapping(value = "/{distributorId}", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<RestResponse<Map>> getRetailer(@PathVariable Long distributorId) {
+    public @ResponseBody ResponseEntity<RestResponse<Map<String,List<Retailer>>>> getRetailer(@PathVariable Long distributorId) {
     	String method = "[CONTROLLER] getRetailer>>>> distributorId :: "+distributorId;
     	logger.info(method);
     	return RestUtils.successResponse(retailerServices.get(distributorId));

@@ -10,6 +10,7 @@ public interface Constants {
 	String  IS_DELETED = "isDeleted";
 	String  MSISDN   = "msisdn";
 	String USER_ID   = "userId";
+	String STATE_ID = "stateId";
 
 	public interface DISTRIBUTOR {
 		String DISTRICT_ID = "districtId";
@@ -27,5 +28,11 @@ public interface Constants {
 		String DATA = "DATA";
 		String USER_ID = "USER-ID";
 	}
+	
+	public interface Customer {
+		String RETAILER_ID = "retailerID";
+	}
+	
+	
 
 }

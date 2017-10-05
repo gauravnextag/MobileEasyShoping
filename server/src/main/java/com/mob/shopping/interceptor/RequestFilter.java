@@ -56,7 +56,7 @@ public class RequestFilter extends OncePerRequestFilter {
 				filterChain.doFilter(request, response);
 			}else{
 				String url = request.getRequestURL().toString();
-				if (!(url.contains("customer") || url.contains("action"))){
+				if ("SKIP".equalsIgnoreCase(request.getHeader(Constants.Headers.KEY)) || !(url.contains("customer") || url.contains("action"))){
 					filterChain.doFilter(request, response);
 				} else {
 					logger.error("INVALID_USER ::"+ ResponseCode.INVALID_USER);

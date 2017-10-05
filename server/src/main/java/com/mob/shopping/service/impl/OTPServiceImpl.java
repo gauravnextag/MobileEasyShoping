@@ -1,13 +1,18 @@
 package com.mob.shopping.service.impl;
 
+import java.text.MessageFormat;
+import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.mob.shopping.beans.OTPOperationDTO;
 import com.mob.shopping.constants.ConfigConstants;
 import com.mob.shopping.constants.ErrorConstants;
-import com.mob.shopping.constants.enums.UserType;
-import com.mob.shopping.entity.Distributor;
-import com.mob.shopping.entity.OTP;
 import com.mob.shopping.constants.enums.ResponseCode;
-import com.mob.shopping.entity.Retailer;
+import com.mob.shopping.entity.OTP;
 import com.mob.shopping.entity.User;
 import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.exception.BusinessException;
@@ -20,13 +25,6 @@ import com.mob.shopping.service.MessageBrokerService;
 import com.mob.shopping.service.OTPService;
 import com.mob.shopping.service.UserService;
 import com.mob.shopping.util.AuthUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.text.MessageFormat;
-import java.util.UUID;
 
 @Component("OTPServiceImpl")
 public class OTPServiceImpl implements OTPService {

@@ -16,6 +16,7 @@ import com.mob.shopping.entity.ConfigMaster;
 import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.exception.DaoException;
 import com.mob.shopping.repository.MasterConfigDao;
+import com.mob.shopping.util.Constants;
 
 @Transactional
 @Repository
@@ -30,7 +31,10 @@ public class MasterConfigDaoImpl implements MasterConfigDao {
     public String findByKey(String key) throws DaoException {
         try {
             Session session = sessionFactory.getCurrentSession();
-            List<ConfigMaster> result = session.createCriteria(ConfigMaster.class).add(Restrictions.eq("key", key)).list();
+            @SuppressWarnings("unchecked")
+			List<ConfigMaster> result = session.createCriteria(ConfigMaster.class).add(Restrictions.eq("key", key))
+            		.add(Restrictions.eq(Constants.IS_DELETED,0))
+            		.list();
             if (CollectionUtils.isNotEmpty(result)) {
                 return result.get(0).getValue();
             } else {
@@ -46,7 +50,9 @@ public class MasterConfigDaoImpl implements MasterConfigDao {
     public List<ConfigMaster> getAllConfigData() throws DaoException {
         try {
             Session session = sessionFactory.getCurrentSession();
-            List<ConfigMaster> result = session.createCriteria(ConfigMaster.class).list();
+            @SuppressWarnings("unchecked")
+			List<ConfigMaster> result = session.createCriteria(ConfigMaster.class)
+            		.add(Restrictions.eq(Constants.IS_DELETED,0)).list();
             return result;
         } catch (Exception e) {
             LOGGER.error("Inside BankMasterConfigDaoImpl:fetching Value,error {}", e.getMessage());

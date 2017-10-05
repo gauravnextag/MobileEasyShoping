@@ -2,7 +2,6 @@ package com.mob.shopping.repository.Impl;
 
 import java.util.List;
 
-import com.mob.shopping.constants.enums.ResponseCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mob.shopping.constants.enums.RegistrationStatus;
+import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.entity.Retailer;
 import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.exception.DaoException;
@@ -73,10 +73,11 @@ public class RetailerDaoImpl implements RetailerDao {
         String method = "[DAO] FETCH>>>> Retailer :: ";
         logger.info(method);
         Session session = sessionFactory.getCurrentSession();
-       List<Retailer> retailers = session.createCriteria(Retailer.class)
-               .add(Restrictions.eq("msisdn",msisdn))
+       @SuppressWarnings("unchecked")
+	List<Retailer> retailers = session.createCriteria(Retailer.class)
+               .add(Restrictions.eq(Constants.MSISDN,msisdn))
                .add(Restrictions.eq("registrationStatus",registrationStatus))
-               .add(Restrictions.eq("isDeleted",0))
+           	  .add(Restrictions.eq(Constants.IS_DELETED,0))
                .list();
         if(retailers!=null && retailers.size()>0){
             return retailers.get(0);
@@ -89,9 +90,10 @@ public class RetailerDaoImpl implements RetailerDao {
 		String method = "[DAO] FETCH>>>> Retailer :: ";
 		logger.info(method);
 		Session session = sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
 		List<Retailer> retailers = session.createCriteria(Retailer.class)
-				.add(Restrictions.eq("msisdn",msisdn))
-				.add(Restrictions.eq("isDeleted",0))
+				.add(Restrictions.eq(Constants.MSISDN,msisdn))
+				.add(Restrictions.eq(Constants.IS_DELETED,0))
 				.add(Restrictions.le("registrationStatus",1))
 				.list();
 		if(retailers!=null && retailers.size()>0){

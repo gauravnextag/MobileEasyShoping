@@ -3,8 +3,6 @@
  */
 package com.mob.shopping.beans.request;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import java.io.Serializable;
 
 public class RetailerDto implements Serializable{
@@ -24,6 +22,9 @@ public class RetailerDto implements Serializable{
     private String msisdn;
 
     private String gstNumber;
+    
+    private String address;
+    
 
     public Long getId() {
         return id;
@@ -84,17 +85,21 @@ public class RetailerDto implements Serializable{
     public void setGstNumber(String gstNumber) {
         this.gstNumber = gstNumber;
     }
+    
+    public String getAddress() {
+		return address;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("storeName", storeName)
-                .append("districtId", districtId)
-                .append("distributorId", distributorId)
-                .append("registrationStatus", registrationStatus)
-                .append("storeName", storeName)
-                .append("msisdn", msisdn)
-                .toString();
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	@Override
+	public String toString() {
+		return "RetailerDto [id=" + id + ", districtId=" + districtId + ", distributorId=" + distributorId
+				+ ", registrationStatus=" + registrationStatus + ", storeName=" + storeName + ", msisdn=" + msisdn
+				+ ", gstNumber=" + gstNumber + ", address=" + address + "]";
+	}
+
+
 }

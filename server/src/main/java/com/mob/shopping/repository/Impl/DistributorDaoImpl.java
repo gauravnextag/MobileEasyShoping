@@ -2,7 +2,6 @@ package com.mob.shopping.repository.Impl;
 
 import java.util.List;
 
-import com.mob.shopping.entity.Retailer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -31,7 +30,10 @@ public class DistributorDaoImpl implements DistributorDao {
     	String method = "[DAO] getDistributors>>>> districtId :: "+districtId;
     	logger.info(method);
             Session session = sessionFactory.getCurrentSession();
-            return session.createCriteria(Distributor.class).add(Restrictions.eq(Constants.DISTRIBUTOR.DISTRICT_ID, districtId)).list();
+            return session.createCriteria(Distributor.class)
+            		.add(Restrictions.eq(Constants.DISTRIBUTOR.DISTRICT_ID, districtId))
+            		.add(Restrictions.eq(Constants.IS_DELETED,0))
+            		.list();
 
     }
 
@@ -40,8 +42,11 @@ public class DistributorDaoImpl implements DistributorDao {
         String method = "[DAO] FETCH>>>> Distributor :: ";
         logger.info(method);
         Session session = sessionFactory.getCurrentSession();
-        List<Distributor> distributors = session.createCriteria(Distributor.class).add(Restrictions.eq("msisdn",msisdn))
-                .list();
+        @SuppressWarnings("unchecked")
+		List<Distributor> distributors = session.createCriteria(Distributor.class)
+		.add(Restrictions.eq(Constants.MSISDN,msisdn))
+		.add(Restrictions.eq(Constants.IS_DELETED,0))
+        .list();
         if(distributors!=null && distributors.size()>0){
             return distributors.get(0);
         }

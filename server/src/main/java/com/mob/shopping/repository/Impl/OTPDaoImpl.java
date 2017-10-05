@@ -8,6 +8,8 @@ import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.exception.DaoException;
 import com.mob.shopping.repository.OTPDao;
 import com.mob.shopping.service.MasterConfigService;
+import com.mob.shopping.util.Constants;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -47,7 +49,11 @@ public class OTPDaoImpl implements OTPDao {
             List<OTP> otpList;
             Session session = sessionFactory.getCurrentSession();
             logger.info("time:{}",expiryTimestamp);
-            otpList = session.createCriteria(OTP.class).add(Restrictions.eq("msisdn", msisdn)).add(Restrictions.gt("lastModifiedDate", expiryTimestamp)).list();
+            otpList = session.createCriteria(OTP.class)
+            		.add(Restrictions.eq(Constants.MSISDN, msisdn))
+            		.add(Restrictions.gt("lastModifiedDate", expiryTimestamp))
+            		.add(Restrictions.eq(Constants.IS_DELETED,0))
+            		.list();
 
             if (null != otpList && otpList.size() > 0) {
                 final OTP otpInfo = otpList.get(0);
@@ -111,7 +117,10 @@ public class OTPDaoImpl implements OTPDao {
             currentTimestamp.setTime(currentTimestamp.getTime()+maxTimeAllowed*60*1000);
             final Timestamp expiryTimestamp = currentTimestamp;
 
-            List<OTP> otpList = session.createCriteria(OTP.class).add(Restrictions.eq("msisdn", msisdn)).list();
+            List<OTP> otpList = session.createCriteria(OTP.class)
+            		.add(Restrictions.eq(Constants.MSISDN, msisdn))
+            		.add(Restrictions.eq(Constants.IS_DELETED,0))
+            		.list();
 
             if(otpList != null && otpList.size() > 0){
                 if (otpList.get(0).getLastModifiedDate().getTime() > expiryTimestamp.getTime()) {
