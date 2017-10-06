@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -38,15 +37,15 @@ public class RequestFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		ServletRequestWrapper myrequest = null;
-		try {
-			try {
-
-				if (!request.getMethod().equals(RequestMethod.GET)) {
-					myrequest = new ServletRequestWrapper(request);
-				}
-			} catch (Exception e) {
-
-			}
+    	try {
+//			try {
+//
+//				if (!request.getMethod().equals(RequestMethod.GET)) {
+//					myrequest = new ServletRequestWrapper(request);
+//				}
+//			} catch (Exception e) {
+//
+//			}
 
 			if (CommonUtility.isValidString(request.getHeader(Constants.Headers.AUTH_TOKEN))) {
 				String tokenParsed = AuthUtils.decodeToken(request.getHeader(Constants.Headers.AUTH_TOKEN));

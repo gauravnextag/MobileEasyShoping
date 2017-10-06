@@ -66,4 +66,19 @@ public class AES {
         }
         return null;
     }
+    
+//    
+//    public static void main(String[] args) {
+//    	
+//    	System.out.println(AES.decrypt(AES.encrypt("strToEncrypt","secret"), "secret"));
+//		
+//	}
+    
+    
+    
+    
+    
+    
+    
+    
 }
