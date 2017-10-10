@@ -18,6 +18,6 @@ public interface OTPService {
 //
 //	OTPOperationDTO verifyOTPFromCache(DSLBean cached, DSLBean original);
 
-	OTP generateOTP(String msisdn) throws BaseApplicationException;
+	OTP generateOTP(String msisdn,Boolean isRegisteredUser) throws BaseApplicationException;
 
 }

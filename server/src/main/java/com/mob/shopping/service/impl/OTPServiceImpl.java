@@ -31,37 +31,36 @@ public class OTPServiceImpl implements OTPService {
 
 	private final Logger logger = LoggerFactory.getLogger(OTPServiceImpl.class);
 
-
 	@Autowired
 	private OTPDao otpDao;
 
-    @Autowired
-    MasterConfigService masterConfigService;
+	@Autowired
+	MasterConfigService masterConfigService;
 
-    @Autowired
-    CustomerDao customerDao;
-    @Autowired
-    RetailerDao retailerDao;
-    @Autowired
-    DistributorDao distributorDao;
+	@Autowired
+	CustomerDao customerDao;
+	@Autowired
+	RetailerDao retailerDao;
+	@Autowired
+	DistributorDao distributorDao;
 
-    @Autowired
-    UserService userService;
+	@Autowired
+	UserService userService;
 
 	@Autowired
 	private MessageBrokerService messageBrokerService;
 
-
 	public OTPOperationDTO verifyOTP(String msisdn, String otp, Long userId) {
 
 		OTPOperationDTO otpOperationDTO = null;
-		String key ="";
-        //check user valid
-        User user = userService.findByUserIdAndMSISDN(userId,msisdn);
+		String key = "";
+		// check user valid
+		User user = userService.findByUserIdAndMSISDN(userId, msisdn);
 		otpOperationDTO = otpDao.verifyOTP(msisdn, otp);
-		if(otpOperationDTO.getOtpStatus().equals(ErrorConstants.OTP_VERIFICATION_SUCCESS)){
-		   key =  key.concat(msisdn).concat(":").concat(user.getUserType().toString()).concat(":").concat(userId.toString());
-            otpOperationDTO.setAuthToken(AuthUtils.createToken(key));
+		if (otpOperationDTO.getOtpStatus().equals(ErrorConstants.OTP_VERIFICATION_SUCCESS)) {
+			key = key.concat(msisdn).concat(":").concat(user.getUserType().toString()).concat(":")
+					.concat(userId.toString());
+			otpOperationDTO.setAuthToken(AuthUtils.createToken(key));
 		}
 		otpOperationDTO.setUserId(user.getUserId());
 		otpOperationDTO.setUserType(user.getUserType());
@@ -69,46 +68,53 @@ public class OTPServiceImpl implements OTPService {
 	}
 
 	public boolean isMaxOTPAttempt(OTP otp) {
-        if (otp.getAttempts().intValue() >= Integer.parseInt(masterConfigService.
-                getValueByKey(ConfigConstants.MAX_OTP_ATTEMPT))) {
-            logger.info("areOTPGenerationExhausted is TRUE, maxOTPAttempts::" + masterConfigService.getValueByKey(ConfigConstants.MAX_OTP_ATTEMPT));
-            return true;
-        }
+		if (otp.getAttempts().intValue() >= Integer
+				.parseInt(masterConfigService.getValueByKey(ConfigConstants.MAX_OTP_ATTEMPT))) {
+			logger.info("areOTPGenerationExhausted is TRUE, maxOTPAttempts::"
+					+ masterConfigService.getValueByKey(ConfigConstants.MAX_OTP_ATTEMPT));
+			return true;
+		}
 
-        return false;
+		return false;
 	}
 
-	public OTP generateOTP(String msisdn) throws BaseApplicationException {
+	public OTP generateOTP(String msisdn, Boolean isRegisteredUser) throws BaseApplicationException {
 
-	    Long userId =null;
-	    //check user valid
+		Long userId = null;
 
-        User user = userService.findByMSISDN(msisdn);
-        logger.info("user:{}",user.toString());
-        userId = user.getUserId();
+		try {
+			User user = userService.findByMSISDN(msisdn);
+			logger.info("user:{}", user.toString());
+			userId = user.getUserId();
+		} catch (BaseApplicationException e) {
+			if (isRegisteredUser) {
+				throw new BaseApplicationException(ResponseCode.INVALID_USER);
+			}
+		}
+
 		OTP otp = null;
-	    Long oldAttempts = Long.valueOf(0);
-	    Long id = null;
-        UUID uuid = UUID.randomUUID();
-        String otpString = Long.toString(Math.abs(uuid.getLeastSignificantBits() % 1000000) * 10).substring(0,6);
-        try {
-        OTP oldOtp = otpDao.findByMsisdn(msisdn);
-        if(oldOtp!=null){
-            if(isMaxOTPAttempt(oldOtp)){
-                throw new BusinessException(ResponseCode.MAX_OTP_ATTEMPT_REACHED);
-            }
-            oldAttempts = oldOtp.getAttempts();
-            id =oldOtp.getId();
-        }
-        otp = otpDao.generateOTP(msisdn, otpString, uuid.toString(),id,oldAttempts);
+		Long oldAttempts = Long.valueOf(0);
+		Long id = null;
+		UUID uuid = UUID.randomUUID();
+		String otpString = Long.toString(Math.abs(uuid.getLeastSignificantBits() % 1000000) * 10).substring(0, 6);
+		try {
+			OTP oldOtp = otpDao.findByMsisdn(msisdn);
+			if (oldOtp != null) {
+				if (isMaxOTPAttempt(oldOtp)) {
+					throw new BusinessException(ResponseCode.MAX_OTP_ATTEMPT_REACHED);
+				}
+				oldAttempts = oldOtp.getAttempts();
+				id = oldOtp.getId();
+			}
+			otp = otpDao.generateOTP(msisdn, otpString, uuid.toString(), id, oldAttempts);
 
-            messageBrokerService.sendMessage(msisdn, masterConfigService.getValueByKey(ConfigConstants.OTP_SHORT_CODE),
-                    MessageFormat.format(masterConfigService.getValueByKey(ConfigConstants.OTP_SMS), otp.getOpt()));
-        }catch (Exception e){
+			messageBrokerService.sendMessage(msisdn, masterConfigService.getValueByKey(ConfigConstants.OTP_SHORT_CODE),
+					MessageFormat.format(masterConfigService.getValueByKey(ConfigConstants.OTP_SMS), otp.getOpt()));
+		} catch (Exception e) {
 
-        }
-        //otp.setOpt("");//Not sending otp Code to UI
-        otp.setUserId(userId);
+		}
+		// otp.setOpt("");//Not sending otp Code to UI
+		otp.setUserId(userId);
 		return otp;
 	}
 
