@@ -6,11 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -74,6 +74,7 @@ public class DistributorController {
     	List<Distributor> distributorsList = new ArrayList<Distributor>();
     	HashMap<String,State> statesMap = new HashMap<String,State>();
     	HashMap<String,District> districtMap = new HashMap<String,District>();
+    	List<Integer> list = new ArrayList<Integer>();
     	
     	
          FileInputStream inputStream = null;
@@ -98,6 +99,8 @@ public class DistributorController {
          
          while (iterator.hasNext()) {
         	 count++;
+        	 try {
+			
              Row nextRow = iterator.next();
              String region = String.valueOf(nextRow.getCell(0))+"".trim();
              String sdMdId = String.valueOf(nextRow.getCell(1))+"".trim();
@@ -166,10 +169,17 @@ public class DistributorController {
              distributorDao.save(distributor);
              distributorsList.add(distributor);
              System.out.println("processing  >> "+count);
+        	 } catch (Exception e) {
+  				list.add(count);
+  	             System.out.println("Failed Row   >> "+count);
+
+  			}
+ 			
 
          }
          
          System.out.println("processed  >> "+distributorsList.size());
+         System.out.println("failed  >> "+Arrays.asList(list));
 
          
          }
