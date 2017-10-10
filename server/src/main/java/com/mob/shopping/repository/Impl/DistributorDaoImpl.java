@@ -54,4 +54,11 @@ public class DistributorDaoImpl implements DistributorDao {
     }
 
 
+	@Override
+	public void save(Distributor distributor) throws DaoException {
+        Session session = sessionFactory.getCurrentSession();
+        session.persist(distributor);
+	}
+
+
 }

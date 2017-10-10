@@ -42,4 +42,36 @@ public class RegionDaoImpl implements RegionDao {
             		.add(Restrictions.eq(Constants.IS_DELETED,0)).list();
     }
 
+	@Override
+	public State findOrSaveState(State state) throws DaoException {
+        Session session = sessionFactory.getCurrentSession();
+        State stateObj  = (State) session.createCriteria(State.class).add(Restrictions.eq(Constants.NAME, state.getName()))
+		.add(Restrictions.eq(Constants.IS_DELETED,0)).uniqueResult();
+    
+        if(stateObj==null){
+        	  session.persist(state);
+        	  stateObj  = (State) session.createCriteria(State.class).add(Restrictions.eq(Constants.NAME, state.getName()))
+        	    		.add(Restrictions.eq(Constants.IS_DELETED,0)).uniqueResult();
+        }
+        return stateObj;
+       
+	
+	}
+
+	
+	@Override
+	public District findOrSaveDistrict(District district) throws DaoException {
+	    Session session = sessionFactory.getCurrentSession();
+	    District districtObj  = (District) session.createCriteria(District.class).add(Restrictions.eq(Constants.NAME, district.getName()))
+		.add(Restrictions.eq(Constants.IS_DELETED,0)).uniqueResult();
+    
+        if(districtObj==null){
+        	  session.persist(district);
+        	  districtObj  = (District) session.createCriteria(District.class).add(Restrictions.eq(Constants.NAME, district.getName()))
+        	    		.add(Restrictions.eq(Constants.IS_DELETED,0)).uniqueResult();
+        }
+        return districtObj;
+       
+	}
+
 }

@@ -1,11 +1,17 @@
 package com.mob.shopping.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Created by B0097545 on 9/4/17.
@@ -14,111 +20,182 @@ import java.sql.Timestamp;
 @Table(name = "DISTRIBUTOR")
 public class Distributor implements Serializable {
 
-    @Id
-    @SequenceGenerator(name = "DISTRIBUTOR_SEQ", sequenceName = "DISTRIBUTOR_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DISTRIBUTOR_SEQ")
-    @Column(name = "ID")
-    private Long id;
+	private static final long serialVersionUID = 1214811411152820677L;
 
-    @Column(name = "NAME")
-    private String name;
+	@Id
+	@SequenceGenerator(name = "DISTRIBUTOR_SEQ", sequenceName = "DISTRIBUTOR_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DISTRIBUTOR_SEQ")
+	@Column(name = "ID")
+	private Long id;
 
-    @Column(name = "DISTRICT_ID")
-    private Long districtId;
+	@Column(name = "NAME")
+	private String name;
 
-    @Column(name = "MSISDN")
-    private String msisdn;
+	@Column(name = "DISTRICT_ID")
+	private Long districtId;
 
-    @Column(name = "ADDRESS")
-    private String address;
+	@Column(name = "MSISDN")
+	private String msisdn;
 
-    @JsonIgnore
-    @Column(name = "IS_DELETED")
-    private int isDeleted;
+	@Column(name = "ADDRESS")
+	private String address;
 
-    @JsonIgnore
-    @Column(name="CREATED_DATE")
-    private Timestamp createdDate;
+	@Column(name = "REGION")
+	private String region;
 
-    @JsonIgnore
-    @Column(name="LAST_MODIFIED_DATE")
-    private Timestamp lastModifiedDate;
+	@Column(name = "CITY")
+	private String city;
 
-    public Long getId() {
-        return id;
-    }
+	@Column(name = "SRD_MD_ID")
+	private String srdMdId;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@Column(name = "SRD_MD_TYPE")
+	private String srdMdType;
 
-    public String getName() {
-        return name;
-    }
+	@Column(name = "SRD_MD_NAME")
+	private String srdMdName;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@Column(name = "EMAIL")
+	private String email;
 
-    public Long getDistrictId() {
-        return districtId;
-    }
+	@JsonIgnore
+	@Column(name = "IS_DELETED")
+	private int isDeleted;
 
-    public void setDistrictId(Long districtId) {
-        this.districtId = districtId;
-    }
+	@JsonIgnore
+	@Column(name = "CREATED_DATE")
+	private Timestamp createdDate;
 
-    public String getMsisdn() {
-        return msisdn;
-    }
+	@JsonIgnore
+	@Column(name = "LAST_MODIFIED_DATE")
+	private Timestamp lastModifiedDate;
 
-    public void setMsisdn(String msisdn) {
-        this.msisdn = msisdn;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public int getIsDeleted() {
-        return isDeleted;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setIsDeleted(int isDeleted) {
-        this.isDeleted = isDeleted;
-    }
+	public Long getDistrictId() {
+		return districtId;
+	}
 
-    public Timestamp getCreatedDate() {
-        return createdDate;
-    }
+	public void setDistrictId(Long districtId) {
+		this.districtId = districtId;
+	}
 
-    public void setCreatedDate(Timestamp createdDate) {
-        this.createdDate = createdDate;
-    }
+	public String getMsisdn() {
+		return msisdn;
+	}
 
-    public Timestamp getLastModifiedDate() {
-        return lastModifiedDate;
-    }
+	public void setMsisdn(String msisdn) {
+		this.msisdn = msisdn;
+	}
 
-    public void setLastModifiedDate(Timestamp lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("name", name)
-                .append("districtId", districtId)
-                .append("msisdn", msisdn)
-                .append("address", address)
-                .append("isDeleted", isDeleted)
-                .append("createdDate", createdDate)
-                .append("lastModifiedDate", lastModifiedDate)
-                .toString();
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getSrdMdId() {
+		return srdMdId;
+	}
+
+	public void setSrdMdId(String srdMdId) {
+		this.srdMdId = srdMdId;
+	}
+
+	public String getSrdMdType() {
+		return srdMdType;
+	}
+
+	public void setSrdMdType(String srdMdType) {
+		this.srdMdType = srdMdType;
+	}
+
+	public String getSrdMdName() {
+		return srdMdName;
+	}
+
+	public void setSrdMdName(String srdMdName) {
+		this.srdMdName = srdMdName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public int getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(int isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
+	public Timestamp getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Timestamp createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Timestamp getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Timestamp lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	@Override
+	public String toString() {
+		return "Distributor [id=" + id + ", name=" + name + ", districtId=" + districtId + ", msisdn=" + msisdn
+				+ ", address=" + address + ", region=" + region + ", city=" + city + ", srdMdId=" + srdMdId
+				+ ", srdMdType=" + srdMdType + ", srdMdName=" + srdMdName + ", email=" + email + ", isDeleted="
+				+ isDeleted + ", createdDate=" + createdDate + ", lastModifiedDate=" + lastModifiedDate + ", getId()="
+				+ getId() + ", getName()=" + getName() + ", getDistrictId()=" + getDistrictId() + ", getMsisdn()="
+				+ getMsisdn() + ", getAddress()=" + getAddress() + ", getRegion()=" + getRegion() + ", getCity()="
+				+ getCity() + ", getSrdMdId()=" + getSrdMdId() + ", getSrdMdType()=" + getSrdMdType()
+				+ ", getSrdMdName()=" + getSrdMdName() + ", getEmail()=" + getEmail() + ", getIsDeleted()="
+				+ getIsDeleted() + ", getCreatedDate()=" + getCreatedDate() + ", getLastModifiedDate()="
+				+ getLastModifiedDate() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
+	}
+
+	
 }

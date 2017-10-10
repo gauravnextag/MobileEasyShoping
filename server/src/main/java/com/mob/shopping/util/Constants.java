@@ -11,6 +11,8 @@ public interface Constants {
 	String  MSISDN   = "msisdn";
 	String USER_ID   = "userId";
 	String STATE_ID = "stateId";
+	String NAME = "name";
+
 
 	public interface DISTRIBUTOR {
 		String DISTRICT_ID = "districtId";

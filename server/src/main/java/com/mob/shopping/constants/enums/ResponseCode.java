@@ -21,7 +21,9 @@ public enum ResponseCode {
 	USER_NOT_AUTHORIZE(5010,"User. not authorize. Please register"),
 	RETAILER_ALREADY_REGISTER(5011," User is already register"),
 	RETAILER_REQUEST_PENDING(5012," Your request is pending . Please contact your Distributor to approve your account"),
-	NO_PENDING_USER(5013," No Pending user found")
+	NO_PENDING_USER(5013," No Pending user found"),
+	INVALID_OTP(5014, "Your request could not served. Invalid Otp!")
+
 	;
 
 	private final int code;

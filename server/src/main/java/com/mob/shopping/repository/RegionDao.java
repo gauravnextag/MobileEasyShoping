@@ -8,5 +8,8 @@ import com.mob.shopping.exception.DaoException;
 
 public interface RegionDao {
    public List<State> getStates() throws DaoException;
+   public State findOrSaveState(State state) throws DaoException;
    public List<District> getDistricts(Long stateId) throws DaoException;
+   public District findOrSaveDistrict(District district) throws DaoException;
+
 }

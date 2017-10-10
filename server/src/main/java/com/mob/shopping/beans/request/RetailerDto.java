@@ -25,6 +25,11 @@ public class RetailerDto implements Serializable{
     
     private String address;
     
+    private String otp;
+    
+    private String lapuNumber;
+    
+    
 
     public Long getId() {
         return id;
@@ -93,13 +98,32 @@ public class RetailerDto implements Serializable{
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+	public String getOtp() {
+		return otp;
+	}
+
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
+
+	public String getLapuNumber() {
+		return lapuNumber;
+	}
+
+	public void setLapuNumber(String lapuNumber) {
+		this.lapuNumber = lapuNumber;
+	}
 
 	@Override
 	public String toString() {
 		return "RetailerDto [id=" + id + ", districtId=" + districtId + ", distributorId=" + distributorId
 				+ ", registrationStatus=" + registrationStatus + ", storeName=" + storeName + ", msisdn=" + msisdn
-				+ ", gstNumber=" + gstNumber + ", address=" + address + "]";
+				+ ", gstNumber=" + gstNumber + ", address=" + address + ", otp=" + otp + ", lapuNumber=" + lapuNumber
+				+ "]";
 	}
+
+	
 
 
 }

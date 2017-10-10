@@ -49,6 +49,9 @@ public class Retailer implements Serializable {
     
     @Column(name = "ADDRESS")
     private String address;
+    
+    @Column(name = "LAPU_NUMBER")
+    private String lapuNumber;
 
     @JsonIgnore
     @Column(name = "IS_DELETED")
@@ -147,17 +150,27 @@ public class Retailer implements Serializable {
 		this.address = address;
 	}
 
+	public String getLapuNumber() {
+		return lapuNumber;
+	}
+
+	public void setLapuNumber(String lapuNumber) {
+		this.lapuNumber = lapuNumber;
+	}
+
 	public Timestamp getLastModifiedDate() {
         return lastModifiedDate;
     }
-	
+
 	@Override
 	public String toString() {
 		return "Retailer [id=" + id + ", storeName=" + storeName + ", districtId=" + districtId + ", distributorId="
 				+ distributorId + ", msisdn=" + msisdn + ", registrationStatus=" + registrationStatus + ", gstNumber="
-				+ gstNumber + ", address=" + address + ", isDeleted=" + isDeleted + ", createdDate=" + createdDate
-				+ ", lastModifiedDate=" + lastModifiedDate + "]";
+				+ gstNumber + ", address=" + address + ", lapuNumber=" + lapuNumber + ", isDeleted=" + isDeleted
+				+ ", createdDate=" + createdDate + ", lastModifiedDate=" + lastModifiedDate + "]";
 	}
+	
+	
 
 
 }

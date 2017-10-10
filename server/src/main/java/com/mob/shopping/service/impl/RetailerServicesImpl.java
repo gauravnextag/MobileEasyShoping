@@ -13,12 +13,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mob.shopping.beans.OTPOperationDTO;
 import com.mob.shopping.beans.request.RetailerDto;
+import com.mob.shopping.constants.ErrorConstants;
 import com.mob.shopping.constants.enums.RegistrationStatus;
 import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.constants.enums.UserType;
 import com.mob.shopping.entity.Retailer;
 import com.mob.shopping.exception.BaseApplicationException;
+import com.mob.shopping.repository.OTPDao;
 import com.mob.shopping.repository.RetailerDao;
 import com.mob.shopping.service.MasterConfigService;
 import com.mob.shopping.service.RetailerServices;
@@ -36,11 +39,23 @@ public class RetailerServicesImpl implements RetailerServices {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	OTPDao otpDao;
 
 	private static final Logger logger = LoggerFactory.getLogger(RetailerServicesImpl.class);
 
 	@Override
     public void register(RetailerDto registrationRequest) throws BaseApplicationException {
+		if(CommonUtility.isValidString(registrationRequest.getMsisdn())&&CommonUtility.isValidString(registrationRequest.getOtp()) ){
+			OTPOperationDTO oTPOperationDTO = otpDao.verifyOTP(registrationRequest.getMsisdn(), registrationRequest.getOtp());
+			if(!oTPOperationDTO.getOtpStatus().equalsIgnoreCase(ErrorConstants.OTP_VERIFICATION_SUCCESS)){
+				throw new BaseApplicationException(ResponseCode.INVALID_OTP);
+			}
+		}else{
+			throw new BaseApplicationException(ResponseCode.INVALID_PARAMETER);
+		}
+		
 		Retailer retailer = new Retailer();
 		retailer.setDistrictId(registrationRequest.getDistrictId());
 		retailer.setDistributorId(registrationRequest.getDistributorId());
@@ -51,7 +66,9 @@ public class RetailerServicesImpl implements RetailerServices {
 		retailer.setLastModifiedDate(new Timestamp(System.currentTimeMillis()));
 		retailer.setGstNumber(registrationRequest.getGstNumber());
 		retailer.setAddress(registrationRequest.getAddress());
-		if(!CommonUtility.isValidString(registrationRequest.getMsisdn()) || !CommonUtility.isValidString(registrationRequest.getStoreName())
+		retailer.setLapuNumber(registrationRequest.getLapuNumber());
+		
+		if(!CommonUtility.isValidString(registrationRequest.getStoreName())
 				|| !CommonUtility.isValidLong(registrationRequest.getDistrictId())){
 			String method = "[SERVICE] register>>>>  :: Missing > Msisdn | StoreName | DistrictId ";
 			logger.error(method);
