@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,7 @@ public class DistributorDaoImpl implements DistributorDao {
             return session.createCriteria(Distributor.class)
             		.add(Restrictions.eq(Constants.DISTRIBUTOR.DISTRICT_ID, districtId))
             		.add(Restrictions.eq(Constants.IS_DELETED,0))
+            		.addOrder(Order.asc(Constants.DISTRIBUTOR.RETAILER_COUNT))
             		.list();
 
     }
@@ -58,6 +60,18 @@ public class DistributorDaoImpl implements DistributorDao {
 	public void save(Distributor distributor) throws DaoException {
         Session session = sessionFactory.getCurrentSession();
         session.persist(distributor);
+	}
+
+	
+	@Override
+	public Distributor getById(Long distributorId) throws DaoException {
+		String method = "[DAO] getDistributors>>>> distributorId :: "+distributorId;
+    	logger.info(method);
+            Session session = sessionFactory.getCurrentSession();
+            return (Distributor) session.createCriteria(Distributor.class)
+            		.add(Restrictions.eq(Constants.ID, distributorId))
+            		.add(Restrictions.eq(Constants.IS_DELETED,0)).uniqueResult();
+            		
 	}
 
 

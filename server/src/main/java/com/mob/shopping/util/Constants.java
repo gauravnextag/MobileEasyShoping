@@ -16,6 +16,8 @@ public interface Constants {
 
 	public interface DISTRIBUTOR {
 		String DISTRICT_ID = "districtId";
+		String RETAILER_COUNT = "retailerCount";
+
 	}
 	
 	

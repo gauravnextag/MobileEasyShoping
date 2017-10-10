@@ -18,23 +18,40 @@ import com.mob.shopping.util.CommonUtility;
 @Service
 public class DistributorServicesImpl implements DistributorServices {
 
-    private static final Logger logger = LoggerFactory.getLogger(DistributorServicesImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(DistributorServicesImpl.class);
 
-    @Autowired
-    MasterConfigService masterConfigService;
+	@Autowired
+	MasterConfigService masterConfigService;
 
-    @Autowired
-    DistributorDao distributorDao;
+	@Autowired
+	DistributorDao distributorDao;
 
-
-
-    @SuppressWarnings("unchecked")
 	@Override
-    public List<Distributor> getDistributors(Long districtId) throws BaseApplicationException {
-    	if(!CommonUtility.isValidLong(districtId)){
-    		logger.error("Invalid districtId "+districtId);
-    		throw new BaseApplicationException(ResponseCode.INVALID_PARAMETER);
-    	}
-    return distributorDao.getDistributors(districtId);
-    }
+	public List<Distributor> getDistributors(Long districtId) throws BaseApplicationException {
+		if (!CommonUtility.isValidLong(districtId)) {
+			logger.error("Invalid districtId " + districtId);
+			throw new BaseApplicationException(ResponseCode.INVALID_PARAMETER);
+		}
+		return distributorDao.getDistributors(districtId);
+	}
+
+	@Override
+	public Distributor getById(Long distributorId) throws BaseApplicationException {
+		if (!CommonUtility.isValidLong(distributorId)) {
+			logger.error("Invalid districtId " + distributorId);
+			throw new BaseApplicationException(ResponseCode.INVALID_PARAMETER);
+		}
+		Distributor distributor = distributorDao.getById(distributorId);
+		if (distributor == null) {
+			throw new BaseApplicationException(ResponseCode.DISTRIBUTOR_NOT_FOUND);
+
+		}
+		return distributor;
+	}
+
+	
+	@Override
+	public void update(Distributor distributor) throws BaseApplicationException {
+		distributorDao.save(distributor);		
+	}
 }

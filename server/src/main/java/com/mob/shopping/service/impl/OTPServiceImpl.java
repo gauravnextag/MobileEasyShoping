@@ -113,7 +113,7 @@ public class OTPServiceImpl implements OTPService {
 		} catch (Exception e) {
 
 		}
-		// otp.setOpt("");//Not sending otp Code to UI
+		otp.setOpt("");//Not sending otp Code to UI
 		otp.setUserId(userId);
 		return otp;
 	}

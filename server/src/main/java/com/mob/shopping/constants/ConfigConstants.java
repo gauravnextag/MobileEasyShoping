@@ -15,9 +15,18 @@ public interface ConfigConstants {
     public static String MAX_OTP_ATTEMPT = "max.otp.attempt";
     public static String OTP_LENGTH = "otp.length";
     public static String OTP_SHORT_CODE = "otp.short.code";
-    public static String OTP_SMS = "otp.sms.text";
     public static String MESSAGE_BROKER_URL = "message.broker.url";
     public static String MESSAGE_BROKER_USER_NAME = "message.broker.username";
     public static String MESSAGE_BROKER_PASSWORD = "message.broker.password";
+    
+    public static String OTP_SMS = "otp.sms.text";
+    public static String ADD_CUSTOMER_SMS = "customer.add.sms.text";
+    public static String ADD_RETAILER_SMS = "retailer.add.sms.text";
+    public static String ADD_RETAILER_TO_DISTRIBUTOR_SMS = "retailer.add.distributor.sms.text";
+    public static String RETAILER_APPROVED_SMS = "retailer.approved.sms.text";
+    public static String RETAILER_REJECTED_SMS = "retailer.rejected.sms.text";
+
+
+
 
 }

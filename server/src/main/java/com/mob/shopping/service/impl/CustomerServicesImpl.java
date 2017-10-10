@@ -13,27 +13,50 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mob.shopping.beans.OTPOperationDTO;
 import com.mob.shopping.beans.request.CustomerDto;
+import com.mob.shopping.constants.ConfigConstants;
+import com.mob.shopping.constants.ErrorConstants;
 import com.mob.shopping.constants.enums.DeliveryStatus;
 import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.entity.Customer;
 import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.repository.CustomerDao;
+import com.mob.shopping.repository.OTPDao;
 import com.mob.shopping.service.CustomerServices;
+import com.mob.shopping.service.MasterConfigService;
+import com.mob.shopping.service.MessageBrokerService;
 import com.mob.shopping.util.CommonUtility;
 
 @Service
 public class CustomerServicesImpl implements CustomerServices {
-    
+
 	private static final Logger logger = LoggerFactory.getLogger(CustomerServicesImpl.class);
 
-    @Autowired
-    CustomerDao customerDao;
+	@Autowired
+	CustomerDao customerDao;
 
-
+	@Autowired
+    private OTPDao otpDao;
+	
+	@Autowired
+	private MasterConfigService masterConfigService;
+	
+	@Autowired
+	private MessageBrokerService messageBrokerService;
+    
 
 	@Override
 	public Long save(CustomerDto customerDto) {
+		if(CommonUtility.isValidString(customerDto.getMsisdn())&&CommonUtility.isValidString(customerDto.getOtp()) ){
+			OTPOperationDTO oTPOperationDTO = otpDao.verifyOTP(customerDto.getMsisdn(), customerDto.getOtp());
+			if(!oTPOperationDTO.getOtpStatus().equalsIgnoreCase(ErrorConstants.OTP_VERIFICATION_SUCCESS)){
+				throw new BaseApplicationException(ResponseCode.INVALID_OTP);
+			}
+		}else{
+			throw new BaseApplicationException(ResponseCode.INVALID_PARAMETER);
+		}
+		
 		validate(customerDto);
 		Customer customer = new Customer();
 		customer.setName(customerDto.getName());
@@ -47,41 +70,50 @@ public class CustomerServicesImpl implements CustomerServices {
 		if(!CommonUtility.isValidLong(userId)){
 			throw new BaseApplicationException();
 		}
+		
+		try{
+			messageBrokerService.sendMessage(customerDto.getMsisdn(),masterConfigService.getValueByKey(ConfigConstants.OTP_SHORT_CODE),
+					masterConfigService.getValueByKey(ConfigConstants.OTP_SMS));
+				
+		}catch(Exception e){
+			
+		}
+	
 		return userId;
 		
 	}
-	
-	private void validate(CustomerDto customerDto){
-		
-		if(!CommonUtility.isValidString(customerDto.getName()) || 
-				!CommonUtility.isValidString(customerDto.getMsisdn()) ||
-				customerDto.getMsisdn().length()<10 ||
-				!CommonUtility.isValidInteger(customerDto.getNoOfDevices()) ){
-			String method = "[SERVICE] save> validate >>>> validation failed for customerDto :: "+customerDto.toString();
-	    	logger.error(method);
+
+	private void validate(CustomerDto customerDto) {
+
+		if (!CommonUtility.isValidString(customerDto.getName()) || !CommonUtility.isValidString(customerDto.getMsisdn())
+				|| customerDto.getMsisdn().length() < 10
+				|| !CommonUtility.isValidInteger(customerDto.getNoOfDevices())) {
+			String method = "[SERVICE] save> validate >>>> validation failed for customerDto :: "
+					+ customerDto.toString();
+			logger.error(method);
 			throw new BaseApplicationException(ResponseCode.INVALID_PARAMETER);
 		}
 	}
 
 	@Override
-	public Map<String,List<Customer>> get(Long retailerId) {
-		
-		if(!CommonUtility.isValidLong(retailerId)){
-    		throw new BaseApplicationException(ResponseCode.RETAILOR_NOT_FOUND);
-    	}
-		List<Customer>  customers =  customerDao.get(retailerId);
-		Map<String,List<Customer>> customerMapByDate = new WeakHashMap<String,List<Customer>>();
+	public Map<String, List<Customer>> get(Long retailerId) {
+
+		if (!CommonUtility.isValidLong(retailerId)) {
+			throw new BaseApplicationException(ResponseCode.RETAILOR_NOT_FOUND);
+		}
+		List<Customer> customers = customerDao.get(retailerId);
+		Map<String, List<Customer>> customerMapByDate = new WeakHashMap<String, List<Customer>>();
 		customers.forEach(customer1 -> {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
-            String date =simpleDateFormat.format(new Date(customer1.getCreatedDate().getTime()));
-            if(!customerMapByDate.containsKey(date)){
-            	LinkedList<Customer> temp = new LinkedList<Customer>();
-                temp.add(customer1);
-                customerMapByDate.put(date,temp);
-            }else {
-                customerMapByDate.get(date).add(customer1);
-            }
-        });
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
+			String date = simpleDateFormat.format(new Date(customer1.getCreatedDate().getTime()));
+			if (!customerMapByDate.containsKey(date)) {
+				LinkedList<Customer> temp = new LinkedList<Customer>();
+				temp.add(customer1);
+				customerMapByDate.put(date, temp);
+			} else {
+				customerMapByDate.get(date).add(customer1);
+			}
+		});
 		return customerMapByDate;
 	}
 

@@ -57,6 +57,9 @@ public class Distributor implements Serializable {
 
 	@Column(name = "EMAIL")
 	private String email;
+	
+	@Column(name = "RETAILER_COUNT")
+	private Long retailerCount;
 
 	@JsonIgnore
 	@Column(name = "IS_DELETED")
@@ -157,6 +160,14 @@ public class Distributor implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public Long getRetailerCount() {
+		return retailerCount;
+	}
+
+	public void setRetailerCount(Long retailerCount) {
+		this.retailerCount = retailerCount;
+	}
 
 	public int getIsDeleted() {
 		return isDeleted;
@@ -186,16 +197,12 @@ public class Distributor implements Serializable {
 	public String toString() {
 		return "Distributor [id=" + id + ", name=" + name + ", districtId=" + districtId + ", msisdn=" + msisdn
 				+ ", address=" + address + ", region=" + region + ", city=" + city + ", srdMdId=" + srdMdId
-				+ ", srdMdType=" + srdMdType + ", srdMdName=" + srdMdName + ", email=" + email + ", isDeleted="
-				+ isDeleted + ", createdDate=" + createdDate + ", lastModifiedDate=" + lastModifiedDate + ", getId()="
-				+ getId() + ", getName()=" + getName() + ", getDistrictId()=" + getDistrictId() + ", getMsisdn()="
-				+ getMsisdn() + ", getAddress()=" + getAddress() + ", getRegion()=" + getRegion() + ", getCity()="
-				+ getCity() + ", getSrdMdId()=" + getSrdMdId() + ", getSrdMdType()=" + getSrdMdType()
-				+ ", getSrdMdName()=" + getSrdMdName() + ", getEmail()=" + getEmail() + ", getIsDeleted()="
-				+ getIsDeleted() + ", getCreatedDate()=" + getCreatedDate() + ", getLastModifiedDate()="
-				+ getLastModifiedDate() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+				+ ", srdMdType=" + srdMdType + ", srdMdName=" + srdMdName + ", email=" + email + ", retailerCount="
+				+ retailerCount + ", isDeleted=" + isDeleted + ", createdDate=" + createdDate + ", lastModifiedDate="
+				+ lastModifiedDate + "]";
 	}
+
+	
 
 	
 }

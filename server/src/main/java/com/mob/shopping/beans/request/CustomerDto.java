@@ -21,6 +21,8 @@ public class CustomerDto implements Serializable {
     private Integer deliveryStatus ;
 
     private Integer noOfDevices;
+    
+    private String otp;
 
     private int isDeleted;
 
@@ -73,6 +75,14 @@ public class CustomerDto implements Serializable {
 	public void setNoOfDevices(Integer noOfDevices) {
 		this.noOfDevices = noOfDevices;
 	}
+	
+	public String getOtp() {
+		return otp;
+	}
+
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
 
 	public int getIsDeleted() {
 		return isDeleted;
@@ -92,10 +102,11 @@ public class CustomerDto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CustomerDto [id=" + id + ", name=" + name + ", retailerID=" + retailerId + ", msisdn=" + msisdn
-				+ ", deliveryStatus=" + deliveryStatus + ", noOfDevices=" + noOfDevices + ", isDeleted=" + isDeleted
-				+ ", createdDate=" + createdDate + "]";
+		return "CustomerDto [id=" + id + ", name=" + name + ", retailerId=" + retailerId + ", msisdn=" + msisdn
+				+ ", deliveryStatus=" + deliveryStatus + ", noOfDevices=" + noOfDevices + ", otp=" + otp
+				+ ", isDeleted=" + isDeleted + ", createdDate=" + createdDate + "]";
 	}
+
 	
 	
 
