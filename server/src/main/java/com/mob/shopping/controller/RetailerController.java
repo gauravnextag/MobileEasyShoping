@@ -30,7 +30,7 @@ public class RetailerController {
     private RetailerServices retailerServices;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public @ResponseBody ResponseEntity<RestResponse<Boolean>> register(@RequestBody RetailerDto registrationRequest) {
+    public  ResponseEntity<RestResponse<Boolean>> register(@RequestBody RetailerDto registrationRequest) {
     	String method = "[CONTROLLER] getDistrict>>>> RegistrationRequest :: "+registrationRequest.toString();
     	logger.info(method);
     	retailerServices.register(registrationRequest);
@@ -38,14 +38,14 @@ public class RetailerController {
     }
 
     @RequestMapping(value = "/{distributorId}", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<RestResponse<Map<String,List<Retailer>>>> getRetailer(@PathVariable Long distributorId) {
+    public  ResponseEntity<RestResponse<Map<String,List<Retailer>>>> getRetailer(@PathVariable Long distributorId) {
     	String method = "[CONTROLLER] getRetailer>>>> distributorId :: "+distributorId;
     	logger.info(method);
     	return RestUtils.successResponse(retailerServices.get(distributorId));
     }
     
     @RequestMapping(value = "/action", method = RequestMethod.PUT)
-    public @ResponseBody ResponseEntity<RestResponse<Boolean>> approve(@RequestBody RetailerDto retailerDto) {        
+    public  ResponseEntity<RestResponse<Boolean>> approve(@RequestBody RetailerDto retailerDto) {        
     	String method = "[CONTROLLER] getRetailer>>>> retailerDto :: "+retailerDto;
     	logger.info(method);
     	return RestUtils.successResponse(retailerServices.changeStatus(retailerDto));

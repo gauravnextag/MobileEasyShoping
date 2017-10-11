@@ -59,20 +59,22 @@ public class RequestFilter extends OncePerRequestFilter {
 				userDto.setMsisdn(list[0]);
 				userDto.setUserType(Integer.parseInt(list[1]));
 				request.setAttribute("user", userDto);
-				if (myrequest == null) {
+				//if (myrequest == null) {
+					//filterChain.doFilter(request, response);
+				//} else {
 					filterChain.doFilter(request, response);
-				} else {
-					filterChain.doFilter(myrequest, response);
-				}
+				//}
 			} else {
 				String url = request.getRequestURL().toString();
 				if ("SKIP".equalsIgnoreCase(request.getHeader(Constants.Headers.KEY))
 						|| !(url.contains("customer") || url.contains("action"))) {
-					if (myrequest == null) {
-						filterChain.doFilter(request, response);
-					} else {
-						filterChain.doFilter(myrequest, response);
-					}
+					filterChain.doFilter(request, response);
+
+//					if (myrequest == null) {
+//						filterChain.doFilter(request, response);
+//					} else {
+//						filterChain.doFilter(myrequest, response);
+//					}
 				} else {
 					logger.error("INVALID_USER ::" + ResponseCode.INVALID_USER);
 					throw new BaseApplicationException(ResponseCode.INVALID_USER);

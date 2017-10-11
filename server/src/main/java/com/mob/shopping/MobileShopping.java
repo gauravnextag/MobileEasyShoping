@@ -12,9 +12,7 @@ import org.springframework.context.annotation.PropertySources;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.WebApplicationInitializer;
 
-@SpringBootApplication
-@EnableAutoConfiguration
-@ComponentScan(basePackages = "com.mob.shopping")
+@SpringBootApplication(scanBasePackages = "com.mob.shopping")
 @EnableTransactionManagement
 @PropertySources({ @PropertySource(value = "file:${mobShop.property.file.path}", ignoreResourceNotFound = true) })
 //@PropertySources({ @PropertySource(value = "file:/home/mobShop/conf/application.properties", ignoreResourceNotFound = true) })

@@ -28,14 +28,14 @@ public class RegionController {
     private RegionServices regionServices;
 
     @RequestMapping(value = "/state", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<RestResponse<List<State>>> getStates() throws BaseApplicationException {
+    public  ResponseEntity<RestResponse<List<State>>> getStates() throws BaseApplicationException {
 		String method = "[CONTROLLER] getStates>>>> ::::";
     	logger.info(method);
 		return RestUtils.successResponse(regionServices.getStates());
     }
 
     @RequestMapping(value = "/district/{stateId}", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<RestResponse<List<District>>>  getDistrict(@PathVariable Long stateId)throws BaseApplicationException {
+    public  ResponseEntity<RestResponse<List<District>>>  getDistrict(@PathVariable Long stateId)throws BaseApplicationException {
 		String method = "[CONTROLLER] getDistrict>>>> stateId :: "+stateId;
     	logger.info(method);
     	return RestUtils.successResponse(regionServices.getDistrictRequest(stateId));

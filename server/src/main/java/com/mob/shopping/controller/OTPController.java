@@ -37,7 +37,7 @@ public class OTPController {
 	private static final Logger logger = LoggerFactory.getLogger(OTPController.class);
 
 	@RequestMapping(value = "login/sendOtp", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody
+	public 
 	ResponseEntity<RestResponse<OTP>> loginSendOTP(@RequestBody OTPRequestBean otpRequestBean) throws BaseApplicationException {
         String method = "[CONTROLLER] sendOTP>>>> ::::";
         logger.info(method);
@@ -45,7 +45,7 @@ public class OTPController {
 	}
 
 	@RequestMapping(value = "login/verifyOtp", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody
+	public 
     ResponseEntity<RestResponse<OTPOperationDTO>> loginVerifyOTP(@RequestBody OTPRequestBean otpRequestBean) {
         String method = "[CONTROLLER] verifyOTP>>>> ::::";
         logger.info(method);
@@ -55,7 +55,7 @@ public class OTPController {
 	
 	
 	@RequestMapping(value = "/sendOtp", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody
+	public 
 	ResponseEntity<RestResponse<OTP>> sendOTP(@RequestBody OTPRequestBean otpRequestBean) throws BaseApplicationException {
         String method = "[CONTROLLER] sendOTP>>>> ::::";
         logger.info(method);
@@ -63,7 +63,7 @@ public class OTPController {
 	}
 
 	@RequestMapping(value = "/verifyOtp", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody
+	public 
     ResponseEntity<RestResponse<OTPOperationDTO>> verifyOTP(@RequestBody OTPRequestBean otpRequestBean) {
         String method = "[CONTROLLER] verifyOTP>>>> ::::";
         logger.info(method);

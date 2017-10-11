@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mob.shopping.beans.request.UserDto;
@@ -22,7 +21,7 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	  @RequestMapping(value = "/user", method = RequestMethod.GET)
-	    public @ResponseBody ResponseEntity<RestResponse<UserDto>> get(HttpServletRequest request) {        
+	    public  ResponseEntity<RestResponse<UserDto>> get(HttpServletRequest request) {        
 	    	String method = "[CONTROLLER] get>>>> user :: ";
 	    	logger.info(method);
 	    	UserDto userDto = (UserDto)request.getAttribute("user");
