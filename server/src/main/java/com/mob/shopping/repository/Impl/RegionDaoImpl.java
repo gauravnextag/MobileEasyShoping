@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class RegionDaoImpl implements RegionDao {
     @Override
     public List<State> getStates() throws DaoException {
               Session session = sessionFactory.getCurrentSession();
-            return session.createCriteria(State.class).list();
+            return session.createCriteria(State.class).add(Restrictions.eq(Constants.IS_DELETED,0)).addOrder(Order.asc(Constants.NAME)).list();
     }
 
     @SuppressWarnings("unchecked")
@@ -39,7 +40,7 @@ public class RegionDaoImpl implements RegionDao {
             LOGGER.info("Fetching list of district corresponding to state id: {}",stateId);
             Session session = sessionFactory.getCurrentSession();
             return  session.createCriteria(District.class).add(Restrictions.eq(Constants.STATE_ID, stateId))
-            		.add(Restrictions.eq(Constants.IS_DELETED,0)).list();
+            		.add(Restrictions.eq(Constants.IS_DELETED,0)).addOrder(Order.asc(Constants.NAME)).list();
     }
 
 	@Override
