@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mob.shopping.beans.request.RetailerDto;
@@ -44,7 +43,7 @@ public class RetailerController {
     	return RestUtils.successResponse(retailerServices.get(distributorId));
     }
     
-    @RequestMapping(value = "/action", method = RequestMethod.PUT,produces={"application/json"})
+    @RequestMapping(value = "/action", method = RequestMethod.POST,produces={"application/json"})
     public  ResponseEntity<RestResponse<Boolean>> approve(@RequestBody RetailerDto retailerDto) {        
     	String method = "[CONTROLLER] getRetailer>>>> retailerDto :: "+retailerDto;
     	logger.info(method);

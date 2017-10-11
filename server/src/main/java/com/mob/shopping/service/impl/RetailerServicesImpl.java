@@ -89,7 +89,7 @@ public class RetailerServicesImpl implements RetailerServices {
 		}
 		if (retailerDao.checkMsisdnStatus(registrationRequest.getMsisdn())) {
 			retailerDao.save(retailer);
-		} else {
+		} else {	
 			throw new BaseApplicationException(ResponseCode.RETAILER_ALREADY_REGISTER);
 		}
 
@@ -135,8 +135,8 @@ public class RetailerServicesImpl implements RetailerServices {
 
 	@Override
 	public Boolean changeStatus(RetailerDto retailerDto) throws BaseApplicationException {
-		if (!((retailerDto.getRegistrationStatus() == RegistrationStatus.APPROVED.getValue())
-				|| (retailerDto.getRegistrationStatus() == RegistrationStatus.REJECTED.getValue()))) {
+		if (!((retailerDto.getRegistrationStatus().intValue() == RegistrationStatus.APPROVED.getValue().intValue())
+				|| (retailerDto.getRegistrationStatus().intValue() == RegistrationStatus.REJECTED.getValue().intValue()))) {
 			String method = "[SERVICE] changeStatus>>>>  :: Invalid change status request  > retailerDto "
 					+ retailerDto.toString();
 			logger.error(method);
@@ -152,14 +152,14 @@ public class RetailerServicesImpl implements RetailerServices {
 			throw new BaseApplicationException(ResponseCode.NO_PENDING_USER);
 		}
 
-		if ((retailerDto.getDistributorId() != retailer.getDistributorId())) {
+		if ((retailerDto.getDistributorId().longValue() != retailer.getDistributorId().longValue())) {
 			String method = "[SERVICE] changeStatus>>>>  :: Invalid change status request  > retailerDto "
 					+ retailerDto.toString();
 			logger.error(method);
 			throw new BaseApplicationException(ResponseCode.INVALID_PARAMETER);
 		}
 		retailer.setRegistrationStatus(retailerDto.getRegistrationStatus());
-		if ((retailerDto.getRegistrationStatus() == RegistrationStatus.APPROVED.getValue())) {
+		if ((retailerDto.getRegistrationStatus().intValue() == RegistrationStatus.APPROVED.getValue().intValue())) {
 			userService.save(retailer.getMsisdn(), retailer.getId(), UserType.RETAILER.getValue());
 		}
 		retailerDao.update(retailer);
