@@ -178,6 +178,7 @@ public class RetailerServicesImpl implements RetailerServices {
 			}
 
 		} catch (Exception e) {
+			logger.error(e.getMessage()+e.getStackTrace());
 
 		}
 		return Boolean.TRUE;

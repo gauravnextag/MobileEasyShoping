@@ -111,7 +111,7 @@ public class OTPServiceImpl implements OTPService {
 			messageBrokerService.sendMessage(msisdn, masterConfigService.getValueByKey(ConfigConstants.OTP_SHORT_CODE),
 					MessageFormat.format(masterConfigService.getValueByKey(ConfigConstants.OTP_SMS), otp.getOpt()));
 		} catch (Exception e) {
-
+			logger.error(e.getMessage()+e.getStackTrace());
 		}
 		otp.setOpt("");//Not sending otp Code to UI
 		otp.setUserId(userId);
