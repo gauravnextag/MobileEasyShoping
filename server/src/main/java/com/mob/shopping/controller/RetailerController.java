@@ -29,7 +29,7 @@ public class RetailerController {
     @Autowired
     private RetailerServices retailerServices;
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST,produces={"application/json"})
     public  ResponseEntity<RestResponse<Boolean>> register(@RequestBody RetailerDto registrationRequest) {
     	String method = "[CONTROLLER] getDistrict>>>> RegistrationRequest :: "+registrationRequest.toString();
     	logger.info(method);
@@ -37,14 +37,14 @@ public class RetailerController {
     	return RestUtils.successResponse(Boolean.TRUE);
     }
 
-    @RequestMapping(value = "/{distributorId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{distributorId}", method = RequestMethod.GET,produces={"application/json"})
     public  ResponseEntity<RestResponse<Map<String,List<Retailer>>>> getRetailer(@PathVariable Long distributorId) {
     	String method = "[CONTROLLER] getRetailer>>>> distributorId :: "+distributorId;
     	logger.info(method);
     	return RestUtils.successResponse(retailerServices.get(distributorId));
     }
     
-    @RequestMapping(value = "/action", method = RequestMethod.PUT)
+    @RequestMapping(value = "/action", method = RequestMethod.PUT,produces={"application/json"})
     public  ResponseEntity<RestResponse<Boolean>> approve(@RequestBody RetailerDto retailerDto) {        
     	String method = "[CONTROLLER] getRetailer>>>> retailerDto :: "+retailerDto;
     	logger.info(method);

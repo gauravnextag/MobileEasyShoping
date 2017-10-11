@@ -50,7 +50,7 @@ public class DistributorController {
 	@Autowired
 	private DistributorDao distributorDao;
 
-	@RequestMapping(value = "/getDistributors/{districtId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getDistributors/{districtId}", method = RequestMethod.GET,produces={"application/json"})
 	@ResponseBody
 	public ResponseEntity<RestResponse<List<Distributor>>> getDistributors(@PathVariable Long districtId)
 			throws BaseApplicationException {
@@ -59,7 +59,7 @@ public class DistributorController {
 		return RestUtils.successResponse(distributorServices.getDistributors(districtId));
 	}
 
-	@RequestMapping(value = "dist/saveAll", method = RequestMethod.GET)
+	@RequestMapping(value = "dist/saveAll", method = RequestMethod.GET,produces={"application/json"})
 	@ResponseBody
 	public ResponseEntity<RestResponse<Boolean>> saveAll() throws BaseApplicationException {
 		saveAllDist();

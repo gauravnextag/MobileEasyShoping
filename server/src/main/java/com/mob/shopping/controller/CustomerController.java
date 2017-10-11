@@ -29,14 +29,14 @@ public class CustomerController {
     @Autowired
     private CustomerServices customerServices;
     
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST,produces={"application/json"})
     public  ResponseEntity<RestResponse<Long>> save(@RequestBody CustomerDto customerDto) {        
     	String method = "[CONTROLLER] save>>>> customerDto :: "+customerDto.toString();
     	logger.info(method);
     	return RestUtils.successResponse(customerServices.save(customerDto));
     }
     
-    @RequestMapping(value = "/{retailerId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{retailerId}", method = RequestMethod.GET,produces={"application/json"})
     public ResponseEntity<RestResponse<Map<String,List<Customer>>>> get(@PathVariable Long retailerId) {        
     	String method = "[CONTROLLER] get>>>> retailerId :: "+retailerId;
     	logger.info(method);

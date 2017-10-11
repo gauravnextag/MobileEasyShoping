@@ -20,7 +20,7 @@ import com.mob.shopping.util.RestUtils;
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	  @RequestMapping(value = "/user", method = RequestMethod.GET)
+	  @RequestMapping(value = "/user", method = RequestMethod.GET,produces={"application/json"})
 	    public  ResponseEntity<RestResponse<UserDto>> get(HttpServletRequest request) {        
 	    	String method = "[CONTROLLER] get>>>> user :: ";
 	    	logger.info(method);
