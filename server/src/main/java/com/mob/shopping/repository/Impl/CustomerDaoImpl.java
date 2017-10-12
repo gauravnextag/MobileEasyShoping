@@ -46,4 +46,11 @@ public class CustomerDaoImpl implements CustomerDao {
             				.add(Restrictions.eq(Constants.IS_DELETED,0)).list();
 	}
 
+	@Override
+	public Customer findByMsisdn(String msisdn) {
+		Session session = sessionFactory.getCurrentSession();
+		return (Customer) session.createCriteria(Customer.class).add(Restrictions.eq(Constants.MSISDN, msisdn))
+				.add(Restrictions.eq(Constants.IS_DELETED, 0)).uniqueResult();
+	}
+
 }

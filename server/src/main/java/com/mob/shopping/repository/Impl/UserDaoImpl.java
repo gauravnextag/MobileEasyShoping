@@ -3,7 +3,6 @@
  */
 package com.mob.shopping.repository.Impl;
 
-import com.mob.shopping.exception.DaoException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mob.shopping.entity.User;
-import com.mob.shopping.exception.BaseApplicationException;
+import com.mob.shopping.exception.DaoException;
 import com.mob.shopping.repository.UserDao;
 import com.mob.shopping.util.Constants;
 

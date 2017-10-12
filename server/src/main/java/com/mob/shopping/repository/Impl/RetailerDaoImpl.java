@@ -100,7 +100,7 @@ public class RetailerDaoImpl implements RetailerDao {
 			retailers.forEach(retailer -> {
 				if(retailer.getRegistrationStatus() ==
                         RegistrationStatus.APPROVED.getValue()){
-				    throw new DaoException(ResponseCode.RETAILER_ALREADY_REGISTER);
+				    throw new DaoException(ResponseCode.ALREADY_REGISTER);
                 }
 			});
             throw new DaoException(ResponseCode.RETAILER_REQUEST_PENDING);

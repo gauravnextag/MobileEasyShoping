@@ -1,12 +1,19 @@
 package com.mob.shopping.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Created by B0097545 on 9/4/17.
@@ -15,7 +22,9 @@ import java.util.Date;
 @Table(name = "STATES")
 public class State implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 4730645720380264853L;
+
+	@Id
     @SequenceGenerator(name = "STATES_SEQ", sequenceName = "STATES_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STATES_SEQ")
     @Column(name = "ID")

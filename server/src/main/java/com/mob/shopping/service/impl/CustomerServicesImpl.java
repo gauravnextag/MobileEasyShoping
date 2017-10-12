@@ -48,6 +48,15 @@ public class CustomerServicesImpl implements CustomerServices {
 
 	@Override
 	public Long save(CustomerDto customerDto) {
+		validate(customerDto);
+
+		Customer customerObj = customerDao.findByMsisdn(customerDto.getMsisdn());
+		
+		if(customerObj!=null){
+			
+			throw new BaseApplicationException(ResponseCode.CUSTOMER_ORDER_ALREADY_PLACED);
+		}
+		
 		if(CommonUtility.isValidString(customerDto.getMsisdn())&&CommonUtility.isValidString(customerDto.getOtp()) ){
 			OTPOperationDTO oTPOperationDTO = otpDao.verifyOTP(customerDto.getMsisdn(), customerDto.getOtp());
 			if(!oTPOperationDTO.getOtpStatus().equalsIgnoreCase(ErrorConstants.OTP_VERIFICATION_SUCCESS)){
@@ -57,7 +66,6 @@ public class CustomerServicesImpl implements CustomerServices {
 			throw new BaseApplicationException(ResponseCode.INVALID_PARAMETER);
 		}
 		
-		validate(customerDto);
 		Customer customer = new Customer();
 		customer.setName(customerDto.getName());
 		customer.setMsisdn(customerDto.getMsisdn());
@@ -73,7 +81,7 @@ public class CustomerServicesImpl implements CustomerServices {
 		
 		try{
 			messageBrokerService.sendMessage(customerDto.getMsisdn(),masterConfigService.getValueByKey(ConfigConstants.OTP_SHORT_CODE),
-					masterConfigService.getValueByKey(ConfigConstants.OTP_SMS));
+					masterConfigService.getValueByKey(ConfigConstants.ADD_CUSTOMER_SMS));
 				
 		}catch(Exception e){
 			logger.error(e.getMessage()+e.getStackTrace());

@@ -97,23 +97,25 @@ public class OTPServiceImpl implements OTPService {
 		Long id = null;
 		UUID uuid = UUID.randomUUID();
 		String otpString = Long.toString(Math.abs(uuid.getLeastSignificantBits() % 1000000) * 10).substring(0, 6);
-		try {
-			OTP oldOtp = otpDao.findByMsisdn(msisdn);
-			if (oldOtp != null) {
-				if (isMaxOTPAttempt(oldOtp)) {
-					throw new BusinessException(ResponseCode.MAX_OTP_ATTEMPT_REACHED);
-				}
-				oldAttempts = oldOtp.getAttempts();
-				id = oldOtp.getId();
-			}
-			otp = otpDao.generateOTP(msisdn, otpString, uuid.toString(), id, oldAttempts);
 
+		OTP oldOtp = otpDao.findByMsisdn(msisdn);
+		if (oldOtp != null) {
+			if (isMaxOTPAttempt(oldOtp)) {
+				throw new BusinessException(ResponseCode.MAX_OTP_ATTEMPT_REACHED);
+			}
+			oldAttempts = oldOtp.getAttempts();
+			id = oldOtp.getId();
+		}
+
+		otp = otpDao.generateOTP(msisdn, otpString, uuid.toString(), id, oldAttempts);
+		try {
 			messageBrokerService.sendMessage(msisdn, masterConfigService.getValueByKey(ConfigConstants.OTP_SHORT_CODE),
 					MessageFormat.format(masterConfigService.getValueByKey(ConfigConstants.OTP_SMS), otp.getOpt()));
 		} catch (Exception e) {
-			logger.error(e.getMessage()+e.getStackTrace());
+			logger.error(e.getMessage() + e.getStackTrace());
+			throw new BusinessException(ResponseCode.ERROR_MESSAGE_MESSAGE_SEND_FAILED);
 		}
-		otp.setOpt("");//Not sending otp Code to UI
+		otp.setOpt("");// Not sending otp Code to UI
 		otp.setUserId(userId);
 		return otp;
 	}

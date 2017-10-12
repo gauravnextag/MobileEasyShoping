@@ -90,7 +90,7 @@ public class RetailerServicesImpl implements RetailerServices {
 		if (retailerDao.checkMsisdnStatus(registrationRequest.getMsisdn())) {
 			retailerDao.save(retailer);
 		} else {	
-			throw new BaseApplicationException(ResponseCode.RETAILER_ALREADY_REGISTER);
+			throw new BaseApplicationException(ResponseCode.ALREADY_REGISTER);
 		}
 
 		try {
