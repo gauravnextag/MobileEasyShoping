@@ -76,7 +76,7 @@ public class CustomerServicesImpl implements CustomerServices {
 					masterConfigService.getValueByKey(ConfigConstants.OTP_SMS));
 				
 		}catch(Exception e){
-			
+			logger.error(e.getMessage()+e.getStackTrace());
 		}
 	
 		return userId;

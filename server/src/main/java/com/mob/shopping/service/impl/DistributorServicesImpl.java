@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mob.shopping.beans.request.DistributorDto;
 import com.mob.shopping.constants.enums.ResponseCode;
 import com.mob.shopping.entity.Distributor;
 import com.mob.shopping.exception.BaseApplicationException;
@@ -27,7 +28,7 @@ public class DistributorServicesImpl implements DistributorServices {
 	DistributorDao distributorDao;
 
 	@Override
-	public List<Distributor> getDistributors(Long districtId) throws BaseApplicationException {
+	public List<DistributorDto> getDistributors(Long districtId) throws BaseApplicationException {
 		if (!CommonUtility.isValidLong(districtId)) {
 			logger.error("Invalid districtId " + districtId);
 			throw new BaseApplicationException(ResponseCode.INVALID_PARAMETER);
