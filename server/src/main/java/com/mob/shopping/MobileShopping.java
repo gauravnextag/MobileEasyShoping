@@ -13,7 +13,7 @@ import org.springframework.web.WebApplicationInitializer;
 @SpringBootApplication(scanBasePackages = "com.mob.shopping")
 @EnableTransactionManagement
 //@PropertySources({ @PropertySource(value = "file:${mobShop.property.file.path}", ignoreResourceNotFound = true) })
-@PropertySources({ @PropertySource(value = "file:/home/mobShop/conf/application.properties", ignoreResourceNotFound = true) })
+@PropertySources({ @PropertySource(value = "file:/opt/mobShop/conf/application.properties", ignoreResourceNotFound = true) })
 @ServletComponentScan(basePackages={"com.mob.shopping.interceptor"})
 public class MobileShopping extends SpringBootServletInitializer implements WebApplicationInitializer{
 

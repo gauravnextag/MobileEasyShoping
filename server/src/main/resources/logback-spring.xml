@@ -14,7 +14,7 @@
 <!-- 	<include file="${mobShop.log.conf.file.path}" />
  -->	
  
- <include file="/home/mobShop/conf/mobShop_logging_conf.xml" />
+ <include file="/opt/mobShop/conf/mobShop_logging_conf.xml" />
 	
 
 </configuration>
