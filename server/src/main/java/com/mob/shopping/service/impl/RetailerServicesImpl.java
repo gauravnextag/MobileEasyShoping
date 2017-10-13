@@ -27,8 +27,8 @@ import com.mob.shopping.repository.OTPDao;
 import com.mob.shopping.repository.RetailerDao;
 import com.mob.shopping.service.DistributorServices;
 import com.mob.shopping.service.MasterConfigService;
-import com.mob.shopping.service.MessageBrokerService;
 import com.mob.shopping.service.RetailerServices;
+import com.mob.shopping.service.SMSAdapterService;
 import com.mob.shopping.service.UserService;
 import com.mob.shopping.util.CommonUtility;
 
@@ -51,7 +51,7 @@ public class RetailerServicesImpl implements RetailerServices {
 	OTPDao otpDao;
 
 	@Autowired
-	private MessageBrokerService messageBrokerService;
+	private SMSAdapterService messageBrokerService;
 
 	private static final Logger logger = LoggerFactory.getLogger(RetailerServicesImpl.class);
 
@@ -98,11 +98,9 @@ public class RetailerServicesImpl implements RetailerServices {
 			distributor.setRetailerCount(distributor.getRetailerCount()+1);
 			distributorService.update(distributor);
 			messageBrokerService.sendMessage(retailer.getMsisdn(),
-					masterConfigService.getValueByKey(ConfigConstants.OTP_SHORT_CODE),
 					masterConfigService.getValueByKey(ConfigConstants.ADD_RETAILER_SMS));
 
 			messageBrokerService.sendMessage(distributor.getMsisdn(),
-					masterConfigService.getValueByKey(ConfigConstants.OTP_SHORT_CODE),
 					masterConfigService.getValueByKey(ConfigConstants.ADD_RETAILER_TO_DISTRIBUTOR_SMS));
 		} catch (Exception e) {
 
@@ -173,8 +171,7 @@ public class RetailerServicesImpl implements RetailerServices {
 			}
 
 			if (smsText != null) {
-				messageBrokerService.sendMessage(retailer.getMsisdn(),
-						masterConfigService.getValueByKey(ConfigConstants.OTP_SHORT_CODE), smsText);
+				messageBrokerService.sendMessage(retailer.getMsisdn(), smsText);
 			}
 
 		} catch (Exception e) {

@@ -13,16 +13,12 @@ import com.mob.shopping.entity.Distributor;
 import com.mob.shopping.exception.BaseApplicationException;
 import com.mob.shopping.repository.DistributorDao;
 import com.mob.shopping.service.DistributorServices;
-import com.mob.shopping.service.MasterConfigService;
 import com.mob.shopping.util.CommonUtility;
 
 @Service
 public class DistributorServicesImpl implements DistributorServices {
 
 	private static final Logger logger = LoggerFactory.getLogger(DistributorServicesImpl.class);
-
-	@Autowired
-	MasterConfigService masterConfigService;
 
 	@Autowired
 	DistributorDao distributorDao;
@@ -50,9 +46,8 @@ public class DistributorServicesImpl implements DistributorServices {
 		return distributor;
 	}
 
-	
 	@Override
 	public void update(Distributor distributor) throws BaseApplicationException {
-		distributorDao.save(distributor);		
+		distributorDao.save(distributor);
 	}
 }

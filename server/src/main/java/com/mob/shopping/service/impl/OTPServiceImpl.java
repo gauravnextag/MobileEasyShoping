@@ -21,8 +21,8 @@ import com.mob.shopping.repository.DistributorDao;
 import com.mob.shopping.repository.OTPDao;
 import com.mob.shopping.repository.RetailerDao;
 import com.mob.shopping.service.MasterConfigService;
-import com.mob.shopping.service.MessageBrokerService;
 import com.mob.shopping.service.OTPService;
+import com.mob.shopping.service.SMSAdapterService;
 import com.mob.shopping.service.UserService;
 import com.mob.shopping.util.AuthUtils;
 
@@ -48,7 +48,7 @@ public class OTPServiceImpl implements OTPService {
 	UserService userService;
 
 	@Autowired
-	private MessageBrokerService messageBrokerService;
+	private SMSAdapterService messageBrokerService;
 
 	public OTPOperationDTO verifyOTP(String msisdn, String otp, Long userId) {
 
@@ -109,8 +109,7 @@ public class OTPServiceImpl implements OTPService {
 
 		otp = otpDao.generateOTP(msisdn, otpString, uuid.toString(), id, oldAttempts);
 		try {
-			messageBrokerService.sendMessage(msisdn, masterConfigService.getValueByKey(ConfigConstants.OTP_SHORT_CODE),
-					MessageFormat.format(masterConfigService.getValueByKey(ConfigConstants.OTP_SMS), otp.getOpt()));
+			messageBrokerService.sendMessage(msisdn,MessageFormat.format(masterConfigService.getValueByKey(ConfigConstants.OTP_SMS), otp.getOpt()));
 		} catch (Exception e) {
 			logger.error(e.getMessage() + e.getStackTrace());
 			throw new BusinessException(ResponseCode.ERROR_MESSAGE_MESSAGE_SEND_FAILED);

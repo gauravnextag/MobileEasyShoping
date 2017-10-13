@@ -25,7 +25,7 @@ import com.mob.shopping.repository.CustomerDao;
 import com.mob.shopping.repository.OTPDao;
 import com.mob.shopping.service.CustomerServices;
 import com.mob.shopping.service.MasterConfigService;
-import com.mob.shopping.service.MessageBrokerService;
+import com.mob.shopping.service.SMSAdapterService;
 import com.mob.shopping.util.CommonUtility;
 
 @Service
@@ -43,7 +43,7 @@ public class CustomerServicesImpl implements CustomerServices {
 	private MasterConfigService masterConfigService;
 	
 	@Autowired
-	private MessageBrokerService messageBrokerService;
+	private SMSAdapterService messageBrokerService;
     
 
 	@Override
@@ -80,8 +80,7 @@ public class CustomerServicesImpl implements CustomerServices {
 		}
 		
 		try{
-			messageBrokerService.sendMessage(customerDto.getMsisdn(),masterConfigService.getValueByKey(ConfigConstants.OTP_SHORT_CODE),
-					masterConfigService.getValueByKey(ConfigConstants.ADD_CUSTOMER_SMS));
+			messageBrokerService.sendMessage(customerDto.getMsisdn(),masterConfigService.getValueByKey(ConfigConstants.ADD_CUSTOMER_SMS));
 				
 		}catch(Exception e){
 			logger.error(e.getMessage()+e.getStackTrace());
