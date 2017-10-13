@@ -75,7 +75,9 @@ public class DistributorController {
 	}
 
 	private void saveAllDist() {
-		String path = "/Users/b0200200/Desktop/test.xlsx";
+		//String path = "/Users/b0200200/Desktop/test.xlsx";
+		String path = "/home/mobShop/test.xlsx";
+
 		List<Distributor> distributorsList = new ArrayList<Distributor>();
 		HashMap<String, State> statesMap = new HashMap<String, State>();
 		HashMap<String, District> districtMap = new HashMap<String, District>();
@@ -184,7 +186,7 @@ public class DistributorController {
 				
 				userdao.save(user);
 				
-				System.out.println("processing  >> " + count+user.toString());
+			System.out.println("processing  >> " + count+user.toString());
 			} catch (Exception e) {
 				list.add(count);
 				System.out.println("Failed Row   >> " + count);
